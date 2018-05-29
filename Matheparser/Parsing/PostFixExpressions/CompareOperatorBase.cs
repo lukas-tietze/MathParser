@@ -2,43 +2,20 @@
 {
     using Matheparser.Values;
 
-    public abstract class CompareOperatorBase : IPostFixExpression
+    public abstract class CompareOperatorBase : BinaryOperatorExpressionBase
     {
-        public PostFixExpressionType Type
+        internal override IValue EvalNumber(double double1, double double2)
         {
-            get
-            {
-                return PostFixExpressionType.Operator;
-            }
+            return new DoubleValue(this.CompareNumber(double1, double2) ? 1 : 0);
         }
 
-        public IValue Eval(IValue[] operands)
+        internal override IValue EvalString(string string1, string string2)
         {
-            this.Validate(operands);
-
-            if (operands[0].Type == ValueType.Number)
-            {
-                return new DoubleValue(this.CompareNumber(operands[0].AsDouble, operands[1].AsDouble) ? 1 : 0);
-            }
-
-            return new DoubleValue(this.CompareString(operands[0].AsString, operands[1].AsString) ? 1 : 0);
+            return new DoubleValue(this.CompareString(string1, string2) ? 1 : 0);
         }
 
         internal abstract bool CompareNumber(double double1, double double2);
 
         internal abstract bool CompareString(string string1, string string2);
-
-        protected void Validate(IValue[] operands)
-        {
-            if (operands.Length != 2)
-            {
-                throw new MissingOperandException();
-            }
-
-            if (operands[0].Type != operands[1].Type)
-            {
-                throw new WrongOperandTypeException();
-            }
-        }
     }
 }
