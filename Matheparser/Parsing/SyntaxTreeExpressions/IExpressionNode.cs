@@ -1,4 +1,4 @@
-﻿namespace Matheparser.Parsing.Expressions
+﻿namespace Matheparser.Parsing.SyntaxTreeExpressions
 {
     public interface IExpressionNode
     {

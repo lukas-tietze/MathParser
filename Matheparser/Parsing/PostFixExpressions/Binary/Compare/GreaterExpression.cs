@@ -1,8 +1,8 @@
-﻿namespace Matheparser.Parsing.PostFixExpressions
+﻿namespace Matheparser.Parsing.PostFixExpressions.Binary.Compare
 {
     using System.Diagnostics;
 
-    [DebuggerDisplay("Operator: >")]
+    [DebuggerDisplay("Operator >")]
     public sealed class GreaterExpression : CompareOperatorBase
     {
         internal override bool CompareNumber(double double1, double double2)

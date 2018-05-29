@@ -2,7 +2,7 @@
 using Matheparser.Parsing;
 using Matheparser.Parsing.Evaluation;
 using Matheparser.Tokenizing;
-namespace Matheparser.Solver
+namespace Matheparser.Solving
 {
     public class Solver
     {

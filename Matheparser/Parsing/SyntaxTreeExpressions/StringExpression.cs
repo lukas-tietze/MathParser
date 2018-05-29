@@ -1,7 +1,7 @@
 ﻿using System;
 using Matheparser.Values;
 
-namespace Matheparser.Parsing.Expressions
+namespace Matheparser.Parsing.SyntaxTreeExpressions
 {
     public class StringExpression : ExpressionNodeBase
     {

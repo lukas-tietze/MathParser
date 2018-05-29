@@ -11,33 +11,6 @@ namespace Matheparser
 
         bool AreMatchingBrackets(char a, char b);
 
-        bool IsOperator(char c);
-
-        char OperatorAdd
-        {
-            get;
-        }
-
-        char OperatorSub
-        {
-            get;
-        }
-
-        char OperatorMul
-        {
-            get;
-        }
-
-        char OperatorDiv
-        {
-            get;
-        }
-
-        char OperatorMod
-        {
-            get;
-        }
-
         char StringSeperator
         {
             get;

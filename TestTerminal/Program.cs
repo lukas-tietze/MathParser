@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Matheparser;
 using Matheparser.Parsing;
-using Matheparser.Solver;
+using Matheparser.Solving;
 using Matheparser.Tokenizing;
 using Matheparser.Variables;
 

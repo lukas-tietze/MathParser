@@ -49,20 +49,29 @@
     <Compile Include="IConfig.cs" />
     <Compile Include="IFunction.cs" />
     <Compile Include="IVariable.cs" />
+    <Compile Include="Operator.cs" />
     <Compile Include="Parsing\Evaluation\PostFixEvaluator.cs" />
-    <Compile Include="Parsing\PostFixExpressions\CompareOperatorBase.cs" />
-    <Compile Include="Parsing\PostFixExpressions\NotEqualExpression.cs" />
-    <Compile Include="Parsing\PostFixExpressions\GreaterEqualExpression.cs" />
-    <Compile Include="Parsing\PostFixExpressions\EqualExpression.cs" />
-    <Compile Include="Parsing\PostFixExpressions\LessThanEqualExpression.cs" />
-    <Compile Include="Parsing\PostFixExpressions\LessThanExpression.cs" />
-    <Compile Include="Parsing\PostFixExpressions\GreaterExpression.cs" />
-    <Compile Include="Parsing\PostFixExpressions\BinaryOperatorExpressionBase.cs" />
-    <Compile Include="Parsing\PostFixExpressions\MissingOperandException.cs" />
+    <Compile Include="Parsing\PostFixExpressions\Binary\Arithmetic\DivExpression.cs" />
+    <Compile Include="Parsing\PostFixExpressions\Binary\Arithmetic\ModExpression.cs" />
+    <Compile Include="Parsing\PostFixExpressions\Binary\Arithmetic\ExpExpression.cs" />
+    <Compile Include="Parsing\PostFixExpressions\Binary\Arithmetic\MulExpression.cs" />
+    <Compile Include="Parsing\PostFixExpressions\Binary\Arithmetic\SubExpression.cs" />
+    <Compile Include="Parsing\PostFixExpressions\Binary\Arithmetic\AddExpression.cs" />
+    <Compile Include="Parsing\PostFixExpressions\Binary\Compare\CompareOperatorBase.cs" />
+    <Compile Include="Parsing\PostFixExpressions\Binary\Compare\NotEqualExpression.cs" />
+    <Compile Include="Parsing\PostFixExpressions\Binary\Compare\GreaterEqualExpression.cs" />
+    <Compile Include="Parsing\PostFixExpressions\Binary\Compare\EqualExpression.cs" />
+    <Compile Include="Parsing\PostFixExpressions\Binary\Compare\LessThanEqualExpression.cs" />
+    <Compile Include="Parsing\PostFixExpressions\Binary\Compare\LessThanExpression.cs" />
+    <Compile Include="Parsing\PostFixExpressions\Binary\Compare\GreaterExpression.cs" />
+    <Compile Include="Parsing\PostFixExpressions\Binary\BinaryOperatorExpressionBase.cs" />
+    <Compile Include="Parsing\PostFixExpressions\Exceptions\IllegalOperationException.cs" />
+    <Compile Include="Parsing\PostFixExpressions\Exceptions\MissingOperandException.cs" />
+    <Compile Include="Parsing\PostFixExpressions\Exceptions\WrongOperandTypeException.cs" />
     <Compile Include="Parsing\PostFixExpressions\PostFixExpressionType.cs" />
-    <Compile Include="Parsing\PostFixExpressions\UnaryOperatorExpressionBase.cs" />
+    <Compile Include="Parsing\PostFixExpressions\Unary\NotExpression.cs" />
+    <Compile Include="Parsing\PostFixExpressions\Unary\UnaryOperatorExpressionBase.cs" />
     <Compile Include="Parsing\PostFixExpressions\ValueExpression.cs" />
-    <Compile Include="Parsing\PostFixExpressions\WrongOperandTypeException.cs" />
     <Compile Include="Parsing\SyntaxTreeExpressions\AddExpression.cs" />
     <Compile Include="Parsing\SyntaxTreeExpressions\DivExpression.cs" />
     <Compile Include="Parsing\SyntaxTreeExpressions\DoubleExpression.cs" />
@@ -100,6 +109,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DefaultFunctions\" />
+    <Folder Include="Parsing\PostFixExpressions\Functions\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

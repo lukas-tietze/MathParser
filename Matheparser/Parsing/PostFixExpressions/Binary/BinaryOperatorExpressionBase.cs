@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Matheparser.Parsing.PostFixExpressions.Exceptions;
 
-namespace Matheparser.Parsing.PostFixExpressions
+namespace Matheparser.Parsing.PostFixExpressions.Binary
 {
     public abstract class BinaryOperatorExpressionBase : IPostFixExpression
     {

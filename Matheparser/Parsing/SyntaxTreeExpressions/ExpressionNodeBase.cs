@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Matheparser.Parsing.Expressions
+namespace Matheparser.Parsing.SyntaxTreeExpressions
 {
     public abstract class ExpressionNodeBase : IExpressionNode
     {

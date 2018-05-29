@@ -54,7 +54,7 @@ namespace Matheparser.Tokenizing
                 this.tokens.Add(this.ReadNext());
             }
 
-            if(this.bracketStack.Count != 0)
+            if (this.bracketStack.Count != 0)
             {
                 throw new MissingBracketException();
             }
@@ -104,10 +104,9 @@ namespace Matheparser.Tokenizing
                 this.pos++;
                 return new Token(TokenType.Seperator, c.ToString());
             }
-            else if (this.config.IsOperator(c))
+            else if (this.TryReadOperator(out Token token))
             {
-                this.pos++;
-                return new Token(TokenType.Operator, c.ToString());
+                return token;
             }
             else
             {
@@ -115,11 +114,94 @@ namespace Matheparser.Tokenizing
             }
         }
 
+        private bool TryReadOperator(out Token tokenOut)
+        {
+            var c1 = this.data[this.pos];
+            var c2 = this.data[this.pos + 1];
+            var token = default(Token);
+
+            switch (c1)
+            {
+                case '+':
+                    this.pos++;
+                    token = new Token(TokenType.Operator, string.Empty);
+                    break;
+                case '-':
+                    this.pos++;
+                    token = new Token(TokenType.Operator, string.Empty);
+                    break;
+                case '*':
+                    this.pos++;
+                    token = new Token(TokenType.Operator, string.Empty);
+                    break;
+                case '/':
+                    this.pos++;
+                    token = new Token(TokenType.Operator, string.Empty);
+                    break;
+                case '^':
+                    this.pos++;
+                    token = new Token(TokenType.Operator, string.Empty);
+                    break;
+                case '=':
+                    if (c2 == '=')
+                    {
+                        this.pos += 2;
+                        token = new Token(TokenType.Operator, string.Empty);
+                        break;
+                    }
+                    else
+                    {
+                        throw new TokenizerException();
+                    }
+                case '>':
+                    if (c2 == '=')
+                    {
+                        token = new Token(TokenType.Operator, string.Empty);
+                    }
+                    else
+                    {
+                        token = new Token(TokenType.Operator, string.Empty);
+                    }
+
+                    break;
+                case '<':
+                    if (c2 == '=')
+                    {
+                        token = new Token(TokenType.Operator, string.Empty);
+                    }
+                    else
+                    {
+                        token = new Token(TokenType.Operator, string.Empty);
+                    }
+                    break;
+
+                case '!':
+                    if (c2 == '=')
+                    {
+                        token = new Token(TokenType.Operator, string.Empty);
+                    }
+                    else
+                    {
+                        token = new Token(TokenType.Operator, string.Empty);
+                    }
+                    break;
+                default:
+                    throw new TokenizerException();
+            }
+
+            tokenOut = token;
+            return token != default(Token);
+        }
+
         private Token ReadIdentifier()
         {
             var readStart = this.pos;
 
-            while ((++this.pos) < this.data.Length && this.IsPartOfIdentifier(this.data[this.pos])) ;
+            do
+            {
+                ++this.pos;
+            }
+            while (this.pos < this.data.Length && this.IsPartOfIdentifier(this.data[this.pos]));
 
             return new Token(TokenType.Identifier, new string(this.data, readStart, this.pos - readStart));
         }
