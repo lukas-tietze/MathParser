@@ -16,5 +16,10 @@ namespace Matheparser.Parsing.PostFixExpressions.Unary
         {
             throw new IllegalOperationException();
         }
+
+        public override string ToString()
+        {
+            return "Op !";
+        }
     }
 }

@@ -61,7 +61,7 @@ namespace TerminalTest
 
         private static void Undefine(string expression)
         {
-            if(string.IsNullOrEmpty(expression))
+            if (string.IsNullOrEmpty(expression))
             {
                 expression = QueryInput();
             }
@@ -163,7 +163,19 @@ namespace TerminalTest
             var parser = new Parser(tokenizer.Tokens, ConfigBase.DefaultConfig);
             var postFix = parser.CreatePostFixExpression();
 
-            throw new NotImplementedException("Ausgabe");
+            for (var i = 0; i < postFix.Count; i++)
+            {
+                Console.Write("({0})", postFix[i].ToString());
+
+                if (i != postFix.Count - 1)
+                {
+                    Console.Write(", ");
+                }
+                else
+                {
+                    Console.WriteLine();
+                }
+            }
         }
 
         private static void Tokenize(string expression)
@@ -178,7 +190,6 @@ namespace TerminalTest
 
             if (tokenizer.Tokens.Count > 0)
             {
-
                 for (var i = 0; i < tokenizer.Tokens.Count; i++)
                 {
                     Console.Write(string.Format("({0}:{1})", tokenizer.Tokens[i].Type, tokenizer.Tokens[i].Value));

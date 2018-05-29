@@ -10,6 +10,11 @@ namespace Matheparser.Tokenizing
         private TokenType type;
         private string value;
 
+        public Token(TokenType type):
+            this(type, string.Empty)
+        {
+        }
+
         public Token(TokenType type, string value)
         {
             this.type = type;

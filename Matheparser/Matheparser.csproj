@@ -61,8 +61,8 @@
     <Compile Include="Parsing\PostFixExpressions\Binary\Compare\NotEqualExpression.cs" />
     <Compile Include="Parsing\PostFixExpressions\Binary\Compare\GreaterEqualExpression.cs" />
     <Compile Include="Parsing\PostFixExpressions\Binary\Compare\EqualExpression.cs" />
-    <Compile Include="Parsing\PostFixExpressions\Binary\Compare\LessThanEqualExpression.cs" />
-    <Compile Include="Parsing\PostFixExpressions\Binary\Compare\LessThanExpression.cs" />
+    <Compile Include="Parsing\PostFixExpressions\Binary\Compare\LessEqualExpression.cs" />
+    <Compile Include="Parsing\PostFixExpressions\Binary\Compare\LessExpression.cs" />
     <Compile Include="Parsing\PostFixExpressions\Binary\Compare\GreaterExpression.cs" />
     <Compile Include="Parsing\PostFixExpressions\Binary\BinaryOperatorExpressionBase.cs" />
     <Compile Include="Parsing\PostFixExpressions\Exceptions\IllegalOperationException.cs" />

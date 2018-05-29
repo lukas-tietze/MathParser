@@ -16,5 +16,10 @@ namespace Matheparser.Parsing.PostFixExpressions.Binary.Arithmetic
         {
             throw new IllegalOperationException();
         }
+
+        public override string ToString()
+        {
+            return "/";
+        }
     }
 }

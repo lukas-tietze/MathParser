@@ -14,5 +14,10 @@
         {
             return string1.CompareTo(string2) > 0;
         }
+
+        public override string ToString()
+        {
+            return "Op >";
+        }
     }
 }

@@ -3,6 +3,7 @@
     public class DoubleValue : IValue
     {
         private double value;
+        private string asString;
 
         public DoubleValue(double value)
         {
@@ -29,7 +30,12 @@
         {
             get
             {
-                return string.Empty;
+                if (string.IsNullOrEmpty(this.asString))
+                {
+                    this.asString = this.value.ToString();
+                }
+
+                return this.asString;
             }
         }
 

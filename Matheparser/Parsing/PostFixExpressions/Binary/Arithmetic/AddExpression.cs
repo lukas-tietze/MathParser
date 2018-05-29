@@ -15,5 +15,10 @@ namespace Matheparser.Parsing.PostFixExpressions.Binary.Arithmetic
         {
             return new StringValue(string.Concat(string1, string2));
         }
+
+        public override string ToString()
+        {
+            return "+";
+        }
     }
 }

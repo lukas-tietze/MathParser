@@ -124,29 +124,29 @@ namespace Matheparser.Tokenizing
             {
                 case '+':
                     this.pos++;
-                    token = new Token(TokenType.Operator, string.Empty);
+                    token = new Token(TokenType.OperatorAdd);
                     break;
                 case '-':
                     this.pos++;
-                    token = new Token(TokenType.Operator, string.Empty);
+                    token = new Token(TokenType.OperatorSub);
                     break;
                 case '*':
                     this.pos++;
-                    token = new Token(TokenType.Operator, string.Empty);
+                    token = new Token(TokenType.OperatorMul);
                     break;
                 case '/':
                     this.pos++;
-                    token = new Token(TokenType.Operator, string.Empty);
+                    token = new Token(TokenType.OperatorDiv);
                     break;
                 case '^':
                     this.pos++;
-                    token = new Token(TokenType.Operator, string.Empty);
+                    token = new Token(TokenType.OperatorExp);
                     break;
                 case '=':
                     if (c2 == '=')
                     {
                         this.pos += 2;
-                        token = new Token(TokenType.Operator, string.Empty);
+                        token = new Token(TokenType.OperatorEqual);
                         break;
                     }
                     else
@@ -156,33 +156,33 @@ namespace Matheparser.Tokenizing
                 case '>':
                     if (c2 == '=')
                     {
-                        token = new Token(TokenType.Operator, string.Empty);
+                        token = new Token(TokenType.OperatorGreaterEqual);
                     }
                     else
                     {
-                        token = new Token(TokenType.Operator, string.Empty);
+                        token = new Token(TokenType.OperatorGreater);
                     }
 
                     break;
                 case '<':
                     if (c2 == '=')
                     {
-                        token = new Token(TokenType.Operator, string.Empty);
+                        token = new Token(TokenType.OperatorLessEqual);
                     }
                     else
                     {
-                        token = new Token(TokenType.Operator, string.Empty);
+                        token = new Token(TokenType.OperatorLess);
                     }
                     break;
 
                 case '!':
                     if (c2 == '=')
                     {
-                        token = new Token(TokenType.Operator, string.Empty);
+                        token = new Token(TokenType.OperatorNotEqual);
                     }
                     else
                     {
-                        token = new Token(TokenType.Operator, string.Empty);
+                        token = new Token(TokenType.OperatorNot);
                     }
                     break;
                 default:

@@ -14,5 +14,10 @@
         {
             return !string1.Equals(string2);
         }
+
+        public override string ToString()
+        {
+            return "Op !=";
+        }
     }
 }
