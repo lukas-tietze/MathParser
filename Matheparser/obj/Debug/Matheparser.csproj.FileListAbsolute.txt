@@ -1,0 +1,7 @@
+D:\Entwicklung\Matheparser\Matheparser\obj\Debug\Matheparser.csprojResolveAssemblyReference.cache
+D:\Entwicklung\Matheparser\Matheparser\bin\Debug\Matheparser.dll.config
+D:\Entwicklung\Matheparser\Matheparser\bin\Debug\Matheparser.dll
+D:\Entwicklung\Matheparser\Matheparser\bin\Debug\Matheparser.pdb
+D:\Entwicklung\Matheparser\Matheparser\obj\Debug\Matheparser.dll
+D:\Entwicklung\Matheparser\Matheparser\obj\Debug\Matheparser.pdb
+D:\Entwicklung\Matheparser\Matheparser\obj\Debug\Matheparser.csproj.CoreCompileInputs.cache
