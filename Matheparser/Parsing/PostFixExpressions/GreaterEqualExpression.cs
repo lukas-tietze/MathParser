@@ -1,7 +1,6 @@
 ﻿namespace Matheparser.Parsing.PostFixExpressions
 {
     using System.Diagnostics;
-    using Matheparser.Values;
 
     [DebuggerDisplay("Operator: >=")]
     public class GreaterEqualExpression : CompareOperatorBase
