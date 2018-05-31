@@ -13,7 +13,7 @@ namespace Matheparser.Parsing.PostFixExpressions.Binary
         {
             get
             {
-                return PostFixExpressionType.Operator;
+                return PostFixExpressionType.BinaryOperator;
             }
         }
 

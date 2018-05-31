@@ -156,10 +156,12 @@ namespace Matheparser.Tokenizing
                 case '>':
                     if (c2 == '=')
                     {
+                        this.pos += 2;
                         token = new Token(TokenType.OperatorGreaterEqual);
                     }
                     else
                     {
+                        this.pos += 1;
                         token = new Token(TokenType.OperatorGreater);
                     }
 
@@ -167,10 +169,12 @@ namespace Matheparser.Tokenizing
                 case '<':
                     if (c2 == '=')
                     {
+                        this.pos += 2;
                         token = new Token(TokenType.OperatorLessEqual);
                     }
                     else
                     {
+                        this.pos += 1;
                         token = new Token(TokenType.OperatorLess);
                     }
                     break;
@@ -178,10 +182,12 @@ namespace Matheparser.Tokenizing
                 case '!':
                     if (c2 == '=')
                     {
+                        this.pos += 2;
                         token = new Token(TokenType.OperatorNotEqual);
                     }
                     else
                     {
+                        this.pos += 1;
                         token = new Token(TokenType.OperatorNot);
                     }
                     break;

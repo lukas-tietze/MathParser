@@ -90,13 +90,13 @@ namespace TerminalTest
                 }
             }
 
-            if (keyStart == keyEnd && keyStart >= input.Length)
+            if (keyStart >= keyEnd && keyStart >= input.Length)
             {
                 key = string.Empty;
                 value = string.Empty;
                 return;
             }
-
+             
             key = input.Substring(keyStart, keyEnd - keyStart).Trim().ToLower();
             value = string.Empty;
 
