@@ -8,7 +8,7 @@ namespace Matheparser.Parsing.PostFixExpressions.Unary
         {
             get
             {
-                return PostFixExpressionType.UnaryOperator;
+                return PostFixExpressionType.BinaryOperator;
             }
         }
 

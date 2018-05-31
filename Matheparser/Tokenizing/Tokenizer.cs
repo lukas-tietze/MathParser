@@ -90,7 +90,7 @@ namespace Matheparser.Tokenizing
             }
             else if (this.config.IsClosingBracket(c))
             {
-                if (this.bracketStack.Count == 0 || !this.config.AreMatchingBrackets(c, this.bracketStack.Peek()))
+                if (this.bracketStack.Count == 0 || !this.config.AreMatchingBrackets(this.bracketStack.Peek(), c))
                 {
                     throw new MismatchingBracketException();
                 }

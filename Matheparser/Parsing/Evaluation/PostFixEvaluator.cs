@@ -18,21 +18,18 @@ namespace Matheparser.Parsing.Evaluation
         public IValue Run()
         {
             var stack = new Stack<IValue>();
-            var operandsBinary = new IValue[2];
-            var operandsUnary = new IValue[1];
+            var binaryoperands = new IValue[2];
+            var unaryOperand = new IValue[1];
 
             foreach (var expression in this.expressions)
             {
                 switch (expression.Type)
                 {
                     case PostFixExpressionType.UnaryOperator:
-                        operandsUnary[0] = stack.Pop();
-                        stack.Push(expression.Eval(operandsUnary));
+                        stack.Push(expression.Eval(new IValue[] { stack.Pop() }));
                         break;
                     case PostFixExpressionType.BinaryOperator:
-                        operandsBinary[0] = stack.Pop();
-                        operandsBinary[1] = stack.Pop();
-                        stack.Push(expression.Eval(operandsBinary));
+                        stack.Push(expression.Eval(new IValue[] { stack.Pop(), stack.Pop() }));
                         break;
                     case PostFixExpressionType.Value:
                         stack.Push(expression.Eval(null));
