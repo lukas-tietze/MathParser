@@ -8,6 +8,9 @@
         Seperator = 0x0003,
         OpeningBracket = 0x0004,
         ClosingBracket = 0x0005,
+        FunctionStart = 0x0006,
+        FunctionEnd = 0x0007,
+
         Operator = 0x1000,
         OperatorAdd = 0x1C01,
         OperatorSub = 0x1C02,

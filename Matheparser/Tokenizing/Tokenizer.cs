@@ -6,12 +6,13 @@ namespace Matheparser.Tokenizing
 {
     public class Tokenizer
     {
-        private char[] data;
+        private readonly char[] data;
         private int pos;
-        private IConfig config;
-        private List<Token> tokens;
-        private Stack<char> bracketStack;
+        private readonly IConfig config;
+        private readonly List<Token> tokens;
+        private readonly Stack<char> bracketStack;
         bool lastWasWhiteSpace;
+        private const char functionBracketMask = (char)(1 << (sizeof(char) * 8 - 2));
 
         public Tokenizer(string data, IConfig config)
         {
@@ -84,20 +85,46 @@ namespace Matheparser.Tokenizing
             }
             else if (this.config.IsOpeningBracket(c))
             {
+                var res = default(Token);
+
+                if (this.tokens.Count != 0 && this.tokens[this.tokens.Count - 1].Type == TokenType.Identifier)
+                {
+                    res = new Token(TokenType.FunctionStart, this.tokens[this.tokens.Count - 1].Value);
+                    this.tokens.RemoveAt(this.tokens.Count - 1);
+                    c |= functionBracketMask;
+                }
+                else
+                {
+                    res = new Token(TokenType.OpeningBracket, c.ToString());
+                }
+
                 this.pos++;
                 this.bracketStack.Push(c);
-                return new Token(TokenType.OpeningBracket, c.ToString());
+                return res;
             }
             else if (this.config.IsClosingBracket(c))
             {
-                if (this.bracketStack.Count == 0 || !this.config.AreMatchingBrackets(this.bracketStack.Peek(), c))
+                if (this.bracketStack.Count == 0)
+                {
+                    throw new ExtraClosingBracketException();
+                }
+
+                this.pos++;
+                var last = this.bracketStack.Pop();
+                var type = TokenType.ClosingBracket;
+
+                if ((last & functionBracketMask) != 0)
+                {
+                    last = (char)(((int)last) & ~functionBracketMask);
+                    type = TokenType.FunctionEnd;
+                }
+
+                if (!this.config.AreMatchingBrackets(last, c))
                 {
                     throw new MismatchingBracketException();
                 }
 
-                this.pos++;
-                this.bracketStack.Pop();
-                return new Token(TokenType.ClosingBracket, c.ToString());
+                return new Token(type, c.ToString());
             }
             else if (c == this.config.ListSeperator)
             {
