@@ -63,13 +63,14 @@ namespace Matheparser.Tokenizing
 
         private Token ReadNext()
         {
-            var c = this.data[this.pos];
             this.lastWasWhiteSpace = false;
 
-            if (char.IsWhiteSpace(c))
+            if (char.IsWhiteSpace(this.data[this.pos]))
             {
                 this.SkipWhiteSpace();
             }
+
+            var c = this.data[this.pos];
 
             if (this.IsStartOfNumber(c))
             {

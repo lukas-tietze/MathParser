@@ -22,6 +22,7 @@ namespace Matheparser.Parsing
         public IReadOnlyList<IPostFixExpression> CreatePostFixExpression()
         {
             var operatorStack = new Stack<TokenType>();
+            var functionStack = new Stack<string>();
             var expressions = new List<IPostFixExpression>();
 
             foreach (var token in this.tokens)
@@ -33,7 +34,7 @@ namespace Matheparser.Parsing
                         expressions.Add(new ValueExpression(token.Value));
                         break;
                     case TokenType.Identifier:
-                        ////expressions.Add(new );
+                        expressions.Add(new VariableExpression(token.Value));
                         break;
                     case TokenType.Seperator:
                         break;

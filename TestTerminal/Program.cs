@@ -10,8 +10,6 @@ namespace TerminalTest
 {
     public static class Program
     {
-        private static Dictionary<string, IVariable> definedVaraibles;
-
         [STAThread]
         public static void Main(string[] args)
         {
@@ -66,7 +64,7 @@ namespace TerminalTest
                 expression = QueryInput();
             }
 
-            definedVaraibles.Remove(expression.Trim().ToLower());
+            VariableManager.Instance.Remove(expression.Trim().ToLower());
         }
 
         private static void SplitKeyValue(string input, out string key, out string value)
@@ -90,7 +88,7 @@ namespace TerminalTest
                 }
             }
 
-            if (keyStart == keyEnd && keyStart >= input.Length)
+            if (keyStart >= keyEnd && keyStart >= input.Length)
             {
                 key = string.Empty;
                 value = string.Empty;
@@ -136,7 +134,7 @@ namespace TerminalTest
             }
 
 
-            definedVaraibles[key] = new Variable(key, value);
+            VariableManager.Instance.Define(new Variable(key, value));
         }
 
         private static void Solve(string expression)
