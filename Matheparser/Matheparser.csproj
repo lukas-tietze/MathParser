@@ -49,7 +49,6 @@
     <Compile Include="IConfig.cs" />
     <Compile Include="IFunction.cs" />
     <Compile Include="IVariable.cs" />
-    <Compile Include="Operator.cs" />
     <Compile Include="Parsing\Evaluation\PostFixEvaluator.cs" />
     <Compile Include="Parsing\PostFixExpressions\Binary\Arithmetic\DivExpression.cs" />
     <Compile Include="Parsing\PostFixExpressions\Binary\Arithmetic\ModExpression.cs" />
@@ -87,6 +86,7 @@
     <Compile Include="Parsing\ParserException.cs" />
     <Compile Include="Parsing\PostFixExpressions\IPostFixExpression.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Solving\ErrorValue.cs" />
     <Compile Include="Solving\Solver.cs" />
     <Compile Include="Tokenizing\InvalidEscapeSequenceException.cs" />
     <Compile Include="Tokenizing\MissingBracketException.cs" />

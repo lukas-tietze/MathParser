@@ -41,11 +41,11 @@ namespace Matheparser.Solving
             }
             catch (TokenizerException t)
             {
-                throw new NotImplementedException("TokenizerException behandeln");
+                return new ErrorValue(t);
             }
             catch(ParserException p)
             {
-                throw new NotImplementedException("ParserException behandeln");
+                return new ErrorValue(p);
             }
 
             return value;

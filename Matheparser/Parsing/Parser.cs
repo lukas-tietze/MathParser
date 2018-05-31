@@ -10,8 +10,8 @@ namespace Matheparser.Parsing
 {
     public class Parser
     {
-        private IReadOnlyList<Token> tokens;
-        private IConfig config;
+        private readonly IReadOnlyList<Token> tokens;
+        private readonly IConfig config;
 
         public Parser(IReadOnlyList<Token> tokens, IConfig config)
         {
@@ -33,33 +33,31 @@ namespace Matheparser.Parsing
                         expressions.Add(new ValueExpression(token.Value));
                         break;
                     case TokenType.Identifier:
+                        ////expressions.Add(new );
                         break;
                     case TokenType.Seperator:
                         break;
                     case TokenType.OpeningBracket:
-                        break;
                     case TokenType.ClosingBracket:
+                        operatorStack.Push(token.Type);
                         break;
                     default:
                         if ((token.Type & TokenType.Operator) != 0)
                         {
-
-                            if (operatorStack.Count == 0)
-                            {
-                                operatorStack.Push(token.Type);
-                            }
-                            else if (IsHigherPriority(token.Type, operatorStack.Peek()))
+                            if (operatorStack.Count == 0 || IsHigherPriority(token.Type, operatorStack.Peek()))
                             {
                                 operatorStack.Push(token.Type);
                             }
                             else
                             {
-                                expressions.Add(this.CreateOperatorExpression(operatorStack.Pop()));
+                                this.AddOperatorExpression(operatorStack.Pop(), expressions);
 
                                 while (operatorStack.Count > 0 && !IsHigherPriority(token.Type, operatorStack.Peek()))
                                 {
-                                    expressions.Add(this.CreateOperatorExpression(operatorStack.Pop()));
+                                    this.AddOperatorExpression(operatorStack.Pop(), expressions);
                                 }
+
+                                operatorStack.Push(token.Type);
                             }
                         }
                         else
@@ -73,7 +71,7 @@ namespace Matheparser.Parsing
 
             while (operatorStack.Count > 0)
             {
-                expressions.Add(this.CreateOperatorExpression(operatorStack.Pop()));
+                this.AddOperatorExpression(operatorStack.Pop(), expressions);
             }
 
             return expressions.AsReadOnly();
@@ -81,7 +79,19 @@ namespace Matheparser.Parsing
 
         private bool IsHigherPriority(TokenType opA, TokenType opB)
         {
-            return opA > opB;
+            var mask = 0x0F00;
+
+            return ((int)opA & mask) > ((int)opB & mask);
+        }
+
+        private void AddOperatorExpression(TokenType type, List<IPostFixExpression> target)
+        {
+            var token = this.CreateOperatorExpression(type);
+
+            if(token != null)
+            {
+                target.Add(token);
+            }
         }
 
         private IPostFixExpression CreateOperatorExpression(TokenType op)
@@ -92,10 +102,11 @@ namespace Matheparser.Parsing
                 case TokenType.Number:
                 case TokenType.Identifier:
                 case TokenType.Seperator:
-                case TokenType.OpeningBracket:
-                case TokenType.ClosingBracket:
                 case TokenType.Operator:
                     throw new ArgumentException();
+                case TokenType.OpeningBracket:
+                case TokenType.ClosingBracket:
+                    return null;
                 case TokenType.OperatorAdd:
                     return new AddExpression();
                 case TokenType.OperatorSub:
