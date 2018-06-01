@@ -47,8 +47,8 @@
   <ItemGroup>
     <Compile Include="Config.cs" />
     <Compile Include="IConfig.cs" />
-    <Compile Include="IFunction.cs" />
-    <Compile Include="IVariable.cs" />
+    <Compile Include="Functions\IFunction.cs" />
+    <Compile Include="Variables\IVariable.cs" />
     <Compile Include="Parsing\Evaluation\PostFixEvaluator.cs" />
     <Compile Include="Parsing\PostFixExpressions\Binary\Arithmetic\DivExpression.cs" />
     <Compile Include="Parsing\PostFixExpressions\Binary\Arithmetic\ModExpression.cs" />
@@ -100,20 +100,19 @@
     <Compile Include="Tokenizing\TokenizerException.cs" />
     <Compile Include="Tokenizing\TokenizerState.cs" />
     <Compile Include="Tokenizing\TokenType.cs" />
-    <Compile Include="IValue.cs" />
+    <Compile Include="Values\IValue.cs" />
     <Compile Include="UndefinedVariableException.cs" />
     <Compile Include="Values\DoubleValue.cs" />
     <Compile Include="Values\StringValue.cs" />
     <Compile Include="Values\ValueCreator.cs" />
-    <Compile Include="ValueType.cs" />
-    <Compile Include="VariableManager.cs" />
+    <Compile Include="Values\ValueType.cs" />
+    <Compile Include="Variables\VariableManager.cs" />
     <Compile Include="Variables\Variable.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="DefaultFunctions\" />
     <Folder Include="Parsing\PostFixExpressions\Functions\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

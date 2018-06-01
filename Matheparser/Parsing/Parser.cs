@@ -36,11 +36,33 @@ namespace Matheparser.Parsing
                     case TokenType.Identifier:
                         expressions.Add(new VariableExpression(token.Value));
                         break;
-                    case TokenType.Seperator:
-                        break;
                     case TokenType.OpeningBracket:
                     case TokenType.ClosingBracket:
                         operatorStack.Push(token.Type);
+                        break;
+                    case TokenType.FunctionStart:
+                        operatorStack.Push(token.Type);
+                        functionStack.Push(token.Value);
+                        break;
+                    case TokenType.FunctionEnd:
+                    case TokenType.Seperator:
+                        var top = operatorStack.Peek();
+
+                        while (operatorStack.Count > 0)
+                        {
+                            if (top == TokenType.FunctionStart || top == TokenType.Seperator)
+                            {
+                                this.AddOperatorExpression(operatorStack.Pop(), expressions);
+                            }
+
+                            top = operatorStack.Peek();
+                        }
+
+                        if(token.Type == TokenType.FunctionEnd)
+                        {
+                            expressions.Add(new Function);
+                        }
+
                         break;
                     default:
                         if ((token.Type & TokenType.Operator) != 0)

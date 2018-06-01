@@ -116,7 +116,7 @@ namespace Matheparser.Tokenizing
 
                 if ((last & functionBracketMask) != 0)
                 {
-                    last = (char)(((int)last) & ~functionBracketMask);
+                    last = (char)(last & ~functionBracketMask);
                     type = TokenType.FunctionEnd;
                 }
 
