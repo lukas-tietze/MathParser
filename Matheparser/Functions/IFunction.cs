@@ -9,12 +9,7 @@ namespace Matheparser
             get;
         }
 
-        ValueType ReturnType
-        {
-            get;
-        }
-
-        IValue Eval(IReadOnlyList<IValue> parameters);
+        IValue Eval(IValue[] parameters);
 
         bool Validate();
     }

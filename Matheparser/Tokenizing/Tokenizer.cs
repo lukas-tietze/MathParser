@@ -132,7 +132,7 @@ namespace Matheparser.Tokenizing
                 this.pos++;
                 return new Token(TokenType.Seperator, c.ToString());
             }
-            else if (this.TryReadOperator(out Token token))
+            else if (this.TryReadOperator(out var token))
             {
                 return token;
             }

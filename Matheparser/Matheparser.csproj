@@ -46,8 +46,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config.cs" />
+    <Compile Include="Functions\DefaultFunctions\Math\Rand.cs" />
+    <Compile Include="Functions\FunctionManager.cs" />
     <Compile Include="IConfig.cs" />
     <Compile Include="Functions\IFunction.cs" />
+    <Compile Include="Parsing\PostFixExpressions\Functions\FunctionExpression.cs" />
     <Compile Include="Variables\IVariable.cs" />
     <Compile Include="Parsing\Evaluation\PostFixEvaluator.cs" />
     <Compile Include="Parsing\PostFixExpressions\Binary\Arithmetic\DivExpression.cs" />
@@ -113,7 +116,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Parsing\PostFixExpressions\Functions\" />
+    <Folder Include="Functions\DefaultFunctions\Text\" />
+    <Folder Include="Functions\DefaultFunctions\Util\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

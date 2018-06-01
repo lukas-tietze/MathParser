@@ -6,7 +6,7 @@ namespace Matheparser.Parsing.PostFixExpressions
     [DebuggerDisplay("Value={this.value}")]
     public class ValueExpression : IPostFixExpression
     {
-        private IValue value;
+        private readonly IValue value;
 
         public ValueExpression(string value) :
             this(ValueCreator.Create(value))
@@ -28,6 +28,14 @@ namespace Matheparser.Parsing.PostFixExpressions
             get
             {
                 return PostFixExpressionType.Value;
+            }
+        }
+
+        public int ArgCount
+        {
+            get
+            {
+                return 0;
             }
         }
 

@@ -2,8 +2,7 @@
 {
     public enum PostFixExpressionType
     {
-        UnaryOperator,
-        BinaryOperator,
+        Function,
         Value,
     }
 }

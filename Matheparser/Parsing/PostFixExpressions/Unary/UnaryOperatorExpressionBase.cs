@@ -8,7 +8,15 @@ namespace Matheparser.Parsing.PostFixExpressions.Unary
         {
             get
             {
-                return PostFixExpressionType.BinaryOperator;
+                return PostFixExpressionType.Function;
+            }
+        }
+
+        public int ArgCount
+        {
+            get
+            {
+                return 1;
             }
         }
 

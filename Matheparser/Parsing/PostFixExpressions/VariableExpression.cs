@@ -5,7 +5,7 @@
 
     public sealed class VariableExpression : IPostFixExpression
     {
-        private string name;
+        private readonly string name;
 
         public VariableExpression(string name)
         {
@@ -17,6 +17,14 @@
             get
             {
                 return PostFixExpressionType.Value;
+            }
+        }
+
+        public int ArgCount
+        {
+            get
+            {
+                return 0;
             }
         }
 

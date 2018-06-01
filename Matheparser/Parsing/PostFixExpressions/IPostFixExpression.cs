@@ -2,6 +2,11 @@
 {
     public interface IPostFixExpression
     {
+        int ArgCount
+        {
+            get;
+        }
+
         PostFixExpressionType Type
         {
             get;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Matheparser.Parsing.PostFixExpressions;
 using Matheparser.Parsing.PostFixExpressions.Binary.Arithmetic;
 using Matheparser.Parsing.PostFixExpressions.Binary.Compare;
+using Matheparser.Parsing.PostFixExpressions.Functions;
 using Matheparser.Parsing.PostFixExpressions.Unary;
 using Matheparser.Tokenizing;
 
@@ -52,6 +53,10 @@ namespace Matheparser.Parsing
                         {
                             if (top == TokenType.FunctionStart || top == TokenType.Seperator)
                             {
+                                break;
+                            }
+                            else
+                            {
                                 this.AddOperatorExpression(operatorStack.Pop(), expressions);
                             }
 
@@ -60,7 +65,7 @@ namespace Matheparser.Parsing
 
                         if(token.Type == TokenType.FunctionEnd)
                         {
-                            expressions.Add(new Function);
+                            expressions.Add(new FunctionExpression(token.Value, 0));
                         }
 
                         break;
@@ -126,6 +131,8 @@ namespace Matheparser.Parsing
                 case TokenType.Identifier:
                 case TokenType.Seperator:
                 case TokenType.Operator:
+                case TokenType.FunctionStart:
+                case TokenType.FunctionEnd:
                     throw new ArgumentException();
                 case TokenType.OpeningBracket:
                 case TokenType.ClosingBracket:
