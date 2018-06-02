@@ -31,7 +31,7 @@ namespace Matheparser.Parsing.Evaluation
 
                         for(var i = 0; i < expression.ArgCount; i++)
                         {
-                            args[i] = stack.Pop();
+                            args[expression.ArgCount - i - 1] = stack.Pop();
                         }
 
                         stack.Push(expression.Eval(args));
