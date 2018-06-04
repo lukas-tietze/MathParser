@@ -76,16 +76,6 @@
     <Compile Include="Parsing\PostFixExpressions\Unary\UnaryOperatorExpressionBase.cs" />
     <Compile Include="Parsing\PostFixExpressions\ValueExpression.cs" />
     <Compile Include="Parsing\PostFixExpressions\VariableExpression.cs" />
-    <Compile Include="Parsing\SyntaxTreeExpressions\AddExpression.cs" />
-    <Compile Include="Parsing\SyntaxTreeExpressions\DivExpression.cs" />
-    <Compile Include="Parsing\SyntaxTreeExpressions\DoubleExpression.cs" />
-    <Compile Include="Parsing\SyntaxTreeExpressions\ExpressionNodeBase.cs" />
-    <Compile Include="Parsing\SyntaxTreeExpressions\IExpressionNode.cs" />
-    <Compile Include="Parsing\SyntaxTreeExpressions\ModExpression.cs" />
-    <Compile Include="Parsing\SyntaxTreeExpressions\MulExpression.cs" />
-    <Compile Include="Parsing\SyntaxTreeExpressions\StringAddExpression.cs" />
-    <Compile Include="Parsing\SyntaxTreeExpressions\StringExpression.cs" />
-    <Compile Include="Parsing\SyntaxTreeExpressions\SubExpression.cs" />
     <Compile Include="Parsing\IllegalTokenException.cs" />
     <Compile Include="Parsing\Parser.cs" />
     <Compile Include="Parsing\ParserException.cs" />
