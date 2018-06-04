@@ -1,6 +1,7 @@
 ﻿using Matheparser.Exceptions;
+using Matheparser.Values;
 
-namespace Matheparser.Functions.DefaultFunctions.Math
+namespace Matheparser.Functions.DefaultFunctions.Calculations
 {
     public abstract class OneParamaterMathFunctionBase : IFunction
     {
@@ -11,8 +12,12 @@ namespace Matheparser.Functions.DefaultFunctions.Math
 
         public IValue Eval(IValue[] parameters)
         {
-            throw new System.NotImplementedException();
+            this.Validate(parameters);
+
+            return new DoubleValue(this.Eval(parameters[0].AsDouble));
         }
+
+        protected abstract double Eval(double arg);
 
         protected virtual void Validate(IValue[] parameters)
         {

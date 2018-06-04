@@ -1,4 +1,4 @@
-﻿namespace Matheparser.Functions.DefaultFunctions.Math
+﻿namespace Matheparser.Functions.DefaultFunctions.Calculations
 {
     using System;
     using Matheparser.Values;

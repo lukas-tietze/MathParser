@@ -46,9 +46,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config.cs" />
-    <Compile Include="Functions\DefaultFunctions\Math\OneParamaterMathFunctionBase.cs" />
-    <Compile Include="Functions\DefaultFunctions\Math\Rand.cs" />
-    <Compile Include="Functions\DefaultFunctions\Math\Sin.cs" />
+    <Compile Include="Functions\DefaultFunctions\Calculations\Min.cs" />
+    <Compile Include="Functions\DefaultFunctions\Calculations\OneParamaterMathFunctionBase - Copy.cs" />
+    <Compile Include="Functions\DefaultFunctions\Calculations\OneParamaterMathFunctionBase.cs" />
+    <Compile Include="Functions\DefaultFunctions\Calculations\Rand.cs" />
+    <Compile Include="Functions\DefaultFunctions\Calculations\ArcCos.cs" />
+    <Compile Include="Functions\DefaultFunctions\Calculations\ArcSin.cs" />
+    <Compile Include="Functions\DefaultFunctions\Calculations\ArcTan.cs" />
+    <Compile Include="Functions\DefaultFunctions\Calculations\Tan.cs" />
+    <Compile Include="Functions\DefaultFunctions\Calculations\Cos.cs" />
+    <Compile Include="Functions\DefaultFunctions\Calculations\Sin.cs" />
     <Compile Include="Functions\FunctionManager.cs" />
     <Compile Include="Exceptions\MissingFunctionException.cs" />
     <Compile Include="IConfig.cs" />
