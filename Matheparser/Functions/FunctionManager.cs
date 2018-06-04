@@ -34,7 +34,12 @@
 
         public IFunction FindByName(string name)
         {
-            return this.functions[name];
+            if (this.functions.TryGetValue(name, out var function))
+            {
+                return function;
+            }
+
+            throw new MissingFunctionException(name);
         }
 
         public void Clear()

@@ -48,6 +48,7 @@
     <Compile Include="Config.cs" />
     <Compile Include="Functions\DefaultFunctions\Math\Rand.cs" />
     <Compile Include="Functions\FunctionManager.cs" />
+    <Compile Include="Functions\MissingFunctionException.cs" />
     <Compile Include="IConfig.cs" />
     <Compile Include="Functions\IFunction.cs" />
     <Compile Include="Parsing\PostFixExpressions\Functions\FunctionExpression.cs" />
