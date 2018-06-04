@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config.cs" />
+    <Compile Include="Functions\DefaultFunctions\Calculations\Max.cs" />
     <Compile Include="Functions\DefaultFunctions\Calculations\Min.cs" />
     <Compile Include="Functions\DefaultFunctions\Calculations\OneParamaterMathFunctionBase - Copy.cs" />
     <Compile Include="Functions\DefaultFunctions\Calculations\OneParamaterMathFunctionBase.cs" />
@@ -53,6 +54,9 @@
     <Compile Include="Functions\DefaultFunctions\Calculations\ArcCos.cs" />
     <Compile Include="Functions\DefaultFunctions\Calculations\ArcSin.cs" />
     <Compile Include="Functions\DefaultFunctions\Calculations\ArcTan.cs" />
+    <Compile Include="Functions\DefaultFunctions\Calculations\Floor.cs" />
+    <Compile Include="Functions\DefaultFunctions\Calculations\Ceil.cs" />
+    <Compile Include="Functions\DefaultFunctions\Calculations\Round.cs" />
     <Compile Include="Functions\DefaultFunctions\Calculations\Tan.cs" />
     <Compile Include="Functions\DefaultFunctions\Calculations\Cos.cs" />
     <Compile Include="Functions\DefaultFunctions\Calculations\Sin.cs" />
