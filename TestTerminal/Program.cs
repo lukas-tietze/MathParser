@@ -113,6 +113,11 @@ namespace TestTerminal
             {
                 value = input.Substring(keyEnd).Trim();
             }
+            else
+            {
+                value = key;
+                key = "solve";
+            }
         }
 
         private static string QueryInput()
