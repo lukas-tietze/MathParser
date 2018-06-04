@@ -77,7 +77,6 @@
     <Compile Include="Parsing\PostFixExpressions\Binary\Compare\LessExpression.cs" />
     <Compile Include="Parsing\PostFixExpressions\Binary\Compare\GreaterExpression.cs" />
     <Compile Include="Parsing\PostFixExpressions\Binary\BinaryOperatorExpressionBase.cs" />
-    <Compile Include="Exceptions\IllegalOperationException.cs" />
     <Compile Include="Exceptions\MissingOperandException.cs" />
     <Compile Include="Exceptions\OperandEvaluationException.cs" />
     <Compile Include="Exceptions\WrongOperandTypeException.cs" />

@@ -1,4 +1,6 @@
-﻿namespace Matheparser.Variables
+﻿using Matheparser.Values;
+
+namespace Matheparser.Variables
 {
     public interface IVariable
     {

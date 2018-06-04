@@ -1,5 +1,6 @@
-﻿using System.Diagnostics;
-using Matheparser.Parsing.PostFixExpressions.Exceptions;
+﻿using System;
+using System.Diagnostics;
+using Matheparser.Exceptions;
 using Matheparser.Values;
 
 namespace Matheparser.Parsing.PostFixExpressions.Unary
@@ -14,7 +15,7 @@ namespace Matheparser.Parsing.PostFixExpressions.Unary
 
         public override IValue EvalStirng(string operand)
         {
-            throw new IllegalOperationException();
+            throw new InvalidOperationException();
         }
 
         public override string ToString()

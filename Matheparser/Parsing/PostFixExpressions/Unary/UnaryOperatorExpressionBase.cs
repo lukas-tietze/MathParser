@@ -1,4 +1,6 @@
-﻿using Matheparser.Parsing.PostFixExpressions.Exceptions;
+﻿using System;
+using Matheparser.Exceptions;
+using Matheparser.Values;
 
 namespace Matheparser.Parsing.PostFixExpressions.Unary
 {
@@ -24,7 +26,7 @@ namespace Matheparser.Parsing.PostFixExpressions.Unary
         {
             this.Validate(operands);
 
-            if (operands[0].Type == ValueType.Number)
+            if (operands[0].Type == Values.ValueType.Number)
             {
                 return this.EvalNumber(operands[0].AsDouble);
             }

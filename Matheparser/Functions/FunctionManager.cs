@@ -1,6 +1,7 @@
 ﻿namespace Matheparser.Functions
 {
     using System.Collections.Generic;
+    using Matheparser.Exceptions;
     using Matheparser.Functions.DefaultFunctions.Calculations;
 
     public class FunctionManager

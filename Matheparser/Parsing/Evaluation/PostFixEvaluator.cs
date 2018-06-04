@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Matheparser.Parsing.PostFixExpressions;
+using Matheparser.Values;
 
 namespace Matheparser.Parsing.Evaluation
 {

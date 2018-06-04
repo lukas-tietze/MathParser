@@ -1,8 +1,9 @@
-﻿namespace Matheparser.Parsing.PostFixExpressions
-{
-    using System;
-    using Matheparser.Parsing.PostFixExpressions.Exceptions;
+﻿using Matheparser.Exceptions;
+using Matheparser.Values;
+using Matheparser.Variables;
 
+namespace Matheparser.Parsing.PostFixExpressions
+{
     public sealed class VariableExpression : IPostFixExpression
     {
         private readonly string name;

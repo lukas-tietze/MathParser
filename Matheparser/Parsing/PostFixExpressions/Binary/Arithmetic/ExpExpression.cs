@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
-using Matheparser.Parsing.PostFixExpressions.Exceptions;
+using Matheparser.Exceptions;
 using Matheparser.Values;
 
 namespace Matheparser.Parsing.PostFixExpressions.Binary.Arithmetic
@@ -15,7 +15,7 @@ namespace Matheparser.Parsing.PostFixExpressions.Binary.Arithmetic
 
         internal override IValue EvalString(string string1, string string2)
         {
-            throw new IllegalOperationException();
+            throw new InvalidOperationException();
         }
 
         public override string ToString()

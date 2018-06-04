@@ -26,11 +26,11 @@
             {
                 return new DoubleValue(this.rand.NextDouble());
             }
-            else if(parameters.Length == 1 && parameters[0].Type == Matheparser.ValueType.Number)
+            else if(parameters.Length == 1 && parameters[0].Type == Values.ValueType.Number)
             {
                 return new DoubleValue(this.rand.NextDouble() * parameters[0].AsDouble);
             }
-            else if(parameters.Length == 2 && parameters[0].Type == Matheparser.ValueType.Number && parameters[1].Type == Matheparser.ValueType.Number)
+            else if(parameters.Length == 2 && parameters[0].Type == Values.ValueType.Number && parameters[1].Type == Values.ValueType.Number)
             {
                 return new DoubleValue(this.rand.NextDouble() * (parameters[1].AsDouble - parameters[0].AsDouble) + parameters[0].AsDouble);
             }

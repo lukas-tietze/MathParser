@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Matheparser.Parsing.PostFixExpressions.Exceptions;
+﻿using Matheparser.Exceptions;
+using Matheparser.Values;
 
 namespace Matheparser.Parsing.PostFixExpressions.Binary
 {

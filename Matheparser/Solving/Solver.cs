@@ -1,7 +1,10 @@
 ﻿using System;
+using Matheparser.Exceptions;
 using Matheparser.Parsing;
 using Matheparser.Parsing.Evaluation;
 using Matheparser.Tokenizing;
+using Matheparser.Values;
+
 namespace Matheparser.Solving
 {
     public class Solver

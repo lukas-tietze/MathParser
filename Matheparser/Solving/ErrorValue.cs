@@ -1,13 +1,12 @@
-﻿using System;
-using Matheparser.Parsing;
+﻿using Matheparser.Values;
 
 namespace Matheparser.Solving
 {
     internal class ErrorValue : IValue
     {
-        private readonly Exception exception;
+        private readonly System.Exception exception;
 
-        public ErrorValue(Exception p)
+        public ErrorValue(System.Exception p)
         {
             this.exception = p;
         }

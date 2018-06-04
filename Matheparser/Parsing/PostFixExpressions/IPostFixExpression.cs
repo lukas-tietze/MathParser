@@ -1,4 +1,6 @@
-﻿namespace Matheparser.Parsing.PostFixExpressions
+﻿using Matheparser.Values;
+
+namespace Matheparser.Parsing.PostFixExpressions
 {
     public interface IPostFixExpression
     {
