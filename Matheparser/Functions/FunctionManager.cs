@@ -1,5 +1,6 @@
 ﻿namespace Matheparser.Functions
 {
+    using System;
     using System.Collections.Generic;
     using Matheparser.Exceptions;
     using Matheparser.Functions.DefaultFunctions.Calculations;
@@ -23,8 +24,13 @@
                 {
                     instance = new FunctionManager();
 
-                    instance.Define(new Rand());
-                    instance.Define(new Min());
+                    foreach (var type in typeof(FunctionManager).Assembly.GetTypes())
+                    {
+                        if (typeof(IFunction).IsAssignableFrom(type) && !type.IsInterface && !type.IsAbstract)
+                        {
+                            instance.Define((IFunction)Activator.CreateInstance(type));
+                        }
+                    }
                 }
 
                 return instance;

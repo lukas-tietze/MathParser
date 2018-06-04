@@ -106,7 +106,7 @@ namespace TestTerminal
                 return;
             }
 
-            key = input.Substring(keyStart, keyEnd - keyStart).Trim().ToLower();
+            key = input.Substring(keyStart, keyEnd - keyStart);
             value = string.Empty;
 
             if (keyEnd < input.Length - 1)
@@ -118,6 +118,8 @@ namespace TestTerminal
                 value = key;
                 key = "solve";
             }
+
+            key = key.Trim().ToLower();
         }
 
         private static string QueryInput()

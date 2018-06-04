@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Matheparser.Values;
 
 namespace Matheparser.Variables
@@ -23,6 +24,9 @@ namespace Matheparser.Variables
                 if (instance == null)
                 {
                     instance = new VariableManager();
+
+                    instance.Define(new Variable("PI", Math.PI));
+                    instance.Define(new Variable("E", Math.E));
                 }
 
                 return instance;
