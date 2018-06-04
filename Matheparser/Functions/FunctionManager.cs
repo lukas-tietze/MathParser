@@ -24,6 +24,7 @@
                     instance = new FunctionManager();
 
                     instance.Define(new Rand());
+                    instance.Define(new Min());
                 }
 
                 return instance;

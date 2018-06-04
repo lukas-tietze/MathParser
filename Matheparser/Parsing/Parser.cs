@@ -24,10 +24,13 @@ namespace Matheparser.Parsing
         {
             var operatorStack = new Stack<TokenType>();
             var functionStack = new Stack<string>();
+            var argCountStack = new Stack<int>();
             var expressions = new List<IPostFixExpression>();
 
-            foreach (var token in this.tokens)
+            for(var i = 0; i< this.tokens.Count; i++)
             {
+                var token = this.tokens[i];
+
                 switch (token.Type)
                 {
                     case TokenType.String:
@@ -44,6 +47,7 @@ namespace Matheparser.Parsing
                     case TokenType.FunctionStart:
                         operatorStack.Push(token.Type);
                         functionStack.Push(token.Value);
+                        argCountStack.Push(0);
                         break;
                     case TokenType.FunctionEnd:
                     case TokenType.Seperator:
@@ -63,9 +67,20 @@ namespace Matheparser.Parsing
                             top = operatorStack.Peek();
                         }
 
-                        if(token.Type == TokenType.FunctionEnd)
+                        if (token.Type == TokenType.FunctionEnd)
                         {
-                            expressions.Add(new FunctionExpression(token.Value, 0));
+                            var argCount = argCountStack.Pop();
+
+                            if (this.tokens[i - 1].Type != TokenType.FunctionStart)
+                            {
+                                argCount++;
+                            }
+
+                            expressions.Add(new FunctionExpression(functionStack.Pop(), argCount));
+                        }
+                        else
+                        {
+                            argCountStack.Push(argCountStack.Pop() + 1);
                         }
 
                         break;
@@ -116,7 +131,7 @@ namespace Matheparser.Parsing
         {
             var token = this.CreateOperatorExpression(type);
 
-            if(token != null)
+            if (token != null)
             {
                 target.Add(token);
             }
