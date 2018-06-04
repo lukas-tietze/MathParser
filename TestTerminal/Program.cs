@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Matheparser;
 using Matheparser.Parsing;
 using Matheparser.Solving;
@@ -52,8 +51,20 @@ namespace TerminalTest
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("Unhandled Exception of Type {0}: \"{1}\"", e.GetType().Name, e.Message);
+                    HandleException(e);
                 }
+            }
+        }
+
+        private static void HandleException(Exception e)
+        {
+            if (e.GetType().Namespace.StartsWith(nameof(Matheparser)))
+            {
+                Console.WriteLine("Error: {1}", e.Message);
+            }
+            else
+            {
+                Console.WriteLine("Unhandled Exception of Type {0}: \"{1}\"", e.GetType().Name, e.Message);
             }
         }
 

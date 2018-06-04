@@ -45,7 +45,7 @@ namespace Matheparser
                 return this.variables[name];
             }
 
-            throw new UndefinedVariableException();
+            throw new UndefinedVariableException(name);
         }
 
         public bool IsDefined(string name)
@@ -60,7 +60,7 @@ namespace Matheparser
                 return res.Value;
             }
 
-            throw new UndefinedVariableException();
+            throw new UndefinedVariableException(name);
         }
 
         public enum MissingVariabeMode

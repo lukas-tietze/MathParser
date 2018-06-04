@@ -24,6 +24,14 @@ namespace Matheparser.Tokenizing
             this.lastWasWhiteSpace = false;
         }
 
+        public TokenizerState State
+        {
+            get
+            {
+                return new TokenizerState(this.data, this.pos, this.tokens.Count > 0 ? this.tokens[this.tokens.Count - 1] : null);
+            }
+        }
+
         public IReadOnlyList<Token> Tokens
         {
             get
@@ -107,7 +115,7 @@ namespace Matheparser.Tokenizing
             {
                 if (this.bracketStack.Count == 0)
                 {
-                    throw new ExtraClosingBracketException();
+                    throw new ExtraClosingBracketException(this.State);
                 }
 
                 this.pos++;

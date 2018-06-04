@@ -1,6 +1,6 @@
 ﻿namespace Matheparser.Tokenizing
 {
-    class MissingStringSeperatorException : TokenizerException
+    public class MissingStringSeperatorException : TokenizerException
     {
     }
 }
