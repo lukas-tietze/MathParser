@@ -131,9 +131,10 @@ namespace Matheparser.Parsing
                 case TokenType.Identifier:
                 case TokenType.Seperator:
                 case TokenType.Operator:
+                    throw new ArgumentException();
                 case TokenType.FunctionStart:
                 case TokenType.FunctionEnd:
-                    throw new ArgumentException();
+                    return null;
                 case TokenType.OpeningBracket:
                 case TokenType.ClosingBracket:
                     return null;
