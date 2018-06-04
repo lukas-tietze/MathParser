@@ -1,4 +1,4 @@
-﻿namespace Matheparser
+﻿namespace Matheparser.Values
 {
     public interface IValue
     {

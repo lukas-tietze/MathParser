@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Matheparser
+namespace Matheparser.Variables
 {
     public class VariableManager
     {

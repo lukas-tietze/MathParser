@@ -1,6 +1,7 @@
 ﻿namespace Matheparser.Functions
 {
     using System.Collections.Generic;
+    using Matheparser.Functions.DefaultFunctions.Math;
 
     public class FunctionManager
     {
@@ -20,7 +21,8 @@
                 if (instance == null)
                 {
                     instance = new FunctionManager();
-                    
+
+                    instance.Define(new Rand());
                 }
 
                 return instance;

@@ -46,9 +46,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config.cs" />
+    <Compile Include="Functions\DefaultFunctions\Math\OneParamaterMathFunctionBase.cs" />
     <Compile Include="Functions\DefaultFunctions\Math\Rand.cs" />
+    <Compile Include="Functions\DefaultFunctions\Math\Sin.cs" />
     <Compile Include="Functions\FunctionManager.cs" />
-    <Compile Include="Functions\MissingFunctionException.cs" />
+    <Compile Include="Exceptions\MissingFunctionException.cs" />
     <Compile Include="IConfig.cs" />
     <Compile Include="Functions\IFunction.cs" />
     <Compile Include="Parsing\PostFixExpressions\Functions\FunctionExpression.cs" />
@@ -68,18 +70,18 @@
     <Compile Include="Parsing\PostFixExpressions\Binary\Compare\LessExpression.cs" />
     <Compile Include="Parsing\PostFixExpressions\Binary\Compare\GreaterExpression.cs" />
     <Compile Include="Parsing\PostFixExpressions\Binary\BinaryOperatorExpressionBase.cs" />
-    <Compile Include="Parsing\PostFixExpressions\Exceptions\IllegalOperationException.cs" />
-    <Compile Include="Parsing\PostFixExpressions\Exceptions\MissingOperandException.cs" />
-    <Compile Include="Parsing\PostFixExpressions\Exceptions\OperandEvaluationException.cs" />
-    <Compile Include="Parsing\PostFixExpressions\Exceptions\WrongOperandTypeException.cs" />
+    <Compile Include="Exceptions\IllegalOperationException.cs" />
+    <Compile Include="Exceptions\MissingOperandException.cs" />
+    <Compile Include="Exceptions\OperandEvaluationException.cs" />
+    <Compile Include="Exceptions\WrongOperandTypeException.cs" />
     <Compile Include="Parsing\PostFixExpressions\PostFixExpressionType.cs" />
     <Compile Include="Parsing\PostFixExpressions\Unary\NotExpression.cs" />
     <Compile Include="Parsing\PostFixExpressions\Unary\UnaryOperatorExpressionBase.cs" />
     <Compile Include="Parsing\PostFixExpressions\ValueExpression.cs" />
     <Compile Include="Parsing\PostFixExpressions\VariableExpression.cs" />
-    <Compile Include="Parsing\IllegalTokenException.cs" />
+    <Compile Include="Exceptions\IllegalTokenException.cs" />
     <Compile Include="Parsing\Parser.cs" />
-    <Compile Include="Parsing\ParserException.cs" />
+    <Compile Include="Exceptions\ParserException.cs" />
     <Compile Include="Parsing\PostFixExpressions\IPostFixExpression.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Solving\ErrorValue.cs" />
@@ -95,7 +97,7 @@
     <Compile Include="Tokenizing\TokenizerState.cs" />
     <Compile Include="Tokenizing\TokenType.cs" />
     <Compile Include="Values\IValue.cs" />
-    <Compile Include="UndefinedVariableException.cs" />
+    <Compile Include="Variables\UndefinedVariableException.cs" />
     <Compile Include="Values\DoubleValue.cs" />
     <Compile Include="Values\StringValue.cs" />
     <Compile Include="Values\ValueCreator.cs" />

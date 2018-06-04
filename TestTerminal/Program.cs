@@ -5,7 +5,7 @@ using Matheparser.Solving;
 using Matheparser.Tokenizing;
 using Matheparser.Variables;
 
-namespace TerminalTest
+namespace TestTerminal
 {
     public static class Program
     {

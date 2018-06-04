@@ -1,4 +1,4 @@
-﻿namespace Matheparser
+﻿namespace Matheparser.Variables
 {
     using System;
 

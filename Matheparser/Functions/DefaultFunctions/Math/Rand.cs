@@ -39,10 +39,5 @@
                 throw new ArgumentException();
             }
         }
-
-        public bool Validate()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

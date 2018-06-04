@@ -1,4 +1,4 @@
-﻿namespace Matheparser.Functions
+﻿namespace Matheparser.Exceptions
 {
     using System;
 

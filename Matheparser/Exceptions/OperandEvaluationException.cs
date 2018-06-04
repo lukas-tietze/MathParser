@@ -1,4 +1,4 @@
-﻿namespace Matheparser.Parsing.PostFixExpressions.Exceptions
+﻿namespace Matheparser.Exceptions
 {
     using System;
 

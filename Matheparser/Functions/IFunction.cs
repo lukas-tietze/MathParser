@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Matheparser
+namespace Matheparser.Functions
 {
     public interface IFunction
     {
@@ -10,7 +10,5 @@ namespace Matheparser
         }
 
         IValue Eval(IValue[] parameters);
-
-        bool Validate();
     }
 }
