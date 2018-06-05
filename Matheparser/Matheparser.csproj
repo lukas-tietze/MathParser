@@ -76,11 +76,14 @@
     <Compile Include="Functions\DefaultFunctions\Text\Lower.cs" />
     <Compile Include="Functions\DefaultFunctions\Text\Upper.cs" />
     <Compile Include="Functions\DefaultFunctions\Util\Eval.cs" />
+    <Compile Include="Functions\DefaultFunctions\Util\If.cs" />
+    <Compile Include="Functions\FunctionBase.cs" />
     <Compile Include="Functions\FunctionManager.cs" />
     <Compile Include="Exceptions\MissingFunctionException.cs" />
     <Compile Include="IConfig.cs" />
     <Compile Include="Functions\IFunction.cs" />
     <Compile Include="Parsing\PostFixExpressions\Functions\FunctionExpression.cs" />
+    <Compile Include="Values\EmptyValue.cs" />
     <Compile Include="Variables\IVariable.cs" />
     <Compile Include="Parsing\Evaluation\PostFixEvaluator.cs" />
     <Compile Include="Parsing\PostFixExpressions\Binary\Arithmetic\DivExpression.cs" />
@@ -110,7 +113,7 @@
     <Compile Include="Exceptions\ParserException.cs" />
     <Compile Include="Parsing\PostFixExpressions\IPostFixExpression.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Solving\ErrorValue.cs" />
+    <Compile Include="Values\ErrorValue.cs" />
     <Compile Include="Solving\Solver.cs" />
     <Compile Include="Tokenizing\ExtraClosingBracketException.cs" />
     <Compile Include="Tokenizing\InvalidEscapeSequenceException.cs" />

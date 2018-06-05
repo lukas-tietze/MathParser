@@ -1,6 +1,4 @@
-﻿using Matheparser.Values;
-
-namespace Matheparser.Solving
+﻿namespace Matheparser.Values
 {
     internal class ErrorValue : IValue
     {
