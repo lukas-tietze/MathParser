@@ -1,18 +1,18 @@
 ﻿namespace Matheparser.Functions.DefaultFunctions.Text
 {
-    public sealed class Trim : OneParameterStringModificationFunction
+    public sealed class Lower : OneParameterStringModificationFunction
     {
         public override string Name
         {
             get
             {
-                return "TRIM";
+                return "LOWER";
             }
         }
 
         protected override string Eval(string arg)
         {
-            return arg.Trim();
+            return arg.ToLower();
         }
     }
 }

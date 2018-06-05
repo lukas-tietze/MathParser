@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="Calculator.cs" />
     <Compile Include="Config.cs" />
+    <Compile Include="Functions\DefaultFunctions\Calculations\Abs.cs" />
     <Compile Include="Functions\DefaultFunctions\Calculations\Exp.cs" />
     <Compile Include="Functions\DefaultFunctions\Calculations\Log.cs" />
     <Compile Include="Functions\DefaultFunctions\Calculations\Log2.cs" />
@@ -54,6 +55,7 @@
     <Compile Include="Functions\DefaultFunctions\Calculations\Ln.cs" />
     <Compile Include="Functions\DefaultFunctions\Calculations\Max.cs" />
     <Compile Include="Functions\DefaultFunctions\Calculations\Min.cs" />
+    <Compile Include="Functions\DefaultFunctions\Calculations\Sign.cs" />
     <Compile Include="Functions\DefaultFunctions\Calculations\TwoParamaterMathFunctionBase.cs" />
     <Compile Include="Functions\DefaultFunctions\Calculations\OneParamaterMathFunctionBase.cs" />
     <Compile Include="Functions\DefaultFunctions\Calculations\Rand.cs" />
@@ -67,7 +69,13 @@
     <Compile Include="Functions\DefaultFunctions\Calculations\Cos.cs" />
     <Compile Include="Functions\DefaultFunctions\Calculations\Sin.cs" />
     <Compile Include="Functions\DefaultFunctions\Text\Concat.cs" />
+    <Compile Include="Functions\DefaultFunctions\Text\Len.cs" />
+    <Compile Include="Functions\DefaultFunctions\Text\OneParameterStringAnalysisFunction.cs" />
+    <Compile Include="Functions\DefaultFunctions\Text\OneParameterStringModificationFunction.cs" />
     <Compile Include="Functions\DefaultFunctions\Text\Trim.cs" />
+    <Compile Include="Functions\DefaultFunctions\Text\Lower.cs" />
+    <Compile Include="Functions\DefaultFunctions\Text\Upper.cs" />
+    <Compile Include="Functions\DefaultFunctions\Util\Eval.cs" />
     <Compile Include="Functions\FunctionManager.cs" />
     <Compile Include="Exceptions\MissingFunctionException.cs" />
     <Compile Include="IConfig.cs" />
@@ -126,8 +134,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Functions\DefaultFunctions\Util\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
