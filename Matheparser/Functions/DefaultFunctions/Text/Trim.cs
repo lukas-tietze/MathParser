@@ -24,7 +24,7 @@ namespace Matheparser.Functions.DefaultFunctions.Text
         {
             if (parameters.Length == 0)
             {
-                throw new MissingOperandException();
+                throw new OperandNumberException();
             }
         }
     }

@@ -40,7 +40,7 @@ namespace Matheparser.Parsing.PostFixExpressions.Binary
         {
             if (operands.Length != 2)
             {
-                throw new MissingOperandException();
+                throw new OperandNumberException();
             }
 
             if (operands[0].Type != operands[1].Type)

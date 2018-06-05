@@ -23,7 +23,7 @@ namespace Matheparser.Functions.DefaultFunctions.Calculations
         {
             if (parameters.Length != 2)
             {
-                throw new MissingOperandException();
+                throw new OperandNumberException();
             }
 
             if (parameters[0].Type != ValueType.Number || parameters[1].Type != ValueType.Number)

@@ -41,7 +41,7 @@ namespace Matheparser.Parsing.PostFixExpressions.Unary
         {
             if (operands.Length != 1)
             {
-                throw new MissingOperandException();
+                throw new OperandNumberException();
             }
         }
     }
