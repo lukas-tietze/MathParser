@@ -41,7 +41,7 @@
 
         public override string ToString()
         {
-            return this.value.ToString();
+            return this.AsString;
         }
     }
 }

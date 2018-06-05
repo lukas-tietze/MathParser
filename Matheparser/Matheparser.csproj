@@ -49,6 +49,7 @@
     <Compile Include="Config.cs" />
     <Compile Include="Functions\DefaultFunctions\Calculations\Abs.cs" />
     <Compile Include="Functions\DefaultFunctions\Calculations\Exp.cs" />
+    <Compile Include="Functions\DefaultFunctions\Calculations\Fac.cs" />
     <Compile Include="Functions\DefaultFunctions\Calculations\Log.cs" />
     <Compile Include="Functions\DefaultFunctions\Calculations\Log2.cs" />
     <Compile Include="Functions\DefaultFunctions\Calculations\Log10.cs" />
@@ -56,6 +57,7 @@
     <Compile Include="Functions\DefaultFunctions\Calculations\Max.cs" />
     <Compile Include="Functions\DefaultFunctions\Calculations\Min.cs" />
     <Compile Include="Functions\DefaultFunctions\Calculations\Sign.cs" />
+    <Compile Include="Functions\DefaultFunctions\Calculations\Sqrt.cs" />
     <Compile Include="Functions\DefaultFunctions\Calculations\TwoParamaterMathFunctionBase.cs" />
     <Compile Include="Functions\DefaultFunctions\Calculations\OneParamaterMathFunctionBase.cs" />
     <Compile Include="Functions\DefaultFunctions\Calculations\Rand.cs" />
@@ -69,9 +71,12 @@
     <Compile Include="Functions\DefaultFunctions\Calculations\Cos.cs" />
     <Compile Include="Functions\DefaultFunctions\Calculations\Sin.cs" />
     <Compile Include="Functions\DefaultFunctions\Text\Concat.cs" />
+    <Compile Include="Functions\DefaultFunctions\Text\Format.cs" />
     <Compile Include="Functions\DefaultFunctions\Text\Len.cs" />
+    <Compile Include="Functions\DefaultFunctions\Text\Num.cs" />
     <Compile Include="Functions\DefaultFunctions\Text\OneParameterStringAnalysisFunction.cs" />
     <Compile Include="Functions\DefaultFunctions\Text\OneParameterStringModificationFunction.cs" />
+    <Compile Include="Functions\DefaultFunctions\Text\Str.cs" />
     <Compile Include="Functions\DefaultFunctions\Text\Trim.cs" />
     <Compile Include="Functions\DefaultFunctions\Text\Lower.cs" />
     <Compile Include="Functions\DefaultFunctions\Text\Upper.cs" />
