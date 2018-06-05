@@ -45,6 +45,11 @@ namespace Matheparser.Variables
             {
                 return this.value;
             }
+
+            set
+            {
+                this.value = value;
+            }
         }
     }
 }

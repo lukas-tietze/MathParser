@@ -77,6 +77,8 @@
     <Compile Include="Functions\DefaultFunctions\Text\Upper.cs" />
     <Compile Include="Functions\DefaultFunctions\Util\Eval.cs" />
     <Compile Include="Functions\DefaultFunctions\Util\If.cs" />
+    <Compile Include="Functions\DefaultFunctions\Util\Set.cs" />
+    <Compile Include="Functions\DefaultFunctions\Util\Aggregate.cs" />
     <Compile Include="Functions\FunctionBase.cs" />
     <Compile Include="Functions\FunctionManager.cs" />
     <Compile Include="Exceptions\MissingFunctionException.cs" />

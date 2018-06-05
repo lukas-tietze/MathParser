@@ -17,6 +17,7 @@ namespace Matheparser.Variables
         IValue Value
         {
             get;
+            set;
         }
     }
 }
