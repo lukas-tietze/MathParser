@@ -47,6 +47,11 @@
   <ItemGroup>
     <Compile Include="Calculator.cs" />
     <Compile Include="Config.cs" />
+    <Compile Include="Functions\DefaultFunctions\Calculations\Exp.cs" />
+    <Compile Include="Functions\DefaultFunctions\Calculations\Log.cs" />
+    <Compile Include="Functions\DefaultFunctions\Calculations\Log2.cs" />
+    <Compile Include="Functions\DefaultFunctions\Calculations\Log10.cs" />
+    <Compile Include="Functions\DefaultFunctions\Calculations\Ln.cs" />
     <Compile Include="Functions\DefaultFunctions\Calculations\Max.cs" />
     <Compile Include="Functions\DefaultFunctions\Calculations\Min.cs" />
     <Compile Include="Functions\DefaultFunctions\Calculations\TwoParamaterMathFunctionBase.cs" />
@@ -84,7 +89,7 @@
     <Compile Include="Parsing\PostFixExpressions\Binary\Compare\LessExpression.cs" />
     <Compile Include="Parsing\PostFixExpressions\Binary\Compare\GreaterExpression.cs" />
     <Compile Include="Parsing\PostFixExpressions\Binary\BinaryOperatorExpressionBase.cs" />
-    <Compile Include="Exceptions\MissingOperandException.cs" />
+    <Compile Include="Exceptions\OperandNumberException.cs" />
     <Compile Include="Exceptions\OperandEvaluationException.cs" />
     <Compile Include="Exceptions\WrongOperandTypeException.cs" />
     <Compile Include="Parsing\PostFixExpressions\PostFixExpressionType.cs" />
