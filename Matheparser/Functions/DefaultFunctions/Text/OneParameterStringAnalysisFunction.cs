@@ -1,21 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Matheparser.Exceptions;
+﻿using Matheparser.Exceptions;
 using Matheparser.Values;
 
 namespace Matheparser.Functions.DefaultFunctions.Text
 {
-    public abstract class OneParameterStringAnalysisFunction : IFunction
+    public abstract class OneParameterStringAnalysisFunction : FunctionBase
     {
-        public abstract string Name
-        {
-            get;
-        }
-
-        public IValue Eval(IValue[] parameters)
+        public override IValue Eval(IValue[] parameters)
         {
             this.Validate(parameters);
 

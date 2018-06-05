@@ -1,5 +1,6 @@
 ﻿using System;
 using Matheparser.Exceptions;
+using Matheparser.Functions;
 using Matheparser.Values;
 
 namespace Matheparser.Parsing.PostFixExpressions.Unary
@@ -22,7 +23,7 @@ namespace Matheparser.Parsing.PostFixExpressions.Unary
             }
         }
 
-        public IValue Eval(IValue[] operands)
+        public IValue Eval(EvaluationContext context, IValue[] operands)
         {
             this.Validate(operands);
 

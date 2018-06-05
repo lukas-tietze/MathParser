@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using Matheparser.Functions;
 using Matheparser.Values;
 
 namespace Matheparser.Parsing.PostFixExpressions
@@ -39,7 +40,7 @@ namespace Matheparser.Parsing.PostFixExpressions
             }
         }
 
-        public IValue Eval(IValue[] operands)
+        public IValue Eval(EvaluationContext context, IValue[] operands)
         {
             return this.value;
         }

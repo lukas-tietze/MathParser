@@ -4,9 +4,9 @@ using Matheparser.Values;
 
 namespace Matheparser.Functions.DefaultFunctions.Text
 {
-    public sealed class Format : IFunction
+    public sealed class Format : FunctionBase
     {
-        public string Name
+        public override string Name
         {
             get
             {
@@ -14,7 +14,7 @@ namespace Matheparser.Functions.DefaultFunctions.Text
             }
         }
 
-        public IValue Eval(IValue[] parameters)
+        public override IValue Eval(IValue[] parameters)
         {
             this.Validate(parameters);
 

@@ -4,9 +4,9 @@ using Matheparser.Values;
 
 namespace Matheparser.Functions.DefaultFunctions.Util
 {
-    public sealed class If : IFunction
+    public sealed class If : FunctionBase
     {
-        public string Name
+        public override string Name
         {
             get
             {
@@ -14,7 +14,7 @@ namespace Matheparser.Functions.DefaultFunctions.Util
             }
         }
 
-        public IValue Eval(IValue[] parameters)
+        public override IValue Eval(IValue[] parameters)
         {
             var thenBranch = default(IValue);
             var elseBranch = default(IValue);

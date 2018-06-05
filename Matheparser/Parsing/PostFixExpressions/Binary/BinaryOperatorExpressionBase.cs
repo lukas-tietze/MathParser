@@ -1,4 +1,5 @@
 ﻿using Matheparser.Exceptions;
+using Matheparser.Functions;
 using Matheparser.Values;
 
 namespace Matheparser.Parsing.PostFixExpressions.Binary
@@ -21,7 +22,7 @@ namespace Matheparser.Parsing.PostFixExpressions.Binary
             }
         }
 
-        public IValue Eval(IValue[] operands)
+        public IValue Eval(EvaluationContext context, IValue[] operands)
         {
             this.Validate(operands);
 

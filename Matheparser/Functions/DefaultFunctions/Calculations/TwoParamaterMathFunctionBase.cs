@@ -3,14 +3,9 @@ using Matheparser.Values;
 
 namespace Matheparser.Functions.DefaultFunctions.Calculations
 {
-    public abstract class TwoParamaterMathFunctionBase : IFunction
+    public abstract class TwoParamaterMathFunctionBase : FunctionBase
     {
-        public abstract string Name
-        {
-            get;
-        }
-
-        public IValue Eval(IValue[] parameters)
+        public override IValue Eval(IValue[] parameters)
         {
             this.Validate(parameters);
 

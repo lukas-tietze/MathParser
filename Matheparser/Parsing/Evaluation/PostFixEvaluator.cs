@@ -1,19 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using Matheparser.Functions;
 using Matheparser.Parsing.PostFixExpressions;
 using Matheparser.Values;
+using Matheparser.Variables;
 
 namespace Matheparser.Parsing.Evaluation
 {
     public class PostFixEvaluator
     {
-        private readonly IConfig config;
         private readonly IReadOnlyList<IPostFixExpression> expressions;
+        private readonly EvaluationContext context;
 
         public PostFixEvaluator(IReadOnlyList<IPostFixExpression> expressions, IConfig config)
         {
             this.expressions = expressions;
-            this.config = config;
+            this.context = new EvaluationContext(new VariableManager(), new FunctionManager(), config);
         }
 
         public IValue Run()

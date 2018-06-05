@@ -1,4 +1,5 @@
-﻿using Matheparser.Values;
+﻿using Matheparser.Functions;
+using Matheparser.Values;
 
 namespace Matheparser.Parsing.PostFixExpressions
 {
@@ -14,6 +15,6 @@ namespace Matheparser.Parsing.PostFixExpressions
             get;
         }
 
-        IValue Eval(IValue[] operands);
+        IValue Eval(EvaluationContext context, IValue[] operands);
     }
 }

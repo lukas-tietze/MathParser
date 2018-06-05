@@ -1,4 +1,5 @@
 ﻿using Matheparser.Exceptions;
+using Matheparser.Functions;
 using Matheparser.Values;
 using Matheparser.Variables;
 
@@ -29,7 +30,7 @@ namespace Matheparser.Parsing.PostFixExpressions
             }
         }
 
-        public IValue Eval(IValue[] operands)
+        public IValue Eval(EvaluationContext context, IValue[] operands)
         {
             this.Validate(operands);
 

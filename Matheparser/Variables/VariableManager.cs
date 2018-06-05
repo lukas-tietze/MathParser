@@ -11,7 +11,10 @@ namespace Matheparser.Variables
         private Dictionary<string, IVariable> variables;
         private MissingVariabeMode missingVariabeMode;
 
-        private VariableManager()
+        public VariableManager():this(false)
+        { }
+
+        public VariableManager(bool setDefaultVariables)
         {
             this.variables = new Dictionary<string, IVariable>();
             this.missingVariabeMode = MissingVariabeMode.Error;

@@ -3,7 +3,7 @@
     using System;
     using Matheparser.Values;
 
-    public sealed class Rand : IFunction
+    public sealed class Rand : FunctionBase
     {
         private readonly Random rand;
 
@@ -12,7 +12,7 @@
             this.rand = new Random();
         }
 
-        public string Name
+        public override string Name
         {
             get
             {
@@ -20,7 +20,7 @@
             }
         }
 
-        public IValue Eval(IValue[] parameters)
+        public override IValue Eval(IValue[] parameters)
         {
             if (parameters.Length == 0)
             {
