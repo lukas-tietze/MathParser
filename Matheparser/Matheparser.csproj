@@ -49,7 +49,7 @@
     <Compile Include="Config.cs" />
     <Compile Include="Functions\DefaultFunctions\Calculations\Max.cs" />
     <Compile Include="Functions\DefaultFunctions\Calculations\Min.cs" />
-    <Compile Include="Functions\DefaultFunctions\Calculations\OneParamaterMathFunctionBase - Copy.cs" />
+    <Compile Include="Functions\DefaultFunctions\Calculations\TwoParamaterMathFunctionBase.cs" />
     <Compile Include="Functions\DefaultFunctions\Calculations\OneParamaterMathFunctionBase.cs" />
     <Compile Include="Functions\DefaultFunctions\Calculations\Rand.cs" />
     <Compile Include="Functions\DefaultFunctions\Calculations\ArcCos.cs" />

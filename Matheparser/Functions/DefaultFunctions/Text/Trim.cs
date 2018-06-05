@@ -17,7 +17,7 @@ namespace Matheparser.Functions.DefaultFunctions.Text
         {
             this.Validate(parameters);
 
-            return new StringValue(parameters[0].AsString.Trim();
+            return new StringValue(parameters[0].AsString.Trim());
         }
 
         private void Validate(IValue[] parameters)
