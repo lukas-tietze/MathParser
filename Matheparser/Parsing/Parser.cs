@@ -177,6 +177,8 @@ namespace Matheparser.Parsing
                     return new LessExpression();
                 case TokenType.OperatorLessEqual:
                     return new LessEqualExpression();
+                case TokenType.OperatorMod:
+                    return new ModExpression();
                 default:
                     throw new NotSupportedException();
             }

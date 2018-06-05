@@ -174,6 +174,10 @@ namespace Matheparser.Tokenizing
                     this.pos++;
                     token = new Token(TokenType.OperatorDiv);
                     break;
+                case '%':
+                    this.pos++;
+                    token = new Token(TokenType.OperatorMod);
+                    break;
                 case '^':
                     this.pos++;
                     token = new Token(TokenType.OperatorExp);

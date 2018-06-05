@@ -17,6 +17,7 @@
         OperatorMul = 0x1D03,
         OperatorDiv = 0x1D04,
         OperatorExp = 0x1E05,
+        OperatorMod = 0x1D05,
         OperatorNot = 0x1C06,
         OperatorEqual = 0x1A07,
         OperatorNotEqual = 0x1A08,
