@@ -27,7 +27,7 @@ namespace Matheparser.Functions.DefaultFunctions.Util
             var evaluator = default(PostFixEvaluator);
             var counter = new Variable(parameters[2].AsString, 0);
             var config = ConfigBase.DefaultConfig;
-            VariableManager.Instance.Define(counter);
+            this.Context.VariableManager.Define(counter);
 
             try
             {
@@ -61,7 +61,7 @@ namespace Matheparser.Functions.DefaultFunctions.Util
                 }
             }
 
-            VariableManager.Instance.Remove(counter.Name);
+            this.Context.VariableManager.Remove(counter.Name);
 
             return new DoubleValue(res);
         }

@@ -6,33 +6,22 @@ namespace Matheparser.Variables
 {
     public class VariableManager
     {
-        private static VariableManager instance;
-
         private Dictionary<string, IVariable> variables;
         private MissingVariabeMode missingVariabeMode;
 
-        public VariableManager():this(false)
+        public VariableManager() :
+            this(false)
         { }
 
         public VariableManager(bool setDefaultVariables)
         {
             this.variables = new Dictionary<string, IVariable>();
             this.missingVariabeMode = MissingVariabeMode.Error;
-        }
 
-        public static VariableManager Instance
-        {
-            get
+            if(setDefaultVariables)
             {
-                if (instance == null)
-                {
-                    instance = new VariableManager();
-
-                    instance.Define(new Variable("PI", Math.PI));
-                    instance.Define(new Variable("E", Math.E));
-                }
-
-                return instance;
+                this.Define(new Variable("E", Math.E));
+                this.Define(new Variable("PI", Math.PI));
             }
         }
 

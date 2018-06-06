@@ -34,7 +34,7 @@ namespace Matheparser.Parsing.PostFixExpressions
         {
             this.Validate(operands);
 
-            return VariableManager.Instance.GetValue(this.name);
+            return context.VariableManager.GetValue(this.name);
         }
 
         private void Validate(IValue[] operands)

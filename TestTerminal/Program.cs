@@ -9,6 +9,8 @@ namespace TestTerminal
 {
     public static class Program
     {
+        private static 
+
         [STAThread]
         public static void Main(string[] args)
         {

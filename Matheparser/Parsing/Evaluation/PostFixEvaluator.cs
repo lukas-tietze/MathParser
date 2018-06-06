@@ -15,7 +15,7 @@ namespace Matheparser.Parsing.Evaluation
         public PostFixEvaluator(IReadOnlyList<IPostFixExpression> expressions, IConfig config)
         {
             this.expressions = expressions;
-            this.context = new EvaluationContext(new VariableManager(), new FunctionManager(), config);
+            this.context = new EvaluationContext(new VariableManager(true), new FunctionManager(true), config);
         }
 
         public IValue Run()
@@ -27,7 +27,7 @@ namespace Matheparser.Parsing.Evaluation
                 switch (expression.Type)
                 {
                     case PostFixExpressionType.Value:
-                        stack.Push(expression.Eval(null));
+                        stack.Push(expression.Eval(this.context, null));
                         break;
                     case PostFixExpressionType.Function:
                         var args = new IValue[expression.ArgCount];
@@ -37,7 +37,7 @@ namespace Matheparser.Parsing.Evaluation
                             args[expression.ArgCount - i - 1] = stack.Pop();
                         }
 
-                        stack.Push(expression.Eval(args));
+                        stack.Push(expression.Eval(this.context, args));
 
                         break;
                     default:

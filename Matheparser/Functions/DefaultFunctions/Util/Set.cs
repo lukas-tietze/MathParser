@@ -19,7 +19,7 @@ namespace Matheparser.Functions.DefaultFunctions.Util
         {
             this.Validate(parameters);
 
-            var var = VariableManager.Instance.GetVariable(parameters[0].AsString).Value = parameters[1];
+            var var = this.Context.VariableManager.GetVariable(parameters[0].AsString).Value = parameters[1];
 
             return parameters[1];
         }

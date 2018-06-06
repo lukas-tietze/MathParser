@@ -7,33 +7,26 @@
 
     public class FunctionManager
     {
-        private static FunctionManager instance;
+        private readonly Dictionary<string, IFunction> functions;
 
-        private Dictionary<string, IFunction> functions;
-
-        private FunctionManager()
+        public FunctionManager() :
+            this(false)
         {
-            this.functions = new Dictionary<string, IFunction>();
         }
 
-        public static FunctionManager Instance
+        public FunctionManager(bool defineDefaultFunctions)
         {
-            get
-            {
-                if (instance == null)
-                {
-                    instance = new FunctionManager();
+            this.functions = new Dictionary<string, IFunction>();
 
-                    foreach (var type in typeof(FunctionManager).Assembly.GetTypes())
+            if (defineDefaultFunctions)
+            {
+                foreach (var type in typeof(FunctionManager).Assembly.GetTypes())
+                {
+                    if (typeof(IFunction).IsAssignableFrom(type) && !type.IsInterface && !type.IsAbstract)
                     {
-                        if (typeof(IFunction).IsAssignableFrom(type) && !type.IsInterface && !type.IsAbstract)
-                        {
-                            instance.Define((IFunction)Activator.CreateInstance(type));
-                        }
+                        this.Define((IFunction)Activator.CreateInstance(type));
                     }
                 }
-
-                return instance;
             }
         }
 
