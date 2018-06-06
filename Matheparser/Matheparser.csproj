@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConfigBase.cs" />
+    <Compile Include="Exceptions\CalculationException.cs" />
     <Compile Include="Functions\DefaultFunctions\Calculations\Abs.cs" />
     <Compile Include="Functions\DefaultFunctions\Calculations\Exp.cs" />
     <Compile Include="Functions\DefaultFunctions\Calculations\Fac.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="Functions\IFunction.cs" />
     <Compile Include="Parsing\PostFixExpressions\Functions\FunctionExpression.cs" />
     <Compile Include="Values\EmptyValue.cs" />
+    <Compile Include="Values\ExpressionValue.cs" />
     <Compile Include="Variables\IVariable.cs" />
     <Compile Include="Parsing\Evaluation\PostFixEvaluator.cs" />
     <Compile Include="Parsing\PostFixExpressions\Binary\Arithmetic\DivExpression.cs" />

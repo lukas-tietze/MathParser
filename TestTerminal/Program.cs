@@ -1,9 +1,11 @@
 ﻿using System;
 using Matheparser;
+using Matheparser.Exceptions;
 using Matheparser.Functions;
 using Matheparser.Parsing;
 using Matheparser.Solving;
 using Matheparser.Tokenizing;
+using Matheparser.Values;
 using Matheparser.Variables;
 
 namespace TestTerminal
@@ -21,36 +23,50 @@ namespace TestTerminal
 
             while (!quit)
             {
-                var command = string.Empty;
-                var expression = string.Empty;
-
-                SplitKeyValue(Console.ReadLine(), out command, out expression);
+                var input = Console.ReadLine();
 
                 try
                 {
-                    switch (command)
+                    if (input.StartsWith(":"))
                     {
-                        case "tokenize":
-                            Tokenize(expression);
-                            break;
-                        case "parse":
-                            Parse(expression);
-                            break;
-                        case "def":
-                        case "define":
-                            Define(expression);
-                            break;
-                        case "undef":
-                            Undefine(expression);
-                            break;
-                        case "quit":
-                            quit = true;
-                            break;
-                        case "solve":
-                        default:
-                            Solve(expression);
-                            break;
+                        SplitKeyValue(input, out var command, out var expression);
+
+                        switch (command.Substring(1))
+                        {
+                            case "tokenize":
+                                Tokenize(expression);
+                                break;
+                            case "parse":
+                                Parse(expression);
+                                break;
+                            case "def":
+                            case "define":
+                            case "defvar":
+                                Define(expression, true);
+                                break;
+                            case "defexp":
+                                Define(expression, false);
+                                break;
+                            case "undef":
+                                Undefine(expression);
+                                break;
+                            case "quit":
+                                quit = true;
+                                break;
+                            case "solve":
+                                Solve(expression);
+                                break;
+                            default:
+                                Console.WriteLine("Undefined command \"{0}\"", command);
+                                break;
+                        }
                     }
+                    else
+                    {
+                        Solve(input);
+                        break;
+                    }
+
                 }
                 catch (Exception e)
                 {
@@ -63,7 +79,7 @@ namespace TestTerminal
         {
             if (e.GetType().Namespace.StartsWith(nameof(Matheparser)))
             {
-                Console.WriteLine("Error: {1}", e.Message);
+                Console.WriteLine("Error: {0}", e.Message);
             }
             else
             {
@@ -83,8 +99,8 @@ namespace TestTerminal
 
         private static void SplitKeyValue(string input, out string key, out string value)
         {
-            key = "solve";
-            value = input;
+            key = input;
+            value = string.Empty;
 
             var keyStart = 0;
             var keyEnd = 0;
@@ -121,7 +137,7 @@ namespace TestTerminal
             return Console.ReadLine();
         }
 
-        private static void Define(string expression)
+        private static void Define(string expression, bool compress)
         {
             if (string.IsNullOrEmpty(expression))
             {
@@ -133,14 +149,31 @@ namespace TestTerminal
 
             SplitKeyValue(expression, out key, out value);
 
-            if (string.IsNullOrEmpty(key))
+            if (string.IsNullOrEmpty(value))
             {
-                Console.WriteLine("Missing Key!");
+                Console.WriteLine("Missing value!");
                 return;
             }
 
+            var res = default(IValue);
 
-            context.VariableManager.Define(new Variable(key, value));
+            if (compress)
+            {
+                try
+                {
+                    res = new Calculator().Calculate(value);
+                }
+                catch (CalculationException)
+                {
+                    res = new ExpressionValue(context, value);
+                }
+            }
+            else
+            {
+                res = new ExpressionValue(context, value);
+            }
+
+            context.VariableManager.Define(new Variable(key, res));
         }
 
         private static void Solve(string expression)

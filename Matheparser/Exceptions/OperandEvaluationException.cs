@@ -2,7 +2,7 @@
 {
     using System;
 
-    public class OperandEvaluationException : Exception
+    public class OperandEvaluationException : CalculationException
     {
     }
 }

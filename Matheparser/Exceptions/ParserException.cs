@@ -2,7 +2,7 @@
 
 namespace Matheparser.Exceptions
 {
-    public class ParserException : Exception
+    public class ParserException : CalculationException
     {
     }
 }
