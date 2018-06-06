@@ -1,5 +1,6 @@
 ﻿using System;
 using Matheparser;
+using Matheparser.Functions;
 using Matheparser.Parsing;
 using Matheparser.Solving;
 using Matheparser.Tokenizing;
@@ -9,11 +10,13 @@ namespace TestTerminal
 {
     public static class Program
     {
-        private static 
+        private static CalculationContext context;
 
         [STAThread]
         public static void Main(string[] args)
         {
+            context = new CalculationContext(new VariableManager(true), new FunctionManager(true), ConfigBase.DefaultConfig);
+
             var quit = false;
 
             while (!quit)
@@ -77,7 +80,7 @@ namespace TestTerminal
                 expression = QueryInput();
             }
 
-            VariableManager.Instance.Remove(expression.Trim().ToLower());
+            context.VariableManager.Remove(expression.Trim().ToLower());
         }
 
         private static void SplitKeyValue(string input, out string key, out string value)
@@ -154,7 +157,7 @@ namespace TestTerminal
             }
 
 
-            VariableManager.Instance.Define(new Variable(key, value));
+            context.VariableManager.Define(new Variable(key, value));
         }
 
         private static void Solve(string expression)
@@ -164,8 +167,8 @@ namespace TestTerminal
                 expression = QueryInput();
             }
 
-            var solver = new Solver();
-            var res = solver.Solve(expression);
+            var calculator = new Calculator();
+            var res = calculator.Calculate(expression);
             Console.WriteLine(res.ToString());
         }
 

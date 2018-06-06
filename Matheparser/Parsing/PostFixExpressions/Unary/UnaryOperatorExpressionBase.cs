@@ -23,7 +23,7 @@ namespace Matheparser.Parsing.PostFixExpressions.Unary
             }
         }
 
-        public IValue Eval(EvaluationContext context, IValue[] operands)
+        public IValue Eval(CalculationContext context, IValue[] operands)
         {
             this.Validate(operands);
 

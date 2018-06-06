@@ -15,6 +15,6 @@ namespace Matheparser.Parsing.PostFixExpressions
             get;
         }
 
-        IValue Eval(EvaluationContext context, IValue[] operands);
+        IValue Eval(CalculationContext context, IValue[] operands);
     }
 }

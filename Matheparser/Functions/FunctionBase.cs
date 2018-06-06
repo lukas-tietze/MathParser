@@ -9,7 +9,7 @@ namespace Matheparser.Functions
             get;
         }
 
-        protected EvaluationContext Context
+        protected CalculationContext Context
         {
             get;
             private set;
@@ -17,7 +17,7 @@ namespace Matheparser.Functions
 
         public abstract IValue Eval(IValue[] parameters);
 
-        public IValue Eval(EvaluationContext context, IValue[] parameters)
+        public IValue Eval(CalculationContext context, IValue[] parameters)
         {
             this.Context = context;
             return this.Eval(parameters);

@@ -2,9 +2,9 @@
 
 namespace Matheparser.Functions
 {
-    public sealed class EvaluationContext
+    public sealed class CalculationContext
     {
-        public EvaluationContext(VariableManager variableManager, FunctionManager functionManager, IConfig config)
+        public CalculationContext(VariableManager variableManager, FunctionManager functionManager, IConfig config)
         {
             this.VariableManager = variableManager;
             this.FunctionManager = functionManager;

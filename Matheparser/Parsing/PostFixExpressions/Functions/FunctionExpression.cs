@@ -30,7 +30,7 @@ namespace Matheparser.Parsing.PostFixExpressions.Functions
             }
         }
 
-        public IValue Eval(EvaluationContext context, IValue[] operands)
+        public IValue Eval(CalculationContext context, IValue[] operands)
         {
             var function = context.FunctionManager.FindByName(this.name);
 

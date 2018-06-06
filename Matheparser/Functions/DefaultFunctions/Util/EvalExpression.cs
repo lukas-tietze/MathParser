@@ -18,8 +18,8 @@ namespace Matheparser.Functions.DefaultFunctions.Util
         {
             this.Validate(parameters);
 
-            var solver = new Solver();
-            return solver.Solve(parameters[0].AsString);
+            var solver = new Calculator();
+            return solver.Calculate(parameters[0].AsString);
         }
 
         private void Validate(IValue[] parameters)

@@ -9,6 +9,6 @@ namespace Matheparser.Functions
             get;
         }
 
-        IValue Eval(EvaluationContext context, IValue[] parameters);
+        IValue Eval(CalculationContext context, IValue[] parameters);
     }
 }
