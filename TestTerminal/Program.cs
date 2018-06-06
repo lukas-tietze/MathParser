@@ -36,9 +36,6 @@ namespace TestTerminal
                         case "parse":
                             Parse(expression);
                             break;
-                        case "solve":
-                            Solve(expression);
-                            break;
                         case "def":
                         case "define":
                             Define(expression);
@@ -49,8 +46,9 @@ namespace TestTerminal
                         case "quit":
                             quit = true;
                             break;
+                        case "solve":
                         default:
-                            Console.WriteLine("Unknown command!");
+                            Solve(expression);
                             break;
                     }
                 }
@@ -85,43 +83,28 @@ namespace TestTerminal
 
         private static void SplitKeyValue(string input, out string key, out string value)
         {
+            key = "solve";
+            value = input;
+
             var keyStart = 0;
             var keyEnd = 0;
 
-            for (keyStart = 0; keyStart < input.Length; keyStart++)
+            while (keyStart < input.Length && char.IsWhiteSpace(input[keyStart]))
             {
-                if (!char.IsWhiteSpace(input[keyStart]))
-                {
-                    break;
-                }
+                keyStart++;
             }
 
-            for (keyEnd = keyStart + 1; keyEnd < input.Length; keyEnd++)
+            keyEnd = keyStart + 1;
+
+            while (keyEnd < input.Length && !char.IsWhiteSpace(input[keyEnd]))
             {
-                if (char.IsWhiteSpace(input[keyEnd]))
-                {
-                    break;
-                }
+                keyEnd++;
             }
 
-            if (keyStart >= keyEnd && keyStart >= input.Length)
+            if (keyEnd < input.Length && keyStart < keyEnd)
             {
-                key = string.Empty;
-                value = string.Empty;
-                return;
-            }
-
-            key = input.Substring(keyStart, keyEnd - keyStart);
-            value = string.Empty;
-
-            if (keyEnd < input.Length - 1)
-            {
-                value = input.Substring(keyEnd).Trim();
-            }
-            else
-            {
-                value = key;
-                key = "solve";
+                key = input.Substring(keyStart, keyEnd - keyStart);
+                value = input.Substring(keyEnd);
             }
 
             key = key.Trim().ToLower();
