@@ -1,8 +1,9 @@
 ﻿namespace Matheparser.Exceptions
 {
-    using System;
-
     public class OperandEvaluationException : CalculationException
     {
+        public OperandEvaluationException(string message) : base(message)
+        {
+        }
     }
 }
