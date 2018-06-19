@@ -128,7 +128,7 @@ namespace TestTerminal
 
         private static string QueryInput()
         {
-            return QueryInput("Input Expression:");
+            return QueryInput("> Input Expression:");
         }
 
         private static string QueryInput(string question)
@@ -151,7 +151,7 @@ namespace TestTerminal
 
             if (string.IsNullOrEmpty(value))
             {
-                Console.WriteLine("Missing value!");
+                Console.WriteLine("> Missing value!");
                 return;
             }
 
@@ -173,7 +173,11 @@ namespace TestTerminal
                 res = new ExpressionValue(context, value);
             }
 
-            context.VariableManager.Define(new Variable(key, res));
+            var newVar = new Variable(key, res);
+
+            context.VariableManager.Define(newVar);
+
+            Console.WriteLine("> Defined {0} as {1}.", newVar.Name, newVar.Value);
         }
 
         private static void Solve(string expression)
@@ -185,7 +189,7 @@ namespace TestTerminal
 
             var calculator = new Calculator();
             var res = calculator.Calculate(expression);
-            Console.WriteLine(res.ToString());
+            Console.WriteLine("> {0}", res.ToString());
         }
 
         private static void Parse(string expression)
