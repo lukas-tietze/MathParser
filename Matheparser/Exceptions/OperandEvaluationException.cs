@@ -2,7 +2,7 @@
 {
     public class OperandEvaluationException : CalculationException
     {
-        public OperandEvaluationException(string message) : base(message)
+        public OperandEvaluationException() : base()
         {
         }
     }

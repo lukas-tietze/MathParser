@@ -1,6 +1,9 @@
 ﻿namespace Matheparser.Exceptions
 {
-    class IllegalTokenException : ParserException
+    internal class IllegalTokenException : ParserException
     {
+        public IllegalTokenException(string message) : base(message)
+        {
+        }
     }
 }
