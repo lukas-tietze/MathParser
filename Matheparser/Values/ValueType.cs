@@ -3,6 +3,7 @@
     public enum ValueType
     {
         String,
-        Number
+        Number,
+        Set,
     }
 }
