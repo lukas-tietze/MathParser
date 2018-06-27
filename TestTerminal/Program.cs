@@ -64,7 +64,6 @@ namespace TestTerminal
                     else
                     {
                         Solve(input);
-                        break;
                     }
 
                 }
