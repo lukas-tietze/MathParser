@@ -2,14 +2,18 @@
 {
     public enum TokenType
     {
-        String = 0x0000,
-        Number = 0x0001,
-        Identifier = 0x0002,
-        Seperator = 0x0003,
-        OpeningBracket = 0x0004,
-        ClosingBracket = 0x0005,
-        FunctionStart = 0x0006,
-        FunctionEnd = 0x0007,
+        String = 0x2000,
+        Number = 0x2001,
+        Identifier = 0x2002,
+        Seperator = 0x2003,
+        OpeningBracket = 0x2004,
+        ClosingBracket = 0x2005,
+        SetStart = 0x2006,
+        SetEnd = 0x2007,
+        AccessorStart = 0x2008,
+        AccessorEnd = 0x2009,
+        FunctionStart = 0x200A,
+        FunctionEnd = 0x200B,
 
         Operator = 0x1000,
         OperatorAdd = 0x1C01,

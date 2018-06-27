@@ -5,12 +5,14 @@ namespace Matheparser
 {
     public class ConfigBase : IConfig
     {
-        private char decimalSeperator;
-        private char stringSeperator;
-        private char listSeperator;
-        private char stringEscapeChar;
-        private char[] openingBrackets;
-        private char[] closingBrackets;
+        private readonly char decimalSeperator;
+        private readonly char stringSeperator;
+        private readonly char listSeperator;
+        private readonly char stringEscapeChar;
+        private readonly char[] openingBrackets;
+        private readonly char[] closingBrackets;
+        private char[] openingArrayBrackets;
+        private char[] closingArrayBrackets;
 
         public static IConfig DefaultConfig
         {
@@ -21,8 +23,8 @@ namespace Matheparser
                     stringSeperator: '\"',
                     listSeperator: ';',
                     stringEscapeChar: '\\',
-                    openingBrackets: new char[] { '(', '[', '{', },
-                    closingBrackets: new char[] { ')', ']', '}', }
+                    openingBrackets: new char[] { '(' },
+                    closingBrackets: new char[] { ')' }
                 );
             }
         }

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Matheparser
+﻿namespace Matheparser
 {
     public interface IConfig
     {

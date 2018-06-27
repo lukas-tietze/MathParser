@@ -27,7 +27,7 @@ namespace Matheparser.Parsing
             var argCountStack = new Stack<int>();
             var expressions = new List<IPostFixExpression>();
 
-            for(var i = 0; i< this.tokens.Count; i++)
+            for (var i = 0; i < this.tokens.Count; i++)
             {
                 var token = this.tokens[i];
 
@@ -84,7 +84,25 @@ namespace Matheparser.Parsing
                         }
 
                         break;
-                    default:
+                    case TokenType.SetStart:
+                    case TokenType.SetEnd:
+                    case TokenType.AccessorStart:
+                    case TokenType.AccessorEnd:
+                        throw new NotImplementedException();
+                    case TokenType.Operator:
+                    case TokenType.OperatorAdd:
+                    case TokenType.OperatorSub:
+                    case TokenType.OperatorMul:
+                    case TokenType.OperatorDiv:
+                    case TokenType.OperatorExp:
+                    case TokenType.OperatorMod:
+                    case TokenType.OperatorNot:
+                    case TokenType.OperatorEqual:
+                    case TokenType.OperatorNotEqual:
+                    case TokenType.OperatorGreater:
+                    case TokenType.OperatorGreaterEqual:
+                    case TokenType.OperatorLess:
+                    case TokenType.OperatorLessEqual:
                         if ((token.Type & TokenType.Operator) != 0)
                         {
                             if (operatorStack.Count == 0 || IsHigherPriority(token.Type, operatorStack.Peek()))
@@ -102,13 +120,15 @@ namespace Matheparser.Parsing
 
                                 operatorStack.Push(token.Type);
                             }
+
+                            break;
                         }
                         else
                         {
                             throw new NotSupportedException();
                         }
-
-                        break;
+                    default:
+                        throw new NotSupportedException();
                 }
             }
 

@@ -92,7 +92,8 @@ namespace Matheparser.Tokenizing
             {
                 return this.ReadIdentifier();
             }
-            else if (this.config.IsOpeningBracket(c))
+            ////TODO An Config binden
+            else if (c == '(')
             {
                 var res = default(Token);
 
@@ -111,7 +112,8 @@ namespace Matheparser.Tokenizing
                 this.bracketStack.Push(c);
                 return res;
             }
-            else if (this.config.IsClosingBracket(c))
+            ////TODO an config binden
+            else if (c == ')')
             {
                 if (this.bracketStack.Count == 0)
                 {
@@ -134,6 +136,30 @@ namespace Matheparser.Tokenizing
                 }
 
                 return new Token(type, c.ToString());
+            }
+            ////TODO an config binden
+            else if (c == '{')
+            {
+                this.pos++;
+                return new Token(TokenType.SetStart);
+            }
+            ////TODO an config binden
+            else if (c == '}')
+            {
+                this.pos++;
+                return new Token(TokenType.SetEnd);
+            }
+            ////TODO an config binden
+            else if (c == '[')
+            {
+                this.pos++;
+                return new Token(TokenType.AccessorStart);
+            }
+            ////TODO an config binden
+            else if (c == ']')
+            {
+                this.pos++;
+                return new Token(TokenType.AccessorEnd);
             }
             else if (c == this.config.ListSeperator)
             {
