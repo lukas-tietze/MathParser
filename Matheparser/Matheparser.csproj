@@ -70,6 +70,11 @@
     <Compile Include="Functions\DefaultFunctions\Calculations\Tan.cs" />
     <Compile Include="Functions\DefaultFunctions\Calculations\Cos.cs" />
     <Compile Include="Functions\DefaultFunctions\Calculations\Sin.cs" />
+    <Compile Include="Functions\DefaultFunctions\File\FileExtension.cs" />
+    <Compile Include="Functions\DefaultFunctions\File\FileName.cs" />
+    <Compile Include="Functions\DefaultFunctions\File\BaseDir.cs" />
+    <Compile Include="Functions\DefaultFunctions\File\FileFunctionBase.cs" />
+    <Compile Include="Functions\DefaultFunctions\File\PathConcat.cs" />
     <Compile Include="Functions\DefaultFunctions\Text\Concat.cs" />
     <Compile Include="Functions\DefaultFunctions\Text\Format.cs" />
     <Compile Include="Functions\DefaultFunctions\Text\Len.cs" />
@@ -83,6 +88,7 @@
     <Compile Include="Functions\DefaultFunctions\Util\EvalExpression.cs" />
     <Compile Include="Functions\DefaultFunctions\Util\Execute.cs" />
     <Compile Include="Functions\DefaultFunctions\Util\If.cs" />
+    <Compile Include="Functions\DefaultFunctions\Util\Input.cs" />
     <Compile Include="Functions\DefaultFunctions\Util\Set.cs" />
     <Compile Include="Functions\DefaultFunctions\Util\Aggregate.cs" />
     <Compile Include="Functions\FunctionBase.cs" />
