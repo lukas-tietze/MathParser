@@ -23,11 +23,12 @@
         OperatorExp = 0x1E05,
         OperatorMod = 0x1D05,
         OperatorNot = 0x1C06,
-        OperatorEqual = 0x1A07,
-        OperatorNotEqual = 0x1A08,
-        OperatorGreater = 0x1A09,
-        OperatorGreaterEqual = 0x1A0A,
-        OperatorLess = 0x1A0B,
-        OperatorLessEqual = 0x1A0C,
+        OperatorLength = 0x1C07,
+        OperatorEqual = 0x1A08,
+        OperatorNotEqual = 0x1A09,
+        OperatorGreater = 0x1A0A,
+        OperatorGreaterEqual = 0x1A0B,
+        OperatorLess = 0x1A0C,
+        OperatorLessEqual = 0x1A0D,
     }
 }

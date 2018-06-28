@@ -101,6 +101,7 @@
                     case TokenType.OperatorExp:
                     case TokenType.OperatorMod:
                     case TokenType.OperatorNot:
+                    case TokenType.OperatorLength:
                     case TokenType.OperatorEqual:
                     case TokenType.OperatorNotEqual:
                     case TokenType.OperatorGreater:
@@ -191,6 +192,8 @@
                     return new ExpExpression();
                 case TokenType.OperatorNot:
                     return new NotExpression();
+                case TokenType.OperatorLength:
+                    return new LengthExpression();
                 case TokenType.OperatorEqual:
                     return new EqualExpression();
                 case TokenType.OperatorNotEqual:

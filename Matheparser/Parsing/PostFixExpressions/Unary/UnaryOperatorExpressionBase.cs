@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Matheparser.Exceptions;
 using Matheparser.Functions;
 using Matheparser.Values;
@@ -27,16 +28,22 @@ namespace Matheparser.Parsing.PostFixExpressions.Unary
         {
             this.Validate(operands);
 
-            if (operands[0].Type == Values.ValueType.Number)
+            switch (operands[0].Type)
             {
-                return this.EvalNumber(operands[0].AsDouble);
+                case Values.ValueType.String:
+                    return this.EvalString(operands[0].AsString);
+                case Values.ValueType.Number:
+                    return this.EvalNumber(operands[0].AsDouble);
+                case Values.ValueType.Set:
+                    return this.EvalSet(operands[0].AsSet);
+                default:
+                    throw new NotSupportedException();
             }
-
-            return this.EvalStirng(operands[0].AsString);
         }
 
-        public abstract IValue EvalNumber(double operand);
-        public abstract IValue EvalStirng(string operand);
+        internal abstract IValue EvalSet(HashSet<IValue> operand);
+        internal abstract IValue EvalNumber(double operand);
+        internal abstract IValue EvalString(string operand);
 
         private void Validate(IValue[] operands)
         {
