@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using Matheparser.Parsing.PostFixExpressions;
-using Matheparser.Parsing.PostFixExpressions.Binary.Arithmetic;
-using Matheparser.Parsing.PostFixExpressions.Binary.Compare;
-using Matheparser.Parsing.PostFixExpressions.Functions;
-using Matheparser.Parsing.PostFixExpressions.Unary;
-using Matheparser.Tokenizing;
-
-namespace Matheparser.Parsing
+﻿namespace Matheparser.Parsing
 {
+    using System;
+    using System.Collections.Generic;
+    using Matheparser.Parsing.PostFixExpressions;
+    using Matheparser.Parsing.PostFixExpressions.Binary.Arithmetic;
+    using Matheparser.Parsing.PostFixExpressions.Binary.Compare;
+    using Matheparser.Parsing.PostFixExpressions.Functions;
+    using Matheparser.Parsing.PostFixExpressions.Unary;
+    using Matheparser.Tokenizing;
+
     public class Parser
     {
         private readonly IReadOnlyList<Token> tokens;

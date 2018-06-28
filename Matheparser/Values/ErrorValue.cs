@@ -1,36 +1,9 @@
 ﻿namespace Matheparser.Values
 {
-    internal class ErrorValue : IValue
+    internal class ErrorValue : StringValue
     {
-        private readonly System.Exception exception;
-
-        public ErrorValue(System.Exception p)
+        public ErrorValue(System.Exception exception) : base(string.Format("{0}: {1}", exception.GetType().Name, exception.Message))
         {
-            this.exception = p;
-        }
-
-        public ValueType Type
-        {
-            get
-            {
-                return ValueType.String;
-            }
-        }
-
-        public double AsDouble
-        {
-            get
-            {
-                return double.NaN;
-            }
-        }
-
-        public string AsString
-        {
-            get
-            {
-                return string.Format("{0}: {1}", this.exception.GetType().Name, this.exception.Message);
-            }
         }
     }
 }

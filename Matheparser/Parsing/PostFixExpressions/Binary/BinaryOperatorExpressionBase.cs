@@ -1,4 +1,5 @@
-﻿using Matheparser.Exceptions;
+﻿using System.Collections.Generic;
+using Matheparser.Exceptions;
 using Matheparser.Functions;
 using Matheparser.Values;
 
@@ -26,6 +27,11 @@ namespace Matheparser.Parsing.PostFixExpressions.Binary
         {
             this.Validate(operands);
 
+            if (operands[0].Type == ValueType.Set || operands[1].Type == ValueType.Set)
+            {
+                return this.EvalSet(operands[0].AsSet, operands[1].AsSet);
+            }
+
             if (operands[0].Type == ValueType.Number)
             {
                 return this.EvalNumber(operands[0].AsDouble, operands[1].AsDouble);
@@ -36,6 +42,7 @@ namespace Matheparser.Parsing.PostFixExpressions.Binary
 
         internal abstract IValue EvalString(string string1, string string2);
         internal abstract IValue EvalNumber(double double1, double double2);
+        internal abstract IValue EvalSet(HashSet<IValue> setA, HashSet<IValue> b);
 
         private void Validate(IValue[] operands)
         {
@@ -44,7 +51,7 @@ namespace Matheparser.Parsing.PostFixExpressions.Binary
                 throw new OperandNumberException();
             }
 
-            if (operands[0].Type != operands[1].Type)
+            if (operands[0].Type != operands[1].Type && operands[0].Type != ValueType.Set)
             {
                 throw new WrongOperandTypeException();
             }

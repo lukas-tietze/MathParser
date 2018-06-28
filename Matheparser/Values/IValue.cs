@@ -1,4 +1,6 @@
-﻿namespace Matheparser.Values
+﻿using System.Collections.Generic;
+
+namespace Matheparser.Values
 {
     public interface IValue
     {
@@ -13,6 +15,10 @@
         }
 
         string AsString
+        {
+            get;
+        }
+        HashSet<IValue> AsSet
         {
             get;
         }

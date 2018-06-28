@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using Matheparser.Exceptions;
 using Matheparser.Values;
@@ -21,6 +22,11 @@ namespace Matheparser.Parsing.PostFixExpressions.Binary.Arithmetic
         public override string ToString()
         {
             return "Op ^";
+        }
+
+        internal override IValue EvalSet(HashSet<IValue> setA, HashSet<IValue> b)
+        {
+            throw new InvalidOperationException();
         }
     }
 }

@@ -1,10 +1,16 @@
 ﻿using System.Collections.Generic;
+using System.Text;
 
 namespace Matheparser.Values
 {
     public class SetValue : IValue
     {
         private readonly HashSet<IValue> values;
+
+        public SetValue(HashSet<IValue> values)
+        {
+            this.values = values;
+        }
 
         public SetValue(IEnumerable<object> items)
         {
@@ -40,6 +46,14 @@ namespace Matheparser.Values
             }
         }
 
+        public HashSet<IValue> AsSet
+        {
+            get
+            {
+                return this.values;
+            }
+        }
+
         public void Union(IValue item)
         {
             this.values.Add(item);
@@ -58,6 +72,24 @@ namespace Matheparser.Values
         public void Cut(SetValue other)
         {
             this.values.IntersectWith(other.values);
+        }
+
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+
+            sb.Append("{ ");
+
+            foreach (var value in this.values)
+            {
+                sb.Append(value);
+                sb.Append(", ");
+            }
+
+            sb.Remove(sb.Length - 2, 2);
+            sb.Append(" }");
+
+            return sb.ToString();
         }
     }
 }

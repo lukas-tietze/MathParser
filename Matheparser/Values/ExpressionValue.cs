@@ -24,7 +24,7 @@
         {
             get
             {
-                if(this.lastResult == null)
+                if (this.lastResult == null)
                 {
                     this.Eval();
                 }
@@ -56,6 +56,19 @@
                 }
 
                 return this.lastResult.AsString;
+            }
+        }
+
+        public HashSet<IValue> AsSet
+        {
+            get
+            {
+                if (this.lastResult == null)
+                {
+                    this.Eval();
+                }
+
+                return this.lastResult.AsSet;
             }
         }
 
