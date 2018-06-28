@@ -17,17 +17,22 @@
             return string1.Equals(string2);
         }
 
-        internal override IValue EvalSet(HashSet<IValue> setA, HashSet<IValue> setB)
+        internal override bool CompareSet(HashSet<IValue> setA, HashSet<IValue> setB)
         {
+            if(setA.Count != setB.Count)
+            {
+                return false;
+            }
+
             foreach (var item in setA)
             {
                 if (!setB.Contains(item))
                 {
-                    return new DoubleValue(0);
+                    return false;
                 }
             }
 
-            return new DoubleValue(setA.Count == setB.Count ? 1 : 0);
+            return true;
         }
 
         public override string ToString()

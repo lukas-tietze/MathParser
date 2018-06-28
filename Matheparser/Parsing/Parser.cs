@@ -49,13 +49,19 @@
                         functionStack.Push(token.Value);
                         argCountStack.Push(0);
                         break;
+                    case TokenType.SetStart:
+                        operatorStack.Push(token.Type);
+                        functionStack.Push(new Functions.DefaultFunctions.Util.MakeSet().Name);
+                        argCountStack.Push(0);
+                        break;
+                    case TokenType.SetEnd:
                     case TokenType.FunctionEnd:
                     case TokenType.Seperator:
                         var top = operatorStack.Peek();
 
                         while (operatorStack.Count > 0)
                         {
-                            if (top == TokenType.FunctionStart || top == TokenType.Seperator)
+                            if (top == TokenType.FunctionStart || top == TokenType.Seperator || top == TokenType.SetStart)
                             {
                                 break;
                             }
@@ -67,11 +73,11 @@
                             top = operatorStack.Peek();
                         }
 
-                        if (token.Type == TokenType.FunctionEnd)
+                        if (token.Type == TokenType.FunctionEnd || token.Type == TokenType.SetEnd)
                         {
                             var argCount = argCountStack.Pop();
 
-                            if (this.tokens[i - 1].Type != TokenType.FunctionStart)
+                            if (this.tokens[i - 1].Type != TokenType.FunctionStart || this.tokens[i - 1].Type != TokenType.SetStart)
                             {
                                 argCount++;
                             }
@@ -84,8 +90,6 @@
                         }
 
                         break;
-                    case TokenType.SetStart:
-                    case TokenType.SetEnd:
                     case TokenType.AccessorStart:
                     case TokenType.AccessorEnd:
                         throw new NotImplementedException();
@@ -169,6 +173,8 @@
                     throw new ArgumentException();
                 case TokenType.FunctionStart:
                 case TokenType.FunctionEnd:
+                case TokenType.SetStart:
+                case TokenType.SetEnd:
                     return null;
                 case TokenType.OpeningBracket:
                 case TokenType.ClosingBracket:

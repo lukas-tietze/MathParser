@@ -1,6 +1,8 @@
 ﻿namespace Matheparser.Parsing.PostFixExpressions.Binary.Compare
 {
+    using System.Collections.Generic;
     using System.Diagnostics;
+    using Matheparser.Values;
 
     [DebuggerDisplay("Operator >")]
     public sealed class GreaterExpression : CompareOperatorBase
@@ -13,6 +15,11 @@
         internal override bool CompareString(string string1, string string2)
         {
             return string1.CompareTo(string2) > 0;
+        }
+
+        internal override bool CompareSet(HashSet<IValue> setA, HashSet<IValue> setB)
+        {
+            return this.CompareNumber(setA.Count, setB.Count);
         }
 
         public override string ToString()

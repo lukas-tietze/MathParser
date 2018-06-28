@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using Matheparser.Exceptions;
 using Matheparser.Values;
@@ -16,6 +17,21 @@ namespace Matheparser.Parsing.PostFixExpressions.Binary.Arithmetic
         internal override IValue EvalString(string string1, string string2)
         {
             throw new InvalidOperationException();
+        }
+
+        internal override IValue EvalSet(HashSet<IValue> setA, HashSet<IValue> setB)
+        {
+            var res = new HashSet<IValue>();
+
+            foreach(var item in setA)
+            {
+                if(!setB.Contains(item))
+                {
+                    res.Add(item);
+                }
+            }
+
+            return new SetValue(res);
         }
 
         public override string ToString()

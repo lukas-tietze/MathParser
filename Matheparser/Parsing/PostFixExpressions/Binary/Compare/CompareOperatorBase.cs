@@ -15,9 +15,9 @@
             return new DoubleValue(this.CompareString(string1, string2) ? 1 : 0);
         }
 
-        internal override IValue EvalSet(HashSet<IValue> setA, HashSet<IValue> b)
+        internal override IValue EvalSet(HashSet<IValue> setA, HashSet<IValue> setB)
         {
-            
+            return new DoubleValue(this.CompareSet(setA, setB) ? 1 : 0);
         }
 
         internal abstract bool CompareNumber(double double1, double double2);

@@ -42,7 +42,7 @@ namespace Matheparser.Parsing.PostFixExpressions.Binary
 
         internal abstract IValue EvalString(string string1, string string2);
         internal abstract IValue EvalNumber(double double1, double double2);
-        internal abstract IValue EvalSet(HashSet<IValue> setA, HashSet<IValue> b);
+        internal abstract IValue EvalSet(HashSet<IValue> setA, HashSet<IValue> setB);
 
         private void Validate(IValue[] operands)
         {

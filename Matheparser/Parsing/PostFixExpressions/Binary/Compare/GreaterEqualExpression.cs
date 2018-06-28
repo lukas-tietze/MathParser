@@ -17,6 +17,11 @@
             return string1.CompareTo(string2) >= 0;
         }
 
+        internal override bool CompareSet(HashSet<IValue> setA, HashSet<IValue> setB)
+        {
+            return this.CompareNumber(setA.Count, setB.Count);
+        }
+
         public override string ToString()
         {
             return "Op >=";

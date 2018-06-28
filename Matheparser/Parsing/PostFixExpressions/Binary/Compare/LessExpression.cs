@@ -1,6 +1,8 @@
 ﻿namespace Matheparser.Parsing.PostFixExpressions.Binary.Compare
 {
+    using System.Collections.Generic;
     using System.Diagnostics;
+    using Matheparser.Values;
 
     [DebuggerDisplay("Operator <")]
     public sealed class LessExpression : CompareOperatorBase
@@ -18,6 +20,11 @@
         public override string ToString()
         {
             return "Op <";
+        }
+
+        internal override bool CompareSet(HashSet<IValue> setA, HashSet<IValue> setB)
+        {
+            return this.CompareNumber(setA.Count, setB.Count);
         }
     }
 }

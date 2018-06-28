@@ -1,4 +1,6 @@
-﻿namespace Matheparser.Values
+﻿using System.Collections.Generic;
+
+namespace Matheparser.Values
 {
     public class DoubleValue : IValue
     {
@@ -36,6 +38,14 @@
                 }
 
                 return this.asString;
+            }
+        }
+
+        public HashSet<IValue> AsSet
+        {
+            get
+            {
+                return new HashSet<IValue>(new[] { this });
             }
         }
 
