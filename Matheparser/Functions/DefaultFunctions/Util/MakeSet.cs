@@ -19,7 +19,7 @@ namespace Matheparser.Functions.DefaultFunctions.Util
 
         public override IValue Eval(IValue[] parameters)
         {
-            return new SetValue(parameters);
+            return new ArrayValue(parameters);
         }
     }
 }

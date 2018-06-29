@@ -17,7 +17,7 @@ namespace Matheparser.Functions.DefaultFunctions.Text
         {
             this.Validate(parameters);
 
-            return new DoubleValue(double.Parse(parameters[0].ToString()));
+            return new DoubleValue(double.Parse(parameters[0].ToString(), this.Context.Culture));
         }
 
         private void Validate(IValue[] parameters)

@@ -4,16 +4,16 @@
     using System.Text;
     using Matheparser.Util;
 
-    public class SetValue : IValue
+    public class ArrayValue : IValue
     {
         private readonly ListArray values;
 
-        public SetValue()
+        public ArrayValue()
         {
             this.values = new ListArray();
         }
 
-        public SetValue(IEnumerable<IValue> values):
+        public ArrayValue(IEnumerable<IValue> values):
             this()
         {
             foreach (var item in values)
@@ -22,7 +22,7 @@
             }
         }
 
-        public SetValue(IEnumerable<object> items) :
+        public ArrayValue(IEnumerable<object> items) :
             this()
         {
             foreach (var item in items)
@@ -83,7 +83,7 @@
 
         public override bool Equals(object obj)
         {
-            return obj is SetValue value &&
+            return obj is ArrayValue value &&
                    EqualityComparer<IArray>.Default.Equals(this.values, value.values);
         }
 

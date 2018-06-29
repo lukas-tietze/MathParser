@@ -78,7 +78,7 @@
 
         private IValue Extract(IArray set, int start, int end)
         {
-            return new SetValue(set.Range(start, end));
+            return new ArrayValue(set.Range(start, end));
         }
 
         private IValue Extract(IArray set, IArray selection)
@@ -95,7 +95,7 @@
                 res.Add(set.At((int)item.AsDouble));
             }
 
-            return new SetValue(res);
+            return new ArrayValue(res);
         }
 
         private void Validate(IValue[] parameters)

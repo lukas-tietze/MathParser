@@ -1,5 +1,7 @@
 ﻿namespace Matheparser
 {
+    using System.Globalization;
+
     public interface IConfig
     {
         bool IsOpeningBracket(char c);
@@ -29,5 +31,10 @@
         }
 
         IConfig Clone();
+
+        CultureInfo Culture
+        {
+            get;
+        }
     }
 }

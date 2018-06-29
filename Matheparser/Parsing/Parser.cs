@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using Matheparser.Parsing.PostFixExpressions;
     using Matheparser.Parsing.PostFixExpressions.Binary.Arithmetic;
     using Matheparser.Parsing.PostFixExpressions.Binary.Compare;

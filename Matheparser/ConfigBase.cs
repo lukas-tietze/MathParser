@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace Matheparser
 {
@@ -13,6 +14,7 @@ namespace Matheparser
         private readonly char[] closingBrackets;
         private char[] openingArrayBrackets;
         private char[] closingArrayBrackets;
+        private CultureInfo culture;
 
         public static IConfig DefaultConfig
         {
@@ -46,6 +48,18 @@ namespace Matheparser
             if (!this.Validate())
             {
                 throw new ArgumentException();
+            }
+
+            this.culture = (CultureInfo)CultureInfo.CurrentCulture.Clone();
+
+            this.culture.NumberFormat.NumberDecimalSeparator = this.decimalSeperator.ToString();
+        }
+
+        public CultureInfo Culture
+        {
+            get
+            {
+                return this.culture;
             }
         }
 
