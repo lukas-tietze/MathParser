@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using Matheparser.Exceptions;
-using Matheparser.Values;
-
-namespace Matheparser.Parsing.PostFixExpressions.Unary
+﻿namespace Matheparser.Parsing.PostFixExpressions.Unary
 {
+    using System;
+    using System.Diagnostics;
+    using Matheparser.Util;
+    using Matheparser.Values;
+
     [DebuggerDisplay("Operator !")]
     public class NotExpression : UnaryOperatorExpressionBase
     {
@@ -19,7 +18,7 @@ namespace Matheparser.Parsing.PostFixExpressions.Unary
             throw new InvalidOperationException();
         }
 
-        internal override IValue EvalSet(HashSet<IValue> operand)
+        internal override IValue EvalSet(IArray operand)
         {
             throw new NotSupportedException();
         }

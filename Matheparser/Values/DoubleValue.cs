@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Matheparser.Util;
 
 namespace Matheparser.Values
 {
@@ -41,18 +42,17 @@ namespace Matheparser.Values
             }
         }
 
-        public IEnumerable<IValue> AsSet
+        public IArray AsSet
         {
             get
             {
-                return new HashSet<IValue>(new[] { this });
+                return new ListArray(this);
             }
         }
 
         public override bool Equals(object obj)
         {
-            var value = obj as DoubleValue;
-            return value != null &&
+            return obj is DoubleValue value &&
                    this.value == value.value;
         }
 

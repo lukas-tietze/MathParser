@@ -4,6 +4,7 @@
     using Matheparser.Functions;
     using Matheparser.Parsing.Evaluation;
     using Matheparser.Parsing.PostFixExpressions;
+    using Matheparser.Util;
 
     public sealed class ExpressionValue : IValue
     {
@@ -59,7 +60,7 @@
             }
         }
 
-        public IEnumerable<IValue> AsSet
+        public IArray AsSet
         {
             get
             {

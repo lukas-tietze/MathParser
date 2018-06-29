@@ -1,8 +1,7 @@
 ﻿namespace Matheparser.Parsing.PostFixExpressions.Binary.Compare
 {
-    using System.Collections.Generic;
     using System.Diagnostics;
-    using Matheparser.Values;
+    using Matheparser.Util;
 
     [DebuggerDisplay("Operator ==")]
     public sealed class EqualExpression : CompareOperatorBase
@@ -17,22 +16,9 @@
             return string1.Equals(string2);
         }
 
-        internal override bool CompareSet(HashSet<IValue> setA, HashSet<IValue> setB)
+        internal override bool CompareSet(IArray setA, IArray setB)
         {
-            if(setA.Count != setB.Count)
-            {
-                return false;
-            }
-
-            foreach (var item in setA)
-            {
-                if (!setB.Contains(item))
-                {
-                    return false;
-                }
-            }
-
-            return true;
+            return setA.Equals(setB);
         }
 
         public override string ToString()

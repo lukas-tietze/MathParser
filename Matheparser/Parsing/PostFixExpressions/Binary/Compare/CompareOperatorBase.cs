@@ -1,6 +1,6 @@
 ﻿namespace Matheparser.Parsing.PostFixExpressions.Binary.Compare
 {
-    using System.Collections.Generic;
+    using Matheparser.Util;
     using Matheparser.Values;
 
     public abstract class CompareOperatorBase : BinaryOperatorExpressionBase
@@ -15,7 +15,7 @@
             return new DoubleValue(this.CompareString(string1, string2) ? 1 : 0);
         }
 
-        internal override IValue EvalSet(HashSet<IValue> setA, HashSet<IValue> setB)
+        internal override IValue EvalSet(IArray setA, IArray setB)
         {
             return new DoubleValue(this.CompareSet(setA, setB) ? 1 : 0);
         }
@@ -24,6 +24,6 @@
 
         internal abstract bool CompareString(string string1, string string2);
 
-        internal abstract bool CompareSet(HashSet<IValue> setA, HashSet<IValue> setB);
+        internal abstract bool CompareSet(IArray setA, IArray setB);
     }
 }

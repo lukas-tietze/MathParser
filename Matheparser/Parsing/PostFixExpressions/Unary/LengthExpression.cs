@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using Matheparser.Values;
-
-namespace Matheparser.Parsing.PostFixExpressions.Unary
+﻿namespace Matheparser.Parsing.PostFixExpressions.Unary
 {
+    using System;
+    using Matheparser.Util;
+    using Matheparser.Values;
+
     public class LengthExpression : UnaryOperatorExpressionBase
     {
         internal override IValue EvalNumber(double operand)
@@ -16,7 +16,7 @@ namespace Matheparser.Parsing.PostFixExpressions.Unary
             return new DoubleValue(operand.Length);
         }
 
-        internal override IValue EvalSet(HashSet<IValue> operand)
+        internal override IValue EvalSet(IArray operand)
         {
             return new DoubleValue(operand.Count);
         }

@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using Matheparser.Values;
-
-namespace Matheparser.Parsing.PostFixExpressions.Binary.Arithmetic
+﻿namespace Matheparser.Parsing.PostFixExpressions.Binary.Arithmetic
 {
+    using System;
+    using System.Diagnostics;
+    using Matheparser.Util;
+    using Matheparser.Values;
+
     [DebuggerDisplay("Operator /")]
     public sealed class DivExpression : BinaryOperatorExpressionBase
     {
@@ -18,7 +18,7 @@ namespace Matheparser.Parsing.PostFixExpressions.Binary.Arithmetic
             throw new InvalidOperationException();
         }
 
-        internal override IValue EvalSet(HashSet<IValue> setA, HashSet<IValue> b)
+        internal override IValue EvalSet(IArray setA, IArray setB)
         {
             throw new NotSupportedException();
         }

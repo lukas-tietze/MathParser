@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="ConfigBase.cs" />
     <Compile Include="Exceptions\CalculationException.cs" />
+    <Compile Include="Exceptions\IndexOutOfBoundsException.cs" />
     <Compile Include="Functions\DefaultFunctions\Calculations\Abs.cs" />
     <Compile Include="Functions\DefaultFunctions\Calculations\Exp.cs" />
     <Compile Include="Functions\DefaultFunctions\Calculations\Fac.cs" />
@@ -75,6 +76,8 @@
     <Compile Include="Functions\DefaultFunctions\File\BaseDir.cs" />
     <Compile Include="Functions\DefaultFunctions\File\FileFunctionBase.cs" />
     <Compile Include="Functions\DefaultFunctions\File\PathConcat.cs" />
+    <Compile Include="Functions\DefaultFunctions\Set\At.cs" />
+    <Compile Include="Functions\DefaultFunctions\Set\Range.cs" />
     <Compile Include="Functions\DefaultFunctions\Text\Concat.cs" />
     <Compile Include="Functions\DefaultFunctions\Text\Format.cs" />
     <Compile Include="Functions\DefaultFunctions\Text\Len.cs" />
@@ -100,8 +103,8 @@
     <Compile Include="Functions\IFunction.cs" />
     <Compile Include="Parsing\PostFixExpressions\Functions\FunctionExpression.cs" />
     <Compile Include="Parsing\PostFixExpressions\Unary\LengthExpression.cs" />
-    <Compile Include="Util\HashSet.cs" />
-    <Compile Include="Util\ISet.cs" />
+    <Compile Include="Util\IArray.cs" />
+    <Compile Include="Util\ListArray.cs" />
     <Compile Include="Values\EmptyValue.cs" />
     <Compile Include="Values\ExpressionValue.cs" />
     <Compile Include="Values\SetValue.cs" />
@@ -158,8 +161,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Functions\DefaultFunctions\Set\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

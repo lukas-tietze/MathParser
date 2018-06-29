@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Matheparser.Exceptions;
 using Matheparser.Functions;
+using Matheparser.Util;
 using Matheparser.Values;
 
 namespace Matheparser.Parsing.PostFixExpressions.Binary
@@ -42,7 +43,7 @@ namespace Matheparser.Parsing.PostFixExpressions.Binary
 
         internal abstract IValue EvalString(string string1, string string2);
         internal abstract IValue EvalNumber(double double1, double double2);
-        internal abstract IValue EvalSet(HashSet<IValue> setA, HashSet<IValue> setB);
+        internal abstract IValue EvalSet(IArray setA, IArray setB);
 
         private void Validate(IValue[] operands)
         {

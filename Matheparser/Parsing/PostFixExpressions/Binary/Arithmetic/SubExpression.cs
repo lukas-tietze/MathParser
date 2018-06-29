@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using Matheparser.Exceptions;
-using Matheparser.Values;
-
-namespace Matheparser.Parsing.PostFixExpressions.Binary.Arithmetic
+﻿namespace Matheparser.Parsing.PostFixExpressions.Binary.Arithmetic
 {
+    using System;
+    using System.Diagnostics;
+    using Matheparser.Util;
+    using Matheparser.Values;
+
     [DebuggerDisplay("Operator -")]
     public sealed class SubExpression : BinaryOperatorExpressionBase
     {
@@ -19,19 +18,9 @@ namespace Matheparser.Parsing.PostFixExpressions.Binary.Arithmetic
             throw new InvalidOperationException();
         }
 
-        internal override IValue EvalSet(HashSet<IValue> setA, HashSet<IValue> setB)
+        internal override IValue EvalSet(IArray setA, IArray setB)
         {
-            var res = new HashSet<IValue>();
-
-            foreach(var item in setA)
-            {
-                if(!setB.Contains(item))
-                {
-                    res.Add(item);
-                }
-            }
-
-            return new SetValue(res);
+            return new SetValue(setA.Except(setB));
         }
 
         public override string ToString()

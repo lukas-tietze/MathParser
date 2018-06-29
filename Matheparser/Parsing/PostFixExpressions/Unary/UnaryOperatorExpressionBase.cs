@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Matheparser.Exceptions;
 using Matheparser.Functions;
+using Matheparser.Util;
 using Matheparser.Values;
 
 namespace Matheparser.Parsing.PostFixExpressions.Unary
@@ -41,7 +42,7 @@ namespace Matheparser.Parsing.PostFixExpressions.Unary
             }
         }
 
-        internal abstract IValue EvalSet(HashSet<IValue> operand);
+        internal abstract IValue EvalSet(IArray operand);
         internal abstract IValue EvalNumber(double operand);
         internal abstract IValue EvalString(string operand);
 

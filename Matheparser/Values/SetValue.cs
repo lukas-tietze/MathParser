@@ -1,21 +1,30 @@
-﻿using System.Collections.Generic;
-using System.Text;
-
-namespace Matheparser.Values
+﻿namespace Matheparser.Values
 {
+    using System.Collections.Generic;
+    using System.Text;
+    using Matheparser.Util;
+
     public class SetValue : IValue
     {
-        private readonly HashSet<IValue> values;
+        private readonly ListArray values;
 
-        public SetValue(HashSet<IValue> values)
+        public SetValue()
         {
-            this.values = values;
+            this.values = new ListArray();
         }
 
-        public SetValue(IEnumerable<object> items)
+        public SetValue(IEnumerable<IValue> values):
+            this()
         {
-            this.values = new HashSet<IValue>();
+            foreach (var item in values)
+            {
+                this.values.Add(item);
+            }
+        }
 
+        public SetValue(IEnumerable<object> items) :
+            this()
+        {
             foreach (var item in items)
             {
                 this.values.Add(ValueCreator.Create(item));
@@ -46,7 +55,7 @@ namespace Matheparser.Values
             }
         }
 
-        public IEnumerable<IValue> AsSet
+        public IArray AsSet
         {
             get
             {
@@ -74,14 +83,13 @@ namespace Matheparser.Values
 
         public override bool Equals(object obj)
         {
-            var value = obj as SetValue;
-            return value != null &&
-                   EqualityComparer<HashSet<IValue>>.Default.Equals(this.values, value.values);
+            return obj is SetValue value &&
+                   EqualityComparer<IArray>.Default.Equals(this.values, value.values);
         }
 
         public override int GetHashCode()
         {
-            return 1649527923 + EqualityComparer<HashSet<IValue>>.Default.GetHashCode(this.values);
+            return 1649527923 + EqualityComparer<IArray>.Default.GetHashCode(this.values);
         }
     }
 }

@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace Matheparser.Values
+﻿namespace Matheparser.Values
 {
+    using Matheparser.Util;
+
     public interface IValue
     {
         ValueType Type
@@ -19,7 +19,7 @@ namespace Matheparser.Values
             get;
         }
 
-        IEnumerable<IValue> AsSet
+        IArray AsSet
         {
             get;
         }

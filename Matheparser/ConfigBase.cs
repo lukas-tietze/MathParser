@@ -19,9 +19,9 @@ namespace Matheparser
             get
             {
                 return new ConfigBase(
-                    decimalSeperator: ',',
-                    stringSeperator: '\"',
-                    listSeperator: ';',
+                    decimalSeperator: '.',
+                    stringSeperator: '\'',
+                    listSeperator: ',',
                     stringEscapeChar: '\\',
                     openingBrackets: new char[] { '(' },
                     closingBrackets: new char[] { ')' }
