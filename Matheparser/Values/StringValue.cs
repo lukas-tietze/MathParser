@@ -43,6 +43,18 @@ namespace Matheparser.Values
             }
         }
 
+        public override bool Equals(object obj)
+        {
+            var value = obj as StringValue;
+            return value != null &&
+                   this.value == value.value;
+        }
+
+        public override int GetHashCode()
+        {
+            return -1584136870 + EqualityComparer<string>.Default.GetHashCode(this.value);
+        }
+
         public override string ToString()
         {
             return this.value;

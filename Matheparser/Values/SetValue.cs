@@ -91,5 +91,17 @@ namespace Matheparser.Values
 
             return sb.ToString();
         }
+
+        public override bool Equals(object obj)
+        {
+            var value = obj as SetValue;
+            return value != null &&
+                   EqualityComparer<HashSet<IValue>>.Default.Equals(this.values, value.values);
+        }
+
+        public override int GetHashCode()
+        {
+            return 1649527923 + EqualityComparer<HashSet<IValue>>.Default.GetHashCode(this.values);
+        }
     }
 }
