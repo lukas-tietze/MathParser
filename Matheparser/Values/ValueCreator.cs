@@ -36,7 +36,12 @@ namespace Matheparser.Values
                 return new DoubleValue(res);
             }
 
-            return new StringValue(expression);
+            if(expression.StartsWith("\"") && expression.EndsWith("\""))
+            {
+                return new StringValue(expression);
+            }
+
+            return new Solving.Calculator().Calculate(expression);
         }
 
         public static IValue Create(IEnumerable<object> value)
