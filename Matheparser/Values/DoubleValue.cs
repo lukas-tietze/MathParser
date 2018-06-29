@@ -41,7 +41,7 @@ namespace Matheparser.Values
             }
         }
 
-        public HashSet<IValue> AsSet
+        public IEnumerable<IValue> AsSet
         {
             get
             {

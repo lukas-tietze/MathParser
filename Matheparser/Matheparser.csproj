@@ -100,6 +100,8 @@
     <Compile Include="Functions\IFunction.cs" />
     <Compile Include="Parsing\PostFixExpressions\Functions\FunctionExpression.cs" />
     <Compile Include="Parsing\PostFixExpressions\Unary\LengthExpression.cs" />
+    <Compile Include="Util\HashSet.cs" />
+    <Compile Include="Util\ISet.cs" />
     <Compile Include="Values\EmptyValue.cs" />
     <Compile Include="Values\ExpressionValue.cs" />
     <Compile Include="Values\SetValue.cs" />

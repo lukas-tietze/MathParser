@@ -46,32 +46,12 @@ namespace Matheparser.Values
             }
         }
 
-        public HashSet<IValue> AsSet
+        public IEnumerable<IValue> AsSet
         {
             get
             {
                 return this.values;
             }
-        }
-
-        public void Union(IValue item)
-        {
-            this.values.Add(item);
-        }
-
-        public void Cut(IValue item)
-        {
-            this.values.Remove(item);
-        }
-
-        public void Union(SetValue other)
-        {
-            this.values.UnionWith(other.values);
-        }
-
-        public void Cut(SetValue other)
-        {
-            this.values.IntersectWith(other.values);
         }
 
         public override string ToString()

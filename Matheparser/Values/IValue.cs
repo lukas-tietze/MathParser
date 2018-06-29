@@ -18,7 +18,8 @@ namespace Matheparser.Values
         {
             get;
         }
-        HashSet<IValue> AsSet
+
+        IEnumerable<IValue> AsSet
         {
             get;
         }
