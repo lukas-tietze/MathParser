@@ -1,9 +1,9 @@
-﻿using System.Diagnostics;
-using Matheparser.Functions;
-using Matheparser.Values;
-
-namespace Matheparser.Parsing.PostFixExpressions
+﻿namespace Matheparser.Parsing.PostFixExpressions
 {
+    using System.Diagnostics;
+    using Matheparser.Functions;
+    using Matheparser.Values;
+
     [DebuggerDisplay("Value={this.value}")]
     public class ValueExpression : IPostFixExpression
     {

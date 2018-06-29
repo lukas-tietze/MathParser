@@ -31,7 +31,8 @@ namespace Matheparser.Values
 
         public static IValue Create(string expression)
         {
-            if (double.TryParse(expression, System.Globalization.NumberStyles.AllowDecimalPoint, config.Culture, out var res))
+            ////if (double.TryParse(expression, System.Globalization.NumberStyles.AllowDecimalPoint, config.Culture, out var res))
+            if (double.TryParse(expression, out var res))
             {
                 return new DoubleValue(res);
             }

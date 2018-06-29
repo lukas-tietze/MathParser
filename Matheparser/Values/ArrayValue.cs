@@ -1,9 +1,11 @@
 ﻿namespace Matheparser.Values
 {
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Text;
     using Matheparser.Util;
 
+    [DebuggerDisplay("Array: Count={values.Count}")]
     public class ArrayValue : IValue
     {
         private readonly ListArray values;

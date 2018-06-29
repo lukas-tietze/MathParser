@@ -35,8 +35,10 @@
                 switch (token.Type)
                 {
                     case TokenType.String:
-                    case TokenType.Number:
                         expressions.Add(new ValueExpression(token.Value));
+                        break;
+                    case TokenType.Number:
+                        expressions.Add(new ValueExpression(double.Parse(token.Value, this.config.Culture)));
                         break;
                     case TokenType.Identifier:
                         expressions.Add(new VariableExpression(token.Value));
