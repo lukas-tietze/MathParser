@@ -112,30 +112,36 @@
         private static void Out(string format, params object[] args)
         {
             outWriter.Write(format, args);
+            outWriter.Flush();
         }
         private static void OutLine(string format, params object[] args)
         {
             outWriter.WriteLine(format, args);
+            outWriter.Flush();
         }
 
         private static void OutLine()
         {
             outWriter.WriteLine();
+            outWriter.Flush();
         }
 
         private static void Err(string format, params object[] args)
         {
             errWriter.Write(format, args);
+            errWriter.Flush();
         }
 
         private static void ErrLine(string format, params object[] args)
         {
             errWriter.WriteLine(format, args);
+            errWriter.Flush();
         }
 
         private static void ErrLine()
         {
             errWriter.WriteLine();
+            errWriter.Flush();
         }
 
         private static TextWriter Open(string expression)
