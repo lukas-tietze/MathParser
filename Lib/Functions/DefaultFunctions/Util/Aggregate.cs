@@ -36,7 +36,7 @@ namespace Matheparser.Functions.DefaultFunctions.Util
                 var parser = new Parser(tokenizer.Tokens, config);
                 evaluator = new PostFixEvaluator(parser.CreatePostFixExpression(), config);
             }
-            catch (System.Exception e)
+            catch (System.Exception)
             {
                 throw new OperandEvaluationException();
             }

@@ -1,76 +1,165 @@
-﻿using System;
-using Matheparser;
-using Matheparser.Exceptions;
-using Matheparser.Functions;
-using Matheparser.Parsing;
-using Matheparser.Solving;
-using Matheparser.Tokenizing;
-using Matheparser.Values;
-using Matheparser.Variables;
-
-namespace TestTerminal
+﻿namespace Terminal
 {
+    using System;
+    using System.IO;
+    using Matheparser;
+    using Matheparser.Exceptions;
+    using Matheparser.Functions;
+    using Matheparser.Parsing;
+    using Matheparser.Solving;
+    using Matheparser.Tokenizing;
+    using Matheparser.Values;
+    using Matheparser.Variables;
+
     public static class Program
     {
         private static CalculationContext context;
+        private static TextWriter outWriter;
+        private static TextWriter errWriter;
 
         [STAThread]
         public static void Main(string[] args)
         {
             context = new CalculationContext(new VariableManager(true), new FunctionManager(true), ConfigBase.DefaultConfig);
+            outWriter = Console.Out;
+            errWriter = Console.Error;
+
+            foreach (var arg in args)
+            {
+                Eval(arg);
+            }
 
             var quit = false;
 
             while (!quit)
             {
-                var input = Console.ReadLine();
+                quit = Eval(Console.ReadLine());
+            }
 
-                try
+            CloseStream(outWriter);
+            CloseStream(errWriter);
+        }
+
+        private static bool Eval(string input)
+        {
+            var quit = false;
+
+            try
+            {
+                if (input.StartsWith(":"))
                 {
-                    if (input.StartsWith(":"))
-                    {
-                        SplitKeyValue(input, out var command, out var expression);
+                    SplitKeyValue(input, out var command, out var expression);
 
-                        switch (command.Substring(1))
-                        {
-                            case "tokenize":
-                                Tokenize(expression);
-                                break;
-                            case "parse":
-                                Parse(expression);
-                                break;
-                            case "def":
-                            case "define":
-                            case "defvar":
-                                Define(expression, true);
-                                break;
-                            case "defexp":
-                                Define(expression, false);
-                                break;
-                            case "undef":
-                                Undefine(expression);
-                                break;
-                            case "quit":
-                                quit = true;
-                                break;
-                            case "solve":
-                                Solve(expression);
-                                break;
-                            default:
-                                Console.WriteLine("Undefined command \"{0}\"", command);
-                                break;
-                        }
-                    }
-                    else
+                    switch (command.Substring(1))
                     {
-                        Solve(input);
+                        case "tokenize":
+                            Tokenize(expression);
+                            break;
+                        case "parse":
+                            Parse(expression);
+                            break;
+                        case "def":
+                        case "define":
+                            Define(expression, true);
+                            break;
+                        case "defexp":
+                            Define(expression, false);
+                            break;
+                        case "undef":
+                            Undefine(expression);
+                            break;
+                        case "quit":
+                            quit = true;
+                            break;
+                        case "solve":
+                            Solve(expression);
+                            break;
+                        case "load":
+                            Load(expression);
+                            break;
+                        case "err":
+                            CloseStream(errWriter);
+                            errWriter = Open(expression);
+                            break;
+                        case "out":
+                            CloseStream(outWriter);
+                            outWriter = Open(expression);
+                            break;
+                        default:
+                            ErrLine("Undefined command \"{0}\"", command);
+                            break;
                     }
-
                 }
-                catch (Exception e)
+                else
                 {
-                    HandleException(e);
+                    Solve(input);
                 }
+            }
+            catch (Exception e)
+            {
+                HandleException(e);
+            }
+
+            return quit;
+        }
+
+        private static void CloseStream(TextWriter writer)
+        {
+            writer.Flush();
+            writer.Close();
+            writer.Dispose();
+        }
+        private static void Out(string format, params object[] args)
+        {
+            outWriter.Write(format, args);
+        }
+        private static void OutLine(string format, params object[] args)
+        {
+            outWriter.WriteLine(format, args);
+        }
+
+        private static void OutLine()
+        {
+            outWriter.WriteLine();
+        }
+
+        private static void Err(string format, params object[] args)
+        {
+            errWriter.Write(format, args);
+        }
+
+        private static void ErrLine(string format, params object[] args)
+        {
+            errWriter.WriteLine(format, args);
+        }
+
+        private static void ErrLine()
+        {
+            errWriter.WriteLine();
+        }
+
+        private static TextWriter Open(string expression)
+        {
+            if ("<stdout>".Equals(expression.ToLower()))
+            {
+                return Console.Out;
+            }
+
+            if ("<stderr>".Equals(expression.ToLower()))
+            {
+                return Console.Error;
+            }
+
+            return new StreamWriter(new FileStream(expression.Trim(), FileMode.Append, FileAccess.Write));
+        }
+
+        private static void Load(string expression)
+        {
+            var allLines = File.ReadAllLines(expression.Trim());
+
+            foreach (var line in allLines)
+            {
+                Eval(line);
             }
         }
 
@@ -78,11 +167,11 @@ namespace TestTerminal
         {
             if (e.GetType().Namespace.StartsWith(nameof(Matheparser)))
             {
-                Console.WriteLine("Error: {0}", e.Message);
+                ErrLine("Error: {0}", e.Message);
             }
             else
             {
-                Console.WriteLine("Unhandled Exception of Type {0}: \"{1}\"", e.GetType().Name, e.Message);
+                ErrLine("Unhandled Exception of Type {0}: \"{1}\"", e.GetType().Name, e.Message);
             }
         }
 
@@ -119,7 +208,7 @@ namespace TestTerminal
             if (keyEnd < input.Length && keyStart < keyEnd)
             {
                 key = input.Substring(keyStart, keyEnd - keyStart);
-                value = input.Substring(keyEnd);
+                value = input.Substring(keyEnd + 1);
             }
 
             key = key.Trim().ToLower();
@@ -132,7 +221,7 @@ namespace TestTerminal
 
         private static string QueryInput(string question)
         {
-            Console.WriteLine(question);
+            OutLine(question);
             return Console.ReadLine();
         }
 
@@ -150,7 +239,7 @@ namespace TestTerminal
 
             if (string.IsNullOrEmpty(value))
             {
-                Console.WriteLine("> Missing value!");
+                OutLine("> Missing value!");
                 return;
             }
 
@@ -176,7 +265,7 @@ namespace TestTerminal
 
             context.VariableManager.Define(newVar);
 
-            Console.WriteLine("> Defined {0} as {1}.", newVar.Name, newVar.Value);
+            OutLine("> Defined {0} as {1}.", newVar.Name, newVar.Value);
         }
 
         private static void Solve(string expression)
@@ -188,7 +277,7 @@ namespace TestTerminal
 
             var calculator = new Calculator();
             var res = calculator.Calculate(expression);
-            Console.WriteLine("> {0}", res.ToString());
+            OutLine("> {0}", res.ToString());
         }
 
         private static void Parse(string expression)
@@ -205,15 +294,15 @@ namespace TestTerminal
 
             for (var i = 0; i < postFix.Count; i++)
             {
-                Console.Write("({0})", postFix[i].ToString());
+                Out("({0})", postFix[i].ToString());
 
                 if (i != postFix.Count - 1)
                 {
-                    Console.Write(", ");
+                    Out(", ");
                 }
                 else
                 {
-                    Console.WriteLine();
+                    OutLine();
                 }
             }
         }
@@ -232,15 +321,15 @@ namespace TestTerminal
             {
                 for (var i = 0; i < tokenizer.Tokens.Count; i++)
                 {
-                    Console.Write(string.Format("({0}:{1})", tokenizer.Tokens[i].Type, tokenizer.Tokens[i].Value));
+                    Out(string.Format("({0}:{1})", tokenizer.Tokens[i].Type, tokenizer.Tokens[i].Value));
 
                     if (i != tokenizer.Tokens.Count - 1)
                     {
-                        Console.Write(", ");
+                        Out(", ");
                     }
                     else
                     {
-                        Console.WriteLine();
+                        OutLine();
                     }
                 }
             }
