@@ -37,12 +37,7 @@ namespace Matheparser.Values
                 return new DoubleValue(res);
             }
 
-            if (expression.StartsWith("\"") && expression.EndsWith("\""))
-            {
-                return new StringValue(expression);
-            }
-
-            return new Solving.Calculator().Calculate(expression);
+            return new StringValue(expression);
         }
 
         public static IValue Create(IEnumerable<object> value)

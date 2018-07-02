@@ -22,7 +22,7 @@ namespace Matheparser
             {
                 return new ConfigBase(
                     decimalSeperator: '.',
-                    stringSeperator: '\'',
+                    stringSeperator: '"',
                     listSeperator: ',',
                     stringEscapeChar: '\\',
                     openingBrackets: new char[] { '(' },

@@ -14,34 +14,34 @@
     public static class Program
     {
         private static CalculationContext context;
-        private static TextWriter outWriter;
-        private static TextWriter errWriter;
+        private static string workingDirectory;
 
         [STAThread]
         public static void Main(string[] args)
         {
             context = new CalculationContext(new VariableManager(true), new FunctionManager(true), ConfigBase.DefaultConfig);
-            outWriter = Console.Out;
-            errWriter = Console.Error;
-
-            foreach (var arg in args)
-            {
-                Eval(arg);
-            }
+            workingDirectory = Directory.GetCurrentDirectory();
 
             var quit = false;
+
+            for (int i = 0; i < args.Length && !quit; i++)
+            {
+                quit = Eval(args[i]);
+            }
 
             while (!quit)
             {
                 quit = Eval(Console.ReadLine());
             }
-
-            CloseStream(outWriter);
-            CloseStream(errWriter);
         }
 
         private static bool Eval(string input)
         {
+            if (string.IsNullOrEmpty(input))
+            {
+                return false;
+            }
+
             var quit = false;
 
             try
@@ -75,18 +75,31 @@
                             Solve(expression);
                             break;
                         case "load":
-                            Load(expression);
+                            quit = Load(expression);
                             break;
                         case "err":
-                            CloseStream(errWriter);
-                            errWriter = Open(expression);
+                            Console.SetError(OpenOut(expression));
                             break;
                         case "out":
-                            CloseStream(outWriter);
-                            outWriter = Open(expression);
+                            Console.SetOut(OpenOut(expression));
+                            break;
+                        case "in":
+                            Console.SetIn(OpenIn(expression));
+                            break;
+                        case "dir":
+                            ChangeDir(expression);
+                            break;
+                        case "promt":
+                            SetPrompt(expression);
+                            break;
+                        case "clear":
+                            Console.Clear();
+                            break;
+                        case "files":
+                            ListFiles();
                             break;
                         default:
-                            ErrLine("Undefined command \"{0}\"", command);
+                            Console.Error.WriteLine("Undefined command \"{0}\"", command);
                             break;
                     }
                 }
@@ -103,81 +116,90 @@
             return quit;
         }
 
-        private static void CloseStream(TextWriter writer)
+        private static void ListFiles()
         {
-            writer.Flush();
-            writer.Close();
-            writer.Dispose();
-        }
-        private static void Out(string format, params object[] args)
-        {
-            outWriter.Write(format, args);
-            outWriter.Flush();
-        }
-        private static void OutLine(string format, params object[] args)
-        {
-            outWriter.WriteLine(format, args);
-            outWriter.Flush();
+            var directories = Directory.GetDirectories(workingDirectory);
+            var files = Directory.GetFiles(workingDirectory);
+
+            Array.Sort(directories);
+            Array.Sort(files);
+
+            foreach(var directory in directories)
+            {
+                Console.WriteLine(Path.GetFileName(directory) + "/");
+            }
+
+            foreach(var file in files)
+            {
+                Console.WriteLine(Path.GetFileName(file));
+            }
         }
 
-        private static void OutLine()
+        private static void ChangeDir(string expression)
         {
-            outWriter.WriteLine();
-            outWriter.Flush();
+            if (!string.IsNullOrEmpty(expression))
+            {
+                workingDirectory = Path.GetFullPath(Path.Combine(workingDirectory, expression));
+            }
+
+            Console.WriteLine("current directory is \"{0}\"", workingDirectory);
         }
 
-        private static void Err(string format, params object[] args)
+        private static void SetPrompt(string expression)
         {
-            errWriter.Write(format, args);
-            errWriter.Flush();
+
         }
 
-        private static void ErrLine(string format, params object[] args)
+        private static TextReader OpenIn(string expression)
         {
-            errWriter.WriteLine(format, args);
-            errWriter.Flush();
+            if ("<stdin>".Equals(expression))
+            {
+                Console.OpenStandardInput();
+                return Console.In;
+            }
+
+            return new StreamReader(new FileStream(expression.Trim(), FileMode.OpenOrCreate, FileAccess.Read));
         }
 
-        private static void ErrLine()
-        {
-            errWriter.WriteLine();
-            errWriter.Flush();
-        }
-
-        private static TextWriter Open(string expression)
+        private static TextWriter OpenOut(string expression)
         {
             if ("<stdout>".Equals(expression.ToLower()))
             {
+                Console.OpenStandardOutput();
                 return Console.Out;
             }
 
             if ("<stderr>".Equals(expression.ToLower()))
             {
+                Console.OpenStandardInput();
                 return Console.Error;
             }
 
             return new StreamWriter(new FileStream(expression.Trim(), FileMode.Append, FileAccess.Write));
         }
 
-        private static void Load(string expression)
+        private static bool Load(string expression)
         {
-            var allLines = File.ReadAllLines(expression.Trim());
+            var allLines = File.ReadAllLines(Path.GetFullPath(Path.Combine(workingDirectory, expression.Trim())));
+            var quit = false;
 
-            foreach (var line in allLines)
+            for (var i = 0; i < allLines.Length && !quit; i++)
             {
-                Eval(line);
+                quit = Eval(allLines[i]);
             }
+
+            return quit;
         }
 
         private static void HandleException(Exception e)
         {
             if (e.GetType().Namespace.StartsWith(nameof(Matheparser)))
             {
-                ErrLine("Error: {0}", e.Message);
+                Console.Error.WriteLine("Error: {0}", e.Message);
             }
             else
             {
-                ErrLine("Unhandled Exception of Type {0}: \"{1}\"", e.GetType().Name, e.Message);
+                Console.Error.WriteLine("Unhandled Exception of Type {0}: \"{1}\"", e.GetType().Name, e.Message);
             }
         }
 
@@ -227,7 +249,7 @@
 
         private static string QueryInput(string question)
         {
-            OutLine(question);
+            Console.WriteLine(question);
             return Console.ReadLine();
         }
 
@@ -245,7 +267,7 @@
 
             if (string.IsNullOrEmpty(value))
             {
-                OutLine("> Missing value!");
+                Console.WriteLine("> Missing value!");
                 return;
             }
 
@@ -271,7 +293,7 @@
 
             context.VariableManager.Define(newVar);
 
-            OutLine("> Defined {0} as {1}.", newVar.Name, newVar.Value);
+            Console.WriteLine("> Defined {0} as {1}.", newVar.Name, newVar.Value);
         }
 
         private static void Solve(string expression)
@@ -283,7 +305,7 @@
 
             var calculator = new Calculator();
             var res = calculator.Calculate(expression);
-            OutLine("> {0}", res.ToString());
+            Console.WriteLine("> {0}", res.ToString());
         }
 
         private static void Parse(string expression)
@@ -300,15 +322,15 @@
 
             for (var i = 0; i < postFix.Count; i++)
             {
-                Out("({0})", postFix[i].ToString());
+                Console.Write("({0})", postFix[i].ToString());
 
                 if (i != postFix.Count - 1)
                 {
-                    Out(", ");
+                    Console.Write(", ");
                 }
                 else
                 {
-                    OutLine();
+                    Console.WriteLine();
                 }
             }
         }
@@ -327,15 +349,15 @@
             {
                 for (var i = 0; i < tokenizer.Tokens.Count; i++)
                 {
-                    Out(string.Format("({0}:{1})", tokenizer.Tokens[i].Type, tokenizer.Tokens[i].Value));
+                    Console.Write(string.Format("({0}:{1})", tokenizer.Tokens[i].Type, tokenizer.Tokens[i].Value));
 
                     if (i != tokenizer.Tokens.Count - 1)
                     {
-                        Out(", ");
+                        Console.Write(", ");
                     }
                     else
                     {
-                        OutLine();
+                        Console.WriteLine();
                     }
                 }
             }

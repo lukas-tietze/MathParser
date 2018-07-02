@@ -1,6 +1,3 @@
 :out out.txt
-:err err.txt
-
-:define
 
 :quit

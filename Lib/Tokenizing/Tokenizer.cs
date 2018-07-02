@@ -261,8 +261,6 @@ namespace Matheparser.Tokenizing
                         token = new Token(TokenType.OperatorNot);
                     }
                     break;
-                default:
-                    throw new TokenizerException();
             }
 
             tokenOut = token;
