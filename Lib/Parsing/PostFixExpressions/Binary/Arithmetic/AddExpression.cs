@@ -19,7 +19,7 @@
 
         internal override IValue EvalSet(IArray setA, IArray setB)
         {
-            return new ArrayValue(setA.Union(setB));
+            return new ArrayValue(setA.Combine(setB));
         }
 
         public override string ToString()

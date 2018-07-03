@@ -20,7 +20,7 @@
 
         internal override IValue EvalSet(IArray setA, IArray setB)
         {
-            return new ArrayValue(setA.Cut(setB));
+            throw new InvalidOperationException();
         }
 
         public override string ToString()

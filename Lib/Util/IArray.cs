@@ -24,6 +24,8 @@
         IArray Range(int start, int end);
 
         IArray RangeUnsafe(int start, int end);
+        
+        IArray Combine(IArray setB);
 
         /// <summary>
         /// Erzeugt die Vereinigung der aktuellen Menge mit der gegebenen Menge <paramref name="other"/>.

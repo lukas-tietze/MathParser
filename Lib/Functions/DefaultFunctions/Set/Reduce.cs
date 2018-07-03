@@ -33,10 +33,10 @@ namespace Matheparser.Functions.DefaultFunctions.Set
                 tokenizer.Run();
                 var tokens = new List<Token>();
 
-                tokens.Add(new Token(TokenType.Identifier, new Functions.DefaultFunctions.Util.Set().Name));
-                tokens.Add(new Token(TokenType.FunctionStart));
+                tokens.Add(new Token(TokenType.FunctionStart, new Functions.DefaultFunctions.Util.Set().Name));
+                tokens.Add(new Token(TokenType.String, res.Name));
+                tokens.Add(new Token(TokenType.Seperator, ","));
                 tokens.Add(new Token(TokenType.Identifier, res.Name));
-                tokens.Add(new Token(TokenType.Seperator));
                 tokens.AddRange(tokenizer.Tokens);
                 tokens.Add(new Token(TokenType.Identifier, i.Name));
                 tokens.Add(new Token(TokenType.FunctionEnd));
@@ -63,14 +63,13 @@ namespace Matheparser.Functions.DefaultFunctions.Set
 
         private void Validate(IValue[] parameters)
         {
-            if (parameters.Length != 3)
+            if (parameters.Length != 2)
             {
                 throw new OperandNumberException();
             }
 
             if (parameters[0].Type != ValueType.Set ||
-                parameters[1].Type != ValueType.String ||
-                parameters[2].Type != ValueType.String)
+                parameters[1].Type != ValueType.String)
             {
                 throw new WrongOperandTypeException();
             }

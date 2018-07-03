@@ -179,7 +179,7 @@ namespace Matheparser.Tokenizing
         private bool TryReadOperator(out Token tokenOut)
         {
             var c1 = this.data[this.pos];
-            var c2 = this.data[this.pos + 1];
+            var c2 = this.pos < this.data.Length - 1 ? this.data[this.pos + 1] : default(char);
             var token = default(Token);
 
             switch (c1)

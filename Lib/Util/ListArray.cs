@@ -14,6 +14,12 @@
             this.data = new List<IValue>();
         }
 
+        public ListArray(IEnumerable<IValue> items) :
+            this()
+        {
+            this.data.AddRange(items);
+        }
+
         public ListArray(IValue item) :
             this()
         {
@@ -33,12 +39,19 @@
             return this.data.Contains(item);
         }
 
+        public IArray Combine(IArray other)
+        {
+            var res = new List<IValue>();
+
+            res.AddRange(this.data);
+            res.AddRange(other.data);
+
+            return new ListArray() { data = res };
+        }
+
         public void Add(IValue value)
         {
-            if (!this.data.Contains(value))
-            {
-                this.data.Add(value);
-            }
+            this.data.Add(value);
         }
 
         public IValue At(int index)

@@ -20,7 +20,7 @@
 
         internal override IValue EvalSet(IArray setA, IArray setB)
         {
-            return new ArrayValue(setA.Except(setB));
+            throw new InvalidOperationException();
         }
 
         public override string ToString()

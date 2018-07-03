@@ -23,14 +23,14 @@ namespace Matheparser.Functions.DefaultFunctions.Set
 
             var set = parameters[0].AsSet;
             var res = new ListArray();
-            var i = new Variable(parameters[2].AsString, 0);
+            var i = new Variable(parameters[1].AsString, 0);
             var evaluator = default(PostFixEvaluator);
 
             this.Context.VariableManager.Define(i);
 
             try
             {
-                var tokenizer = new Tokenizer(parameters[3].AsString, this.Context.Config);
+                var tokenizer = new Tokenizer(parameters[2].AsString, this.Context.Config);
                 tokenizer.Run();
                 var parser = new Parser(tokenizer.Tokens, this.Context.Config);
                 evaluator = new PostFixEvaluator(parser.CreatePostFixExpression(), this.Context);
