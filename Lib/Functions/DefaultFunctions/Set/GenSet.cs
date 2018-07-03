@@ -4,13 +4,13 @@
     using Matheparser.Util;
     using Matheparser.Values;
 
-    class SetGen : FunctionBase
+    class GenSet : FunctionBase
     {
         public override string Name
         {
             get
             {
-                return "SETGEN";
+                return "GENSET";
             }
         }
 
