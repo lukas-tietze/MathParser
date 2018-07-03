@@ -10,5 +10,7 @@ namespace Matheparser.Functions
         }
 
         IValue Eval(CalculationContext context, IValue[] parameters);
+
+        FunctionInfo[] GetFunctionInfos();
     }
 }

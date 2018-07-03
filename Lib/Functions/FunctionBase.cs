@@ -22,5 +22,11 @@ namespace Matheparser.Functions
             this.Context = context;
             return this.Eval(parameters);
         }
+
+        // public abstract FunctionInfo[] GetFunctionInfos()
+        public FunctionInfo[] GetFunctionInfos()
+        {
+            return new FunctionInfo[] { FunctionInfo.MissingInfo };
+        }
     }
 }

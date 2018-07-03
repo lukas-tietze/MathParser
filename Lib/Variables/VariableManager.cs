@@ -25,12 +25,6 @@ namespace Matheparser.Variables
             }
         }
 
-        private void SetDefaultVariables()
-        {
-            this.Define(new Variable("E", Math.E));
-            this.Define(new Variable("PI", Math.PI));
-        }
-
         public void Remove(string key)
         {
             this.variables.Remove(key);
@@ -49,6 +43,23 @@ namespace Matheparser.Variables
             }
 
             throw new UndefinedVariableException(name);
+        }
+
+        public IVariable CreateTempVariable()
+        {
+            var count = DateTime.UtcNow.Ticks;
+            var name = "__temp__" + count;
+
+            while (this.variables.ContainsKey(name))
+            {
+                name = "__temp__" + ++count;
+            }
+
+            var tmp = new Variable(name, new EmptyValue());
+
+            Define(tmp);
+
+            return tmp;
         }
 
         public bool IsDefined(string name)
@@ -81,6 +92,12 @@ namespace Matheparser.Variables
         {
             this.variables.Clear();
             this.SetDefaultVariables();
+        }
+
+        private void SetDefaultVariables()
+        {
+            this.Define(new Variable("e", Math.E));
+            this.Define(new Variable("pi", Math.PI));
         }
     }
 }

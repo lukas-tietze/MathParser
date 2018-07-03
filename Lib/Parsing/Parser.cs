@@ -53,7 +53,7 @@
                         break;
                     case TokenType.SetStart:
                         operatorStack.Push(token.Type);
-                        functionStack.Push(new Functions.DefaultFunctions.Util.MakeSet().Name);
+                        functionStack.Push(new Functions.DefaultFunctions.Set.MakeSet().Name);
                         argCountStack.Push(0);
                         break;
                     case TokenType.SetEnd:
