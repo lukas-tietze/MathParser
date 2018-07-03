@@ -44,7 +44,7 @@
             var res = new List<IValue>();
 
             res.AddRange(this.data);
-            res.AddRange(other.data);
+            res.AddRange(other);
 
             return new ListArray() { data = res };
         }

@@ -52,7 +52,7 @@ namespace Matheparser.Parsing.PostFixExpressions.Binary
                 throw new OperandNumberException();
             }
 
-            if (operands[0].Type != operands[1].Type && operands[0].Type != ValueType.Set)
+            if (operands[0].Type != operands[1].Type || operands[0].Type != ValueType.Set)
             {
                 throw new WrongOperandTypeException();
             }
