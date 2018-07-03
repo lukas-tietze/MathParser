@@ -12,10 +12,10 @@ namespace Matheparser.Parsing.Evaluation
         private readonly IReadOnlyList<IPostFixExpression> expressions;
         private readonly CalculationContext context;
 
-        public PostFixEvaluator(IReadOnlyList<IPostFixExpression> expressions, IConfig config)
+        public PostFixEvaluator(IReadOnlyList<IPostFixExpression> expressions, CalculationContext context)
         {
             this.expressions = expressions;
-            this.context = new CalculationContext(new VariableManager(true), new FunctionManager(true), config);
+            this.context = context;
         }
 
         public IValue Run()

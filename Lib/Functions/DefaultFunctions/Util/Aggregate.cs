@@ -34,7 +34,7 @@ namespace Matheparser.Functions.DefaultFunctions.Util
                 var tokenizer = new Tokenizer(parameters[3].AsString, config);
                 tokenizer.Run();
                 var parser = new Parser(tokenizer.Tokens, config);
-                evaluator = new PostFixEvaluator(parser.CreatePostFixExpression(), config);
+                evaluator = new PostFixEvaluator(parser.CreatePostFixExpression(), this.Context);
             }
             catch (System.Exception)
             {

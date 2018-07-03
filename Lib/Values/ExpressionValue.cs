@@ -78,7 +78,7 @@
 
         private void Eval()
         {
-            this.lastResult = new PostFixEvaluator(this.expressions, this.context.Config).Run();
+            this.lastResult = new PostFixEvaluator(this.expressions, this.context).Run();
         }
 
         public override string ToString()

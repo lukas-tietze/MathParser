@@ -16,6 +16,7 @@
             this(new CalculationContext(new VariableManager(true), new FunctionManager(true), ConfigBase.DefaultConfig))
         {
         }
+
         public Calculator(CalculationContext context)
         {
             this.context = context;
@@ -55,7 +56,7 @@
                 var tokenizer = new Tokenizer(expression, config);
                 tokenizer.Run();
                 var parser = new Parser(tokenizer.Tokens, config);
-                var evaluater = new PostFixEvaluator(parser.CreatePostFixExpression(), config);
+                var evaluater = new PostFixEvaluator(parser.CreatePostFixExpression(), this.context);
                 value = evaluater.Run();
                 return value;
             }
