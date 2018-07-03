@@ -142,6 +142,14 @@
                         ListFiles();
                         return false;
                     }
+                },
+
+                {
+                    "clearvars",
+                    (expression) => {
+                        ClearVars(expression);
+                        return false;
+                    }
                 }
             };
 
@@ -155,6 +163,18 @@
             while (!quit)
             {
                 quit = Eval(Console.ReadLine());
+            }
+        }
+
+        private static void ClearVars(string expression)
+        {
+            if ("all".Equals(expression.Trim().ToLower()))
+            {
+                context.VariableManager.ClearAll();
+            }
+            else
+            {
+                context.VariableManager.ClearUserVariables();
             }
         }
 

@@ -11,18 +11,24 @@ namespace Matheparser.Variables
 
         public VariableManager() :
             this(false)
-        { }
+        {
+        }
 
         public VariableManager(bool setDefaultVariables)
         {
             this.variables = new Dictionary<string, IVariable>();
             this.missingVariabeMode = MissingVariabeMode.Error;
 
-            if(setDefaultVariables)
+            if (setDefaultVariables)
             {
-                this.Define(new Variable("E", Math.E));
-                this.Define(new Variable("PI", Math.PI));
+                this.SetDefaultVariables();
             }
+        }
+
+        private void SetDefaultVariables()
+        {
+            this.Define(new Variable("E", Math.E));
+            this.Define(new Variable("PI", Math.PI));
         }
 
         public void Remove(string key)
@@ -64,6 +70,17 @@ namespace Matheparser.Variables
         {
             Error,
             ReturnDefaultValue,
+        }
+
+        public void ClearAll()
+        {
+            this.variables.Clear();
+        }
+
+        public void ClearUserVariables()
+        {
+            this.variables.Clear();
+            this.SetDefaultVariables();
         }
     }
 }
