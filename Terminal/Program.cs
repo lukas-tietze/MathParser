@@ -1,6 +1,7 @@
 ﻿namespace Terminal
 {
     using System;
+    using System.Collections.Generic;
     using System.IO;
     using Matheparser;
     using Matheparser.Exceptions;
@@ -15,16 +16,136 @@
     {
         private static CalculationContext context;
         private static string workingDirectory;
+        private static Dictionary<string, Func<string, bool>> actions;
 
         [STAThread]
         public static void Main(string[] args)
         {
             context = new CalculationContext(new VariableManager(true), new FunctionManager(true), ConfigBase.DefaultConfig);
             workingDirectory = Directory.GetCurrentDirectory();
+            actions = new Dictionary<string, Func<string, bool>>
+            {
+                {
+                    "tokenize",
+                    (expression) => {
+                        Tokenize(expression);
+                        return false;
+                    }
+                },
 
+                {
+                    "parse",
+                    (expression) => {
+                        Parse(expression);
+                        return false;
+                    }
+                },
+
+                {
+                    "def",
+                    (expression) => {
+                        Define(expression, true);
+                        return false;
+                    }
+                },
+
+                {
+                    "exp",
+                    (expression) => {
+                        Define(expression, false);
+                        return false;
+                    }
+                },
+
+                {
+                    "undef",
+                    (expression) => {
+                        Undefine(expression);
+                        return false;
+                    }
+                },
+
+                {
+                    "quit",
+                    (expression) => {
+                        return true;
+                    }
+                },
+
+                {
+                    "solve",
+                    (expression) => {
+                        Solve(expression);
+                        return false;
+                    }
+                },
+
+                {
+                    "load",
+                    (expression) => {
+                        return Load(expression);
+                    }
+                },
+
+                {
+                    "err",
+                    (expression) => {
+                        Console.SetError(OpenOut(expression));
+                        return false;
+                    }
+                },
+
+                {
+                    "out",
+                    (expression) => {
+                        Console.SetOut(OpenOut(expression));
+                        return false;
+                    }
+                },
+
+                {
+                    "in",
+                    (expression) => {
+                        Console.SetIn(OpenIn(expression));
+                        return false;
+                    }
+                },
+
+                {
+                    "dir",
+                    (expression) => {
+                        ChangeDir(expression);
+                        return false;
+                    }
+                },
+
+                {
+                    "promt",
+                    (expression) => {
+                        SetPrompt(expression);
+                        return false;
+                    }
+                },
+
+                {
+                    "clear",
+                    (expression) => {
+                        Console.Clear();
+                        return false;
+                    }
+                },
+
+                {
+                    "files",
+                    (expression) => {
+                        ListFiles();
+                        return false;
+                    }
+                }
+            };
             var quit = false;
 
-            for (int i = 0; i < args.Length && !quit; i++)
+            for (var i = 0; i < args.Length && !quit; i++)
             {
                 quit = Eval(args[i]);
             }
@@ -50,57 +171,13 @@
                 {
                     SplitKeyValue(input, out var command, out var expression);
 
-                    switch (command.Substring(1))
+                    if (actions.TryGetValue(command.Substring(1), out var func))
                     {
-                        case "tokenize":
-                            Tokenize(expression);
-                            break;
-                        case "parse":
-                            Parse(expression);
-                            break;
-                        case "def":
-                        case "define":
-                            Define(expression, true);
-                            break;
-                        case "defexp":
-                            Define(expression, false);
-                            break;
-                        case "undef":
-                            Undefine(expression);
-                            break;
-                        case "quit":
-                            quit = true;
-                            break;
-                        case "solve":
-                            Solve(expression);
-                            break;
-                        case "load":
-                            quit = Load(expression);
-                            break;
-                        case "err":
-                            Console.SetError(OpenOut(expression));
-                            break;
-                        case "out":
-                            Console.SetOut(OpenOut(expression));
-                            break;
-                        case "in":
-                            Console.SetIn(OpenIn(expression));
-                            break;
-                        case "dir":
-                            ChangeDir(expression);
-                            break;
-                        case "promt":
-                            SetPrompt(expression);
-                            break;
-                        case "clear":
-                            Console.Clear();
-                            break;
-                        case "files":
-                            ListFiles();
-                            break;
-                        default:
-                            Console.Error.WriteLine("Undefined command \"{0}\"", command);
-                            break;
+                        quit = func(expression);
+                    }
+                    else
+                    {
+                        Console.Error.WriteLine("Undefined command \"{0}\"", command);
                     }
                 }
                 else
@@ -124,12 +201,12 @@
             Array.Sort(directories);
             Array.Sort(files);
 
-            foreach(var directory in directories)
+            foreach (var directory in directories)
             {
                 Console.WriteLine(Path.GetFileName(directory) + "/");
             }
 
-            foreach(var file in files)
+            foreach (var file in files)
             {
                 Console.WriteLine(Path.GetFileName(file));
             }
