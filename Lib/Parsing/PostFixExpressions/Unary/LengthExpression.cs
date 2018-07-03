@@ -1,9 +1,11 @@
 ﻿namespace Matheparser.Parsing.PostFixExpressions.Unary
 {
     using System;
+    using System.Diagnostics;
     using Matheparser.Util;
     using Matheparser.Values;
 
+    [DebuggerDisplay("Operator #")]
     public class LengthExpression : UnaryOperatorExpressionBase
     {
         internal override IValue EvalNumber(double operand)
@@ -19,6 +21,11 @@
         internal override IValue EvalSet(IArray operand)
         {
             return new DoubleValue(operand.Count);
+        }
+
+        public override string ToString()
+        {
+            return "Op #";
         }
     }
 }

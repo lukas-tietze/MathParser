@@ -344,15 +344,22 @@ namespace Matheparser.Tokenizing
         private Token ReadNumber()
         {
             var decSeperatorRead = false;
+            var prefixRead = false;
             var readStart = this.pos;
 
             while (this.pos < this.data.Length)
             {
-                if (!this.IsDigit(this.data[this.pos]))
+                var c = this.data[this.pos];
+
+                if (!this.IsDigit(c))
                 {
-                    if (this.data[this.pos] == this.config.DecimalSeperator && !decSeperatorRead)
+                    if (c == this.config.DecimalSeperator && !decSeperatorRead)
                     {
                         decSeperatorRead = true;
+                    }
+                    else if (c == '-' && !prefixRead)
+                    {
+                        prefixRead = true;
                     }
                     else
                     {
@@ -401,7 +408,9 @@ namespace Matheparser.Tokenizing
 
         private bool IsStartOfNumber(char c)
         {
-            return this.IsDigit(c) || c == this.config.DecimalSeperator;
+            return this.IsDigit(c) || c == this.config.DecimalSeperator ||
+                (c == '-' && (this.tokens.Count == 0 ||
+                   (this.tokens.Count > 0 && this.tokens[this.tokens.Count - 1].Type == TokenType.OpeningBracket)));
         }
     }
 }
