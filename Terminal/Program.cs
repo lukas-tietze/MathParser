@@ -11,6 +11,7 @@
     using Matheparser.Tokenizing;
     using Matheparser.Values;
     using Matheparser.Variables;
+    using Matheparser.Util;
 
     public static class Program
     {
@@ -177,7 +178,7 @@
                     }
                     else
                     {
-                        Console.Error.WriteLine("Undefined command \"{0}\"", command);
+                        HandleUndefinedCommand(command);
                     }
                 }
                 else
@@ -191,6 +192,52 @@
             }
 
             return quit;
+        }
+
+        private static List<string> FindSimilarCommands(string command)
+        {
+            var res = new List<string>();
+
+            foreach (var existingCommand in actions.Keys)
+            {
+                if (existingCommand.Contains(command) ||
+                    command.Contains(existingCommand) ||
+                    OsaDistance(existingCommand, command) < 3)
+                {
+                    res.Add(existingCommand);
+                }
+            }
+
+            return res;
+        }
+
+        private static void HandleUndefinedCommand(string command)
+        {
+            if (string.IsNullOrEmpty(command))
+            {
+                Console.Error.WriteLine("Please enter a command");
+
+                foreach (var existingCommand in actions.Keys)
+                {
+                    Console.WriteLine("\t{0}", existingCommand);
+                }
+            }
+            else
+            {
+                var matches = FindSimilarCommands(command);
+
+                Console.Error.WriteLine("Undefined command \"{0}\"", command);
+
+                if (matches.Count > 0)
+                {
+                    Console.WriteLine("Possible similar commands:");
+
+                    foreach (var match in matches)
+                    {
+                        Console.WriteLine("\t{0}", match);
+                    }
+                }
+            }
         }
 
         private static void ListFiles()
@@ -438,6 +485,40 @@
                     }
                 }
             }
+        }
+
+        private static int OsaDistance(string s1, string s2)
+        {
+            var d = new int[s1.Length + 1, s2.Length + 1];
+
+            for (var i = 0; i <= s1.Length; i++)
+            {
+                d[i, 0] = i;
+            }
+
+            for (var i = 0; i <= s2.Length; i++)
+            {
+                d[0, i] = i;
+            }
+
+            for (var i = 1; i <= s1.Length; i++)
+            {
+                for (var j = 1; j <= s2.Length; j++)
+                {
+                    var cost = s1[i - 1] == s2[j - 1] ? 0 : 1;
+
+                    d[i, j] = Math.Min(Math.Min(d[i - 1, j] + 1,    // deletion
+                                       d[i, j - 1] + 1),            // insertion
+                                       d[i - 1, j - 1] + cost);     // substitution
+
+                    if (i > 2 && j > 2 && s1[i - 1] == s2[j - 2] && s1[i - 2] == s2[j - 1])
+                    {
+                        d[i, j] = Math.Min(d[i, j], d[i - 2, j - 2] + cost);  // transposition
+                    }
+                }
+            }
+
+            return d[s1.Length, s2.Length];
         }
     }
 }
