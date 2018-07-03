@@ -144,6 +144,7 @@
                     }
                 }
             };
+
             var quit = false;
 
             for (var i = 0; i < args.Length && !quit; i++)
