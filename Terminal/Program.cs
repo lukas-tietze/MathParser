@@ -200,7 +200,7 @@
             {
                 // {"", ""},
                  {"def", "!"},
-                  {"Help", "?"},
+                  {"help", "?"},
             };
 
             foreach(var kvp in aliases)
