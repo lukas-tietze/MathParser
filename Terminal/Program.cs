@@ -18,6 +18,7 @@
         private static CalculationContext context;
         private static string workingDirectory;
         private static Dictionary<string, Tuple<Func<string, bool>, string>> actions;
+        private static Dictionary<string, string> aliases;
 
         [STAThread]
         public static void Main(string[] args)
@@ -194,6 +195,21 @@
                     "")
                 },
             };
+
+            aliases = new Dictionary<string, string>()
+            {
+                // {"", ""},
+                 {"def", "!"},
+                  {"Help", "?"},
+            };
+
+            foreach(var kvp in aliases)
+            {
+                if(actions.ContainsKey(kvp.Key))
+                {
+                    actions.Add(kvp.Value, actions[kvp.Key]);
+                }
+            }
 
             var quit = false;
 
