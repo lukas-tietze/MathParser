@@ -51,5 +51,10 @@ namespace Matheparser.Variables
                 this.value = value;
             }
         }
+
+        public override string ToString()
+        {
+            return string.Format("\"{0}\" ({1}): {2}", this.name, this.value.Type, this.value);
+        }
     }
 }

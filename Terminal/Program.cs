@@ -212,11 +212,11 @@
         {
             if (string.IsNullOrEmpty(expression))
             {
-                Console.WriteLine("---- Help ----:");
+                Console.WriteLine("---- Help ----");
                 Console.WriteLine("Type the expression you want to Calculate and press enter.");
-                Console.WriteLine("If a line starts with ':' it will be interpreted as a command.");
-                Console.WriteLine("Commands are formatted like :<command> <arg>.");
-                Console.WriteLine("Not all commands require an argument.");
+                Console.WriteLine("Lines with the syntax");
+                Console.WriteLine("\t:<command> <arg>");
+                Console.WriteLine("will be interpreted as commands, instead of calculations. (Not all commands require an argument)");
                 Console.WriteLine();
                 Console.WriteLine("Possible Commands are:");
 
