@@ -49,5 +49,10 @@
         {
             this.functions.Clear();
         }
+
+        public bool IsDefined(string expression)
+        {
+            return this.functions.ContainsKey(expression);
+        }
     }
 }

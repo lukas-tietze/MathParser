@@ -17,140 +17,182 @@
     {
         private static CalculationContext context;
         private static string workingDirectory;
-        private static Dictionary<string, Func<string, bool>> actions;
+        private static Dictionary<string, Tuple<Func<string, bool>, string>> actions;
 
         [STAThread]
         public static void Main(string[] args)
         {
             context = new CalculationContext(new VariableManager(true), new FunctionManager(true), ConfigBase.DefaultConfig);
             workingDirectory = Directory.GetCurrentDirectory();
-            actions = new Dictionary<string, Func<string, bool>>
+            actions = new Dictionary<string, Tuple<Func<string, bool>, string>>
             {
                 {
                     "tokenize",
+                    new Tuple<Func<string, bool>, string>(
                     (expression) => {
                         Tokenize(expression);
                         return false;
-                    }
+                    },
+                    "")
                 },
 
                 {
                     "parse",
+                    new Tuple<Func<string, bool>, string>(
                     (expression) => {
                         Parse(expression);
                         return false;
-                    }
+                    },
+                    "")
                 },
 
                 {
                     "def",
+                    new Tuple<Func<string, bool>, string>(
                     (expression) => {
                         Define(expression, true);
                         return false;
-                    }
+                    },
+                    "")
                 },
 
                 {
                     "exp",
+                    new Tuple<Func<string, bool>, string>(
                     (expression) => {
                         Define(expression, false);
                         return false;
-                    }
+                    },
+                    "")
                 },
 
                 {
                     "undef",
+                    new Tuple<Func<string, bool>, string>(
                     (expression) => {
                         Undefine(expression);
                         return false;
-                    }
+                    },
+                    "")
                 },
 
                 {
                     "quit",
+                    new Tuple<Func<string, bool>, string>(
                     (expression) => {
                         return true;
-                    }
+                    },
+                    "")
                 },
 
                 {
                     "solve",
+                    new Tuple<Func<string, bool>, string>(
                     (expression) => {
                         Solve(expression);
                         return false;
-                    }
+                    },
+                    "")
                 },
 
                 {
                     "load",
+                    new Tuple<Func<string, bool>, string>(
                     (expression) => {
                         return Load(expression);
-                    }
+                    },
+                    "")
                 },
 
                 {
                     "err",
+                    new Tuple<Func<string, bool>, string>(
                     (expression) => {
                         Console.SetError(OpenOut(expression));
                         return false;
-                    }
+                    },
+                    "")
                 },
 
                 {
                     "out",
+                    new Tuple<Func<string, bool>, string>(
                     (expression) => {
                         Console.SetOut(OpenOut(expression));
                         return false;
-                    }
+                    },
+                    "")
                 },
 
                 {
                     "in",
+                    new Tuple<Func<string, bool>, string>(
                     (expression) => {
                         Console.SetIn(OpenIn(expression));
                         return false;
-                    }
+                    },
+                    "")
                 },
 
                 {
                     "dir",
+                    new Tuple<Func<string, bool>, string>(
                     (expression) => {
                         ChangeDir(expression);
                         return false;
-                    }
+                    },
+                    "")
                 },
 
                 {
                     "promt",
+                    new Tuple<Func<string, bool>, string>(
                     (expression) => {
                         SetPrompt(expression);
                         return false;
-                    }
+                    },
+                    "")
                 },
 
                 {
                     "clear",
+                    new Tuple<Func<string, bool>, string>(
                     (expression) => {
                         Console.Clear();
                         return false;
-                    }
+                    },
+                    "")
                 },
 
                 {
                     "files",
+                    new Tuple<Func<string, bool>, string>(
                     (expression) => {
                         ListFiles();
                         return false;
-                    }
+                    },
+                    "")
                 },
 
                 {
                     "clearvars",
+                    new Tuple<Func<string, bool>, string>(
                     (expression) => {
                         ClearVars(expression);
                         return false;
-                    }
-                }
+                    },
+                    "")
+                },
+
+                {
+                    "help",
+                    new Tuple<Func<string, bool>, string>(
+                    (expression) => {
+                        ShowHelp(expression);
+                        return false;
+                    },
+                    "")
+                },
             };
 
             var quit = false;
@@ -163,6 +205,40 @@
             while (!quit)
             {
                 quit = Eval(Console.ReadLine());
+            }
+        }
+
+        private static void ShowHelp(string expression)
+        {
+            if (string.IsNullOrEmpty(expression))
+            {
+                Console.WriteLine("---- Help ----:");
+                Console.WriteLine("Type the expression you want to Calculate and press enter.");
+                Console.WriteLine("If a line starts with ':' it will be interpreted as a command.");
+                Console.WriteLine("Commands are formatted like :<command> <arg>.");
+                Console.WriteLine("Not all commands require an argument.");
+                Console.WriteLine();
+                Console.WriteLine("Possible Commands are:");
+
+                foreach (var action in actions)
+                {
+                    Console.WriteLine("\t{0} - {1}", action.Key, action.Value.Item2);
+                }
+            }
+            else if (context.VariableManager.IsDefined(expression))
+            {
+                Console.WriteLine("{0} is a variable:\n{1}", expression, context.VariableManager.GetVariable(expression));
+            }
+            else if(context.FunctionManager.IsDefined(expression))
+            {
+                Console.WriteLine("{0} is a function:\n{1}", expression, context.FunctionManager.FindByName(expression));
+            }
+            else if(actions.ContainsKey(expression))
+            {
+                Console.WriteLine("{0} is an command:\n{1}", expression, actions[expression].Item2);
+            }
+            else{
+                Console.WriteLine("There is no help topic for {0}. Use :help for general help and check your spelling.", expression);
             }
         }
 
@@ -195,7 +271,7 @@
 
                     if (actions.TryGetValue(command.Substring(1), out var func))
                     {
-                        quit = func(expression);
+                        quit = func.Item1(expression);
                     }
                     else
                     {
