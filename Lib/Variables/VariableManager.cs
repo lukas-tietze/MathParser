@@ -32,7 +32,7 @@ namespace Matheparser.Variables
 
         public void Define(IVariable variable)
         {
-            this.variables.Add(variable.Name, variable);
+            this.variables[variable.Name] = variable;
         }
 
         public IVariable GetVariable(string name)

@@ -18,7 +18,7 @@ namespace Matheparser.Functions.DefaultFunctions.Util
         {
             this.Validate(parameters);
 
-            var solver = new Calculator();
+            var solver = new Calculator(this.Context);
             return solver.Calculate(parameters[0].AsString);
         }
 

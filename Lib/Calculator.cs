@@ -12,9 +12,13 @@
     {
         private readonly CalculationContext context;
 
-        public Calculator()
+        public Calculator() :
+            this(new CalculationContext(new VariableManager(true), new FunctionManager(true), ConfigBase.DefaultConfig))
         {
-            this.context = new CalculationContext(new VariableManager(true), new FunctionManager(true), ConfigBase.DefaultConfig);
+        }
+        public Calculator(CalculationContext context)
+        {
+            this.context = context;
         }
 
         public IConfig Config

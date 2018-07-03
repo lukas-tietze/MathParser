@@ -402,7 +402,7 @@
             {
                 try
                 {
-                    res = new Calculator().Calculate(value);
+                    res = new Calculator(context).Calculate(value);
                 }
                 catch (CalculationException)
                 {
@@ -428,7 +428,7 @@
                 expression = QueryInput();
             }
 
-            var calculator = new Calculator();
+            var calculator = new Calculator(context);
             var res = calculator.Calculate(expression);
             Console.WriteLine("> {0}", res.ToString());
         }
