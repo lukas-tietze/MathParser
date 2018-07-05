@@ -9,7 +9,7 @@ namespace Matheparser.Functions.DefaultFunctions.Util
         {
             get
             {
-                return "ISNUM";
+                return "MATCH";
             }
         }
 
