@@ -1,4 +1,4 @@
-namespace Terminal
+namespace Matheparser.Io
 {
     public interface IReader
     {

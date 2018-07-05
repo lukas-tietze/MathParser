@@ -1,4 +1,4 @@
-namespace Terminal
+namespace Matheparser.Io
 {
     public interface IWriter
     {
@@ -19,7 +19,7 @@ namespace Terminal
 
         bool WarningsEnabled
         {
-            get;
+            set;
         }
 
         bool ErrorsEnabled
