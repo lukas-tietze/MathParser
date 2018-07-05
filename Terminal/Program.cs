@@ -203,9 +203,11 @@
                   {"help", "?"},
             };
 
-            foreach(var kvp in aliases)
+            Console.Clear();
+
+            foreach (var kvp in aliases)
             {
-                if(actions.ContainsKey(kvp.Key))
+                if (actions.ContainsKey(kvp.Key))
                 {
                     actions.Add(kvp.Value, actions[kvp.Key]);
                 }
@@ -245,15 +247,16 @@
             {
                 Console.WriteLine("{0} is a variable:\n{1}", expression, context.VariableManager.GetVariable(expression));
             }
-            else if(context.FunctionManager.IsDefined(expression))
+            else if (context.FunctionManager.IsDefined(expression))
             {
                 Console.WriteLine("{0} is a function:\n{1}", expression, context.FunctionManager.FindByName(expression));
             }
-            else if(actions.ContainsKey(expression))
+            else if (actions.ContainsKey(expression))
             {
                 Console.WriteLine("{0} is an command:\n{1}", expression, actions[expression].Item2);
             }
-            else{
+            else
+            {
                 Console.WriteLine("There is no help topic for {0}. Use :help for general help and check your spelling.", expression);
             }
         }
