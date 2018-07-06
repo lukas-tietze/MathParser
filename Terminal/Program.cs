@@ -409,7 +409,7 @@
             {
                 var newDir = Path.GetFullPath(Path.Combine(workingDirectory, expression));
 
-                if (File.Exists(newDir))
+                if (Directory.Exists(newDir))
                 {
                     workingDirectory = newDir;
                 }

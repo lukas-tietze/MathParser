@@ -1,2 +1,6 @@
-:out out.txt
+:out <off>
+:err <std>
+
+:def setA GENSET(1,1,1000);
+
 :quit
