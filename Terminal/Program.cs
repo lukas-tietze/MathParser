@@ -519,7 +519,7 @@
                 value = input.Substring(keyEnd + 1);
             }
 
-            key = key.Trim().ToLower();
+            key = key.Trim();
         }
 
         private static string QueryInput()
@@ -535,11 +535,6 @@
 
         private static void Define(string expression, bool compress)
         {
-            if (string.IsNullOrEmpty(expression))
-            {
-                expression = QueryInput();
-            }
-
             var key = string.Empty;
             var value = string.Empty;
 

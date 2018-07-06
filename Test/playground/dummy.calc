@@ -1,8 +1,0 @@
-:out <off>
-
-:def setA GENSET(1,1,1000);
-:def setB GENSET(1,2,1000);
-:def setC FOREACH(setA, "i", "i%4")
-
-:out <std>
-:quit

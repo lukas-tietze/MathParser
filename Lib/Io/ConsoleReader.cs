@@ -14,12 +14,12 @@ namespace Matheparser.Io
             set;
         }
 
-        public ConsoleKey ReadKey()
+        public virtual ConsoleKey ReadKey()
         {
             return Console.ReadKey(false).Key;
         }
 
-        public ConsoleKey ReadKey(string prompt)
+        public virtual ConsoleKey ReadKey(string prompt)
         {
             if(this.EnablePrompt)
             {
@@ -29,12 +29,12 @@ namespace Matheparser.Io
             return this.ReadKey();
         }
 
-        public string ReadLine()
+        public virtual string ReadLine()
         {
             return Console.ReadLine();
         }
 
-        public string ReadLine(string prompt)
+        public virtual string ReadLine(string prompt)
         {
             if(this.EnablePrompt)
             {

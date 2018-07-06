@@ -14,7 +14,7 @@
             this.Culture = config.Culture;
             this.Out = new ConsoleWriter();
             this.Err = new ConsoleWriter();
-            this.In = new ConsoleReader();
+            this.In = new ExtendedConsoleReader();
         }
 
         public VariableManager VariableManager { get; set; }
