@@ -424,15 +424,20 @@
 
         private static void SetPrompt(string expression)
         {
-            // TODO
-            // context.Out.Prompt = expression;
+            context.Out.ClearIndent();
+            context.Out.BeginIndent(expression, false);
         }
 
         private static IReader OpenIn(string expression)
         {
-            if ("<std>".Equals(expression))
+            if ("<std>".Equals(expression.ToLower()))
             {
                 return new ConsoleReader();
+            }
+
+            if ("<off>".Equals(expression.ToLower()))
+            {
+                return new EmptyReader();
             }
 
             return new FileReader(expression.Trim());
@@ -443,6 +448,11 @@
             if ("<std>".Equals(expression.ToLower()))
             {
                 return new ConsoleWriter();
+            }
+
+            if ("<off>".Equals(expression.ToLower()))
+            {
+                return new EmptyWriter();
             }
 
             return new FileWriter(expression.Trim());
