@@ -2,42 +2,34 @@ namespace Matheparser.Io
 {
     public interface IWriter
     {
-        string MessagePrefix
+        bool Enabled
         {
+            get;
             set;
         }
 
-        string WarningPrefix
+        bool IndentEnabled
         {
+            get;
             set;
         }
 
-        string ErrorPrefix
-        {
-            set;
-        }
+        void BeginIndent(string indent, bool append);
 
-        bool WarningsEnabled
-        {
-            set;
-        }
+        void EndIndent();
 
-        bool ErrorsEnabled
-        {
-            set;
-        }
+        void ClearIndent();
 
-        bool MessagesEnabled
-        {
-            set;
-        }
-
-        void WriteWarning(string msg);
-
-        void WriteError(string msg);
+        void Clear();
 
         void Write(string msg);
 
         void WriteLine(string msg);
+
+        void Write(string format, params object[] args);
+
+        void WriteLine(string format, params object[] args);
+        
+        void WriteLine();
     }
 }

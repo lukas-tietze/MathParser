@@ -12,6 +12,7 @@
     using Matheparser.Values;
     using Matheparser.Variables;
     using Matheparser.Util;
+    using Matheparser.Io;
 
     public static class Program
     {
@@ -109,7 +110,7 @@
                     "err",
                     new Tuple<Func<string, bool>, string>(
                     (expression) => {
-                        Console.SetError(OpenOut(expression));
+                        context.Out = OpenOut(expression);
                         return false;
                     },
                     "")
@@ -119,7 +120,7 @@
                     "out",
                     new Tuple<Func<string, bool>, string>(
                     (expression) => {
-                        Console.SetOut(OpenOut(expression));
+                        context.Out = OpenOut(expression);
                         return false;
                     },
                     "")
@@ -129,7 +130,7 @@
                     "in",
                     new Tuple<Func<string, bool>, string>(
                     (expression) => {
-                        Console.SetIn(OpenIn(expression));
+                        context.In = OpenIn(expression);
                         return false;
                     },
                     "")
@@ -159,7 +160,7 @@
                     "clear",
                     new Tuple<Func<string, bool>, string>(
                     (expression) => {
-                        Console.Clear();
+                        context.Out.Clear();
                         return false;
                     },
                     "")
@@ -203,7 +204,7 @@
                   {"help", "?"},
             };
 
-            Console.Clear();
+            context.Out.Clear();
 
             foreach (var kvp in aliases)
             {
@@ -222,7 +223,7 @@
 
             while (!quit)
             {
-                quit = Eval(Console.ReadLine());
+                quit = Eval(context.In.ReadLine());
             }
         }
 
@@ -230,34 +231,34 @@
         {
             if (string.IsNullOrEmpty(expression))
             {
-                Console.WriteLine("---- Help ----");
-                Console.WriteLine("Type the expression you want to Calculate and press enter.");
-                Console.WriteLine("Lines with the syntax");
-                Console.WriteLine("\t:<command> <arg>");
-                Console.WriteLine("will be interpreted as commands, instead of calculations. (Not all commands require an argument)");
-                Console.WriteLine();
-                Console.WriteLine("Possible Commands are:");
+                context.Out.WriteLine("---- Help ----");
+                context.Out.WriteLine("Type the expression you want to Calculate and press enter.");
+                context.Out.WriteLine("Lines with the syntax");
+                context.Out.WriteLine("\t:<command> <arg>");
+                context.Out.WriteLine("will be interpreted as commands, instead of calculations. (Not all commands require an argument)");
+                context.Out.WriteLine();
+                context.Out.WriteLine("Possible Commands are:");
 
                 foreach (var action in actions)
                 {
-                    Console.WriteLine("\t{0} - {1}", action.Key, action.Value.Item2);
+                    context.Out.WriteLine("\t{0} - {1}", action.Key, action.Value.Item2);
                 }
             }
             else if (context.VariableManager.IsDefined(expression))
             {
-                Console.WriteLine("{0} is a variable:\n{1}", expression, context.VariableManager.GetVariable(expression));
+                context.Out.WriteLine("{0} is a variable:\n{1}", expression, context.VariableManager.GetVariable(expression));
             }
             else if (context.FunctionManager.IsDefined(expression))
             {
-                Console.WriteLine("{0} is a function:\n{1}", expression, context.FunctionManager.FindByName(expression));
+                context.Out.WriteLine("{0} is a function:\n{1}", expression, context.FunctionManager.FindByName(expression));
             }
             else if (actions.ContainsKey(expression))
             {
-                Console.WriteLine("{0} is an command:\n{1}", expression, actions[expression].Item2);
+                context.Out.WriteLine("{0} is an command:\n{1}", expression, actions[expression].Item2);
             }
             else
             {
-                Console.WriteLine("There is no help topic for {0}. Use :help for general help and check your spelling.", expression);
+                context.Out.WriteLine("There is no help topic for {0}. Use :help for general help and check your spelling.", expression);
             }
         }
 
@@ -331,26 +332,26 @@
         {
             if (string.IsNullOrEmpty(command))
             {
-                Console.Error.WriteLine("Please enter a command");
+                context.Err.WriteLine("Please enter a command");
 
                 foreach (var existingCommand in actions.Keys)
                 {
-                    Console.WriteLine("\t{0}", existingCommand);
+                    context.Out.WriteLine("\t{0}", existingCommand);
                 }
             }
             else
             {
                 var matches = FindSimilarCommands(command);
 
-                Console.Error.WriteLine("Undefined command \"{0}\"", command);
+                context.Err.WriteLine("Undefined command \"{0}\"", command);
 
                 if (matches.Count > 0)
                 {
-                    Console.WriteLine("Possible similar commands:");
+                    context.Out.WriteLine("Possible similar commands:");
 
                     foreach (var match in matches)
                     {
-                        Console.WriteLine("\t{0}", match);
+                        context.Out.WriteLine(match);
                     }
                 }
             }
@@ -366,12 +367,12 @@
 
             foreach (var directory in directories)
             {
-                Console.WriteLine(Path.GetFileName(directory) + "/");
+                context.Out.WriteLine(Path.GetFileName(directory) + "/");
             }
 
             foreach (var file in files)
             {
-                Console.WriteLine(Path.GetFileName(file));
+                context.Out.WriteLine(Path.GetFileName(file));
             }
         }
 
@@ -382,40 +383,33 @@
                 workingDirectory = Path.GetFullPath(Path.Combine(workingDirectory, expression));
             }
 
-            Console.WriteLine("current directory is \"{0}\"", workingDirectory);
+            context.Out.WriteLine("current directory is \"{0}\"", workingDirectory);
         }
 
         private static void SetPrompt(string expression)
         {
-
+            // TODO
+            // context.Out.Prompt = expression;
         }
 
-        private static TextReader OpenIn(string expression)
+        private static IReader OpenIn(string expression)
         {
-            if ("<stdin>".Equals(expression))
+            if ("<std>".Equals(expression))
             {
-                Console.OpenStandardInput();
-                return Console.In;
+                return new ConsoleReader();
             }
 
-            return new StreamReader(new FileStream(expression.Trim(), FileMode.OpenOrCreate, FileAccess.Read));
+            return new FileReader(expression.Trim());
         }
 
-        private static TextWriter OpenOut(string expression)
+        private static IWriter OpenOut(string expression)
         {
-            if ("<stdout>".Equals(expression.ToLower()))
+            if ("<std>".Equals(expression.ToLower()))
             {
-                Console.OpenStandardOutput();
-                return Console.Out;
+                return new ConsoleWriter();
             }
 
-            if ("<stderr>".Equals(expression.ToLower()))
-            {
-                Console.OpenStandardInput();
-                return Console.Error;
-            }
-
-            return new StreamWriter(new FileStream(expression.Trim(), FileMode.Append, FileAccess.Write));
+            return new FileWriter(expression.Trim());
         }
 
         private static bool Load(string expression)
@@ -435,11 +429,11 @@
         {
             if (e.GetType().Namespace.StartsWith(nameof(Matheparser)))
             {
-                Console.Error.WriteLine("Error: {0}", e.Message);
+                context.Err.WriteLine("Error: {0}", e.Message);
             }
             else
             {
-                Console.Error.WriteLine("Unhandled Exception of Type {0}: \"{1}\"", e.GetType().Name, e.Message);
+                context.Err.WriteLine("Unhandled Exception of Type {0}: \"{1}\"", e.GetType().Name, e.Message);
             }
         }
 
@@ -489,8 +483,8 @@
 
         private static string QueryInput(string question)
         {
-            Console.WriteLine(question);
-            return Console.ReadLine();
+            context.Out.WriteLine(question);
+            return context.In.ReadLine();
         }
 
         private static void Define(string expression, bool compress)
@@ -507,7 +501,7 @@
 
             if (string.IsNullOrEmpty(value))
             {
-                Console.WriteLine("> Missing value!");
+                context.Out.WriteLine("> Missing value!");
                 return;
             }
 
@@ -533,7 +527,7 @@
 
             context.VariableManager.Define(newVar);
 
-            Console.WriteLine("> Defined {0} as {1}.", newVar.Name, newVar.Value);
+            context.Out.WriteLine("Defined {0} as {1}.", newVar.Name, newVar.Value);
         }
 
         private static void Solve(string expression)
@@ -545,7 +539,7 @@
 
             var calculator = new Calculator(context);
             var res = calculator.Calculate(expression);
-            Console.WriteLine("> {0}", res.ToString());
+            context.Out.WriteLine("> {0}", res.ToString());
         }
 
         private static void Parse(string expression)
@@ -562,15 +556,15 @@
 
             for (var i = 0; i < postFix.Count; i++)
             {
-                Console.Write("({0})", postFix[i].ToString());
+                context.Out.Write("({0})", postFix[i].ToString());
 
                 if (i != postFix.Count - 1)
                 {
-                    Console.Write(", ");
+                    context.Out.Write(", ");
                 }
                 else
                 {
-                    Console.WriteLine();
+                    context.Out.WriteLine();
                 }
             }
         }
@@ -589,15 +583,15 @@
             {
                 for (var i = 0; i < tokenizer.Tokens.Count; i++)
                 {
-                    Console.Write(string.Format("({0}:{1})", tokenizer.Tokens[i].Type, tokenizer.Tokens[i].Value));
+                    context.Out.Write(string.Format("({0}:{1})", tokenizer.Tokens[i].Type, tokenizer.Tokens[i].Value));
 
                     if (i != tokenizer.Tokens.Count - 1)
                     {
-                        Console.Write(", ");
+                        context.Out.Write(", ");
                     }
                     else
                     {
-                        Console.WriteLine();
+                        context.Out.WriteLine();
                     }
                 }
             }

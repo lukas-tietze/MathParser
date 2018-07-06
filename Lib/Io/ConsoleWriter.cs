@@ -2,74 +2,26 @@ using System;
 
 namespace Matheparser.Io
 {
-    public class ConsoleWriter : IWriter
+    public class ConsoleWriter : WriterBase
     {
-        public string MessagePrefix
+        public override void Clear()
         {
-            get;
-            set;
+            Console.Clear();
         }
 
-        public string WarningPrefix
+        protected override void WriteCore(string msg)
         {
-            get;
-            set;
+            Console.Write(msg);
         }
 
-        public string ErrorPrefix
+        protected override void WriteLineCore(string msg)
         {
-            get;
-            set;
+            Console.WriteLine(msg);
         }
 
-        public bool WarningsEnabled
+        protected override void WriteLineCore()
         {
-            get;
-            set;
-        }
-
-        public bool ErrorsEnabled
-        {
-            get;
-            set;
-        }
-
-        public bool MessagesEnabled
-        {
-            get;
-            set;
-        }
-
-        public void Write(string msg)
-        {
-            if (this.MessagesEnabled)
-            {
-                Console.Write(msg);
-            }
-        }
-
-        public void WriteError(string msg)
-        {
-            if (this.ErrorsEnabled)
-            {
-                Console.WriteLine("{0}{1}", this.ErrorPrefix, msg);
-            }
-        }
-
-        public void WriteLine(string msg)
-        {
-            if (this.MessagesEnabled)
-            {
-                Console.WriteLine("{0}{1}", this.MessagePrefix, msg);
-            }
-        }
-
-        public void WriteWarning(string msg)
-        {
-            if(this.WarningsEnabled)
-            {
-                Console.WriteLine("{0}{1}", this.WarningPrefix, msg);
-            }
+            Console.WriteLine();
         }
     }
 }

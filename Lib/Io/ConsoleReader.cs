@@ -36,7 +36,7 @@ namespace Matheparser.Io
 
         public string ReadLine(string prompt)
         {
-            if(this.ena)
+            if(this.EnablePrompt)
             {
                 Console.WriteLine(prompt);
             }

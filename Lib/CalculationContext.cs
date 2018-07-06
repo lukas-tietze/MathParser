@@ -12,8 +12,9 @@
             this.FunctionManager = functionManager;
             this.Config = config;
             this.Culture = config.Culture;
-            this.Writer = new ConsoleWriter();
-            this.Reader = new ConsoleReader();
+            this.Out = new ConsoleWriter();
+            this.Err = new ConsoleWriter();
+            this.In = new ConsoleReader();
         }
 
         public VariableManager VariableManager { get; set; }
@@ -24,8 +25,10 @@
 
         public CultureInfo Culture { get; set; }
 
-        public IWriter Writer { get; set; }
+        public IWriter Out { get; set; }
 
-        public IReader Reader { get; set; }
+        public IWriter Err { get; set; }
+
+        public IReader In { get; set; }
     }
 }
