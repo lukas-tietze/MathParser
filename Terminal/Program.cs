@@ -18,199 +18,214 @@
     {
         private static CalculationContext context;
         private static string workingDirectory;
-        private static Dictionary<string, Tuple<Func<string, bool>, string>> actions;
-        private static Dictionary<string, string> aliases;
+        private static Dictionary<string, TerminalAction> actions;
+        private static List<TerminalAction> uniqeActions;
 
         [STAThread]
         public static void Main(string[] args)
         {
             context = new CalculationContext(new VariableManager(true), new FunctionManager(true), ConfigBase.DefaultConfig);
             workingDirectory = Directory.GetCurrentDirectory();
-            actions = new Dictionary<string, Tuple<Func<string, bool>, string>>
+            uniqeActions = new List<TerminalAction>()
             {
-                {
-                    "tokenize",
-                    new Tuple<Func<string, bool>, string>(
-                    (expression) => {
+                new TerminalAction {
+                    Name = "tokenize",
+                    Alias = "",
+                    Description = "",
+                    Action = (expression) => {
                         Tokenize(expression);
                         return false;
                     },
-                    "")
                 },
 
-                {
-                    "parse",
-                    new Tuple<Func<string, bool>, string>(
-                    (expression) => {
+                new TerminalAction {
+                    Name = "parse",
+                    Alias = "",
+                    Description = "",
+                    Action = (expression) => {
                         Parse(expression);
                         return false;
                     },
-                    "")
                 },
 
-                {
-                    "def",
-                    new Tuple<Func<string, bool>, string>(
-                    (expression) => {
+                new TerminalAction {
+                    Name = "def",
+                    Alias = "",
+                    Description = "",
+                    Action = (expression) => {
                         Define(expression, true);
                         return false;
                     },
-                    "")
                 },
 
-                {
-                    "exp",
-                    new Tuple<Func<string, bool>, string>(
-                    (expression) => {
+                new TerminalAction {
+                    Name = "exp",
+                    Alias = "",
+                    Description = "",
+                    Action = (expression) => {
                         Define(expression, false);
                         return false;
                     },
-                    "")
                 },
 
-                {
-                    "undef",
-                    new Tuple<Func<string, bool>, string>(
-                    (expression) => {
+                new TerminalAction {
+                    Name = "undef",
+                    Alias = "",
+                    Description = "",
+                    Action = (expression) => {
                         Undefine(expression);
                         return false;
                     },
-                    "")
                 },
 
-                {
-                    "quit",
-                    new Tuple<Func<string, bool>, string>(
-                    (expression) => {
+                new TerminalAction {
+                    Name = "quit",
+                    Alias = "",
+                    Description = "",
+                    Action = (expression) => {
                         return true;
                     },
-                    "")
                 },
 
-                {
-                    "solve",
-                    new Tuple<Func<string, bool>, string>(
-                    (expression) => {
+                new TerminalAction {
+                    Name = "solve",
+                    Alias = "",
+                    Description = "",
+                    Action = (expression) => {
                         Solve(expression);
                         return false;
                     },
-                    "")
                 },
 
-                {
-                    "load",
-                    new Tuple<Func<string, bool>, string>(
-                    (expression) => {
+                new TerminalAction {
+                    Name = "load",
+                        Alias = "",
+                        Description = "",
+                    Action = (expression) => {
                         return Load(expression);
                     },
-                    "")
                 },
 
+                new TerminalAction
                 {
-                    "err",
-                    new Tuple<Func<string, bool>, string>(
-                    (expression) => {
+                    Name = "err",
+                    Alias = "",
+                    Description = "",
+                    Action = (expression) =>
+                    {
                         context.Out = OpenOut(expression);
                         return false;
                     },
-                    "")
                 },
 
+                new TerminalAction
                 {
-                    "out",
-                    new Tuple<Func<string, bool>, string>(
-                    (expression) => {
+                    Name = "out",
+                    Alias = "",
+                    Description = "",
+                    Action = (expression) =>
+                    {
                         context.Out = OpenOut(expression);
                         return false;
                     },
-                    "")
                 },
 
+                new TerminalAction
                 {
-                    "in",
-                    new Tuple<Func<string, bool>, string>(
-                    (expression) => {
+                    Name = "in",
+                    Alias = "",
+                    Description = "",
+                    Action = (expression) =>
+                    {
                         context.In = OpenIn(expression);
                         return false;
                     },
-                    "")
                 },
 
+                new TerminalAction
                 {
-                    "dir",
-                    new Tuple<Func<string, bool>, string>(
-                    (expression) => {
+                    Name = "dir",
+                    Alias = "",
+                    Description = "",
+                    Action = (expression) =>
+                    {
                         ChangeDir(expression);
                         return false;
                     },
-                    "")
                 },
 
+                new TerminalAction
                 {
-                    "promt",
-                    new Tuple<Func<string, bool>, string>(
-                    (expression) => {
+                    Name = "promt",
+                    Alias = "",
+                    Description = "",
+                    Action = (expression) =>
+                    {
                         SetPrompt(expression);
                         return false;
                     },
-                    "")
                 },
 
+                new TerminalAction
                 {
-                    "clear",
-                    new Tuple<Func<string, bool>, string>(
-                    (expression) => {
+                    Name = "clear",
+                    Alias = "",
+                    Description = "",
+                    Action = (expression) =>
+                    {
                         context.Out.Clear();
                         return false;
                     },
-                    "")
                 },
 
+                new TerminalAction
                 {
-                    "files",
-                    new Tuple<Func<string, bool>, string>(
-                    (expression) => {
+                    Name = "files",
+                    Alias = "",
+                    Description = "",
+                    Action = (expression) =>
+                    {
                         ListFiles();
                         return false;
                     },
-                    "")
                 },
 
+                new TerminalAction
                 {
-                    "clearvars",
-                    new Tuple<Func<string, bool>, string>(
-                    (expression) => {
+                    Name = "clearvars",
+                    Alias = "",
+                    Description = "",
+                    Action = (expression) =>
+                    {
                         ClearVars(expression);
                         return false;
                     },
-                    "")
                 },
 
+                new TerminalAction
                 {
-                    "help",
-                    new Tuple<Func<string, bool>, string>(
-                    (expression) => {
+                    Name = "help",
+                    Alias = "",
+                    Description = "",
+                    Action = (expression) =>
+                    {
                         ShowHelp(expression);
                         return false;
                     },
-                    "")
                 },
-            };
-
-            aliases = new Dictionary<string, string>()
-            {
-                // {"", ""},
-                 {"def", "!"},
-                  {"help", "?"},
             };
 
             context.Out.Clear();
 
-            foreach (var kvp in aliases)
+            actions = new Dictionary<string, TerminalAction>();
+
+            foreach (var item in uniqeActions)
             {
-                if (actions.ContainsKey(kvp.Key))
+                actions.Add(item.Name, item);
+
+                if (!string.IsNullOrEmpty(item.Alias))
                 {
-                    actions.Add(kvp.Value, actions[kvp.Key]);
+                    actions.Add(item.Alias, item);
                 }
             }
 
@@ -239,10 +254,22 @@
                 context.Out.WriteLine();
                 context.Out.WriteLine("Possible Commands are:");
 
-                foreach (var action in actions)
+                context.Out.BeginIndent("\t", false);
+
+                foreach (var action in uniqeActions)
                 {
-                    context.Out.WriteLine("\t{0} - {1}", action.Key, action.Value.Item2);
+                    if (action.HasAlias)
+                    {
+                        context.Out.WriteLine(action.Name);
+                        context.Out.WriteLine("{0} - {1}", action.Name, action.Description);
+                    }
+                    else
+                    {
+                        context.Out.WriteLine("{0} - {1}", action.Name, action.Description);
+                    }
                 }
+
+                context.Out.EndIndent();
             }
             else if (context.VariableManager.IsDefined(expression))
             {
@@ -254,7 +281,7 @@
             }
             else if (actions.ContainsKey(expression))
             {
-                context.Out.WriteLine("{0} is an command:\n{1}", expression, actions[expression].Item2);
+                context.Out.WriteLine("{0} is an command:\n{1}", expression, actions[expression].Description);
             }
             else
             {
@@ -291,7 +318,7 @@
 
                     if (actions.TryGetValue(command.Substring(1), out var func))
                     {
-                        quit = func.Item1(expression);
+                        quit = func.Run(expression);
                     }
                     else
                     {
@@ -638,6 +665,56 @@
             }
 
             return d[s1.Length, s2.Length];
+
+        }
+        public class TerminalAction
+        {
+            public string Name
+            {
+                get;
+                set;
+            }
+
+            public string Alias
+            {
+                get;
+                set;
+            }
+
+            public bool HasAlias
+            {
+                get
+                {
+                    return !string.IsNullOrEmpty(this.Alias);
+                }
+            }
+
+            public string Description
+            {
+                get;
+                set;
+            }
+
+            public bool HasDesciption
+            {
+                get
+                {
+                    return string.IsNullOrEmpty(this.Description);
+                }
+            }
+
+            public Func<string, bool> Action
+            {
+                get;
+                set;
+            }
+
+            public bool Run(string arg)
+            {
+                return this.Action(arg);
+            }
         }
     }
+
+
 }
