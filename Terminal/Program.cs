@@ -380,7 +380,16 @@
         {
             if (!string.IsNullOrEmpty(expression))
             {
-                workingDirectory = Path.GetFullPath(Path.Combine(workingDirectory, expression));
+                var newDir = Path.GetFullPath(Path.Combine(workingDirectory, expression));
+
+                if (File.Exists(newDir))
+                {
+                    workingDirectory = newDir;
+                }
+                else
+                {
+                    context.Err.WriteLine("Can'tchange to {0}, Directory {1} doesn't exist", expression, newDir);
+                }
             }
 
             context.Out.WriteLine("current directory is \"{0}\"", workingDirectory);
