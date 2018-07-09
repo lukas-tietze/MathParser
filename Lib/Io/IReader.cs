@@ -1,6 +1,8 @@
+using System;
+
 namespace Matheparser.Io
 {
-    public interface IReader
+    public interface IReader : IDisposable
     {
         bool EnablePrompt
         {

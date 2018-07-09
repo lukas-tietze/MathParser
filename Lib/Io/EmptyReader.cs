@@ -29,5 +29,9 @@ namespace Matheparser.Io
         {
             return this.ReadLine();
         }
+
+        public void Dispose()
+        {
+        }
     }
 }

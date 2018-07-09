@@ -105,5 +105,9 @@ namespace Matheparser.Io
         protected abstract void WriteLineCore(string msg);
 
         protected abstract void WriteLineCore();
+
+        public virtual void Dispose()
+        {
+        }
     }
 }

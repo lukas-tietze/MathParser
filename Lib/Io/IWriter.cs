@@ -1,6 +1,8 @@
+using System;
+
 namespace Matheparser.Io
 {
-    public interface IWriter
+    public interface IWriter : IDisposable
     {
         bool Enabled
         {

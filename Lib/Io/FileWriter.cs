@@ -32,5 +32,11 @@ namespace Matheparser.Io
         {
             this.output.WriteLine();
         }
+
+        public override void Dispose()
+        {
+            this.output.Close();
+            this.output.Dispose();
+        }
     }
 }

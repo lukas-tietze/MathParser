@@ -39,5 +39,11 @@ namespace Matheparser.Io
         {
             return this.ReadLine();
         }
+
+        public virtual void Dispose()
+        {
+            this.input.Close();
+            this.input.Dispose();
+        }
     }
 }

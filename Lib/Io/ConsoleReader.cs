@@ -14,6 +14,10 @@ namespace Matheparser.Io
             set;
         }
 
+        public virtual void Dispose()
+        {
+        }
+
         public virtual ConsoleKey ReadKey()
         {
             return Console.ReadKey(false).Key;
