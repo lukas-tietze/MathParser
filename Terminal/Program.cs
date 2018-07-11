@@ -15,6 +15,7 @@
     using Matheparser.Io;
     using System.Runtime.Loader;
     using Api;
+    using System.Reflection;
 
     public static class Program
     {
@@ -473,7 +474,16 @@
 
         private static bool LoadPlugin(string path)
         {
-            var dll = AssemblyLoadContext.Default.LoadFromAssemblyPath(path);
+            var dll = default(Assembly);
+
+            try
+            {
+                dll = AssemblyLoadContext.Default.LoadFromAssemblyPath(Path.GetFullPath(path));
+            }
+            catch (Exception e)
+            {
+                HandleException(e);
+            }
 
             foreach (var type in dll.GetTypes())
             {
@@ -482,8 +492,8 @@
                     var plugin = (IPlugin)Activator.CreateInstance(type);
                     plugin.Init(context);
                 }
-                
-                if(typeof(IFunction).IsAssignableFrom(type))
+
+                if (typeof(IFunction).IsAssignableFrom(type))
                 {
                     context.FunctionManager.Define((IFunction)Activator.CreateInstance(type));
                 }
