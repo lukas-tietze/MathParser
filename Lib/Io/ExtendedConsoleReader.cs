@@ -15,7 +15,7 @@ namespace Matheparser.Io
         {
             get
             {
-                if(string.IsNullOrEmpty(this.lastLineClearer) || this.lastLineClearer.Length != Console.BufferWidth - 1)
+                if (string.IsNullOrEmpty(this.lastLineClearer) || this.lastLineClearer.Length != Console.BufferWidth - 1)
                 {
                     this.lastLineClearer = "\r" + new string(' ', Console.BufferWidth - 1);
                 }
@@ -65,10 +65,10 @@ namespace Matheparser.Io
                         this.HandleEscape();
                         break;
                     case ConsoleKey.UpArrow:
-                        this.HandleMoveUp();
+                        this.HandleUp();
                         break;
                     case ConsoleKey.DownArrow:
-                        this.HandleMoveDown();
+                        this.HandleDown();
                         break;
                     case ConsoleKey.Tab:
                         this.HandleTab();
@@ -253,10 +253,18 @@ namespace Matheparser.Io
 
         private void HandleRight()
         {
+            if (Console.CursorLeft < Console.BufferWidth)
+            {
+                Console.CursorLeft++;
+            }
         }
 
         private void HandleLeft()
         {
+            if (Console.CursorLeft > 0)
+            {
+                Console.CursorLeft--;
+            }
         }
 
         private void HandleHelp()
@@ -269,18 +277,40 @@ namespace Matheparser.Io
 
         private void HandleTab()
         {
+            var args = new AutoCompleteEventArgs(this.currentInput.ToString());
+
+            this.AutoCompleteRequired?.Invoke(this, args);
+
+            if (args.Suggestions.Count == 1)
+            {
+                var enumerator = args.Suggestions.GetEnumerator();
+                enumerator.MoveNext();
+                this.currentInput.Clear().Append(enumerator.Current)
+                this.Refresh();
+            }
+            else
+            {
+
+            }
         }
 
-        private void HandleMoveDown()
+        private void HandleDown()
         {
         }
 
-        private void HandleMoveUp()
+        private void HandleUp()
         {
         }
 
         private void HandleBackspace()
         {
+            if (Console.CursorLeft > 0)
+            {
+                var pos = Console.CursorLeft;
+                this.HandleLeft();
+
+                Console.Write("\r{0} ", this.currentInput);
+            }
         }
 
         private void HandleDelete()
