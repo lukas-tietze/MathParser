@@ -13,6 +13,7 @@
     using Matheparser.Variables;
     using Matheparser.Util;
     using Matheparser.Io;
+    using System.Runtime.Loader;
 
     public static class Program
     {
@@ -99,8 +100,8 @@
 
                 new TerminalAction {
                     Name = "load",
-                        Alias = "",
-                        Description = "",
+                    Alias = "",
+                    Description = "",
                     Action = (expression) => {
                         return Load(expression);
                     },
@@ -458,9 +459,18 @@
             return new FileWriter(expression.Trim());
         }
 
-        private static bool Load(string expression)
+        private static bool LoadPlugin(string path)
         {
-            var allLines = File.ReadAllLines(Path.GetFullPath(Path.Combine(workingDirectory, expression.Trim())));
+            var plugin = AssemblyLoadContext.Default.LoadFromAssemblyPath(path);
+
+            
+
+            return false;
+        }
+
+        private static bool Load(string path)
+        {
+            var allLines = File.ReadAllLines(Path.GetFullPath(Path.Combine(workingDirectory, path.Trim())));
             var quit = false;
 
             for (var i = 0; i < allLines.Length && !quit; i++)
