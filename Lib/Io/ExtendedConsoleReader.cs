@@ -285,8 +285,8 @@ namespace Matheparser.Io
             {
                 var enumerator = args.Suggestions.GetEnumerator();
                 enumerator.MoveNext();
-                this.currentInput.Clear().Append(enumerator.Current)
-                this.Refresh();
+                this.currentInput.Clear().Append(enumerator.Current);
+                // this.Refresh();
             }
             else
             {

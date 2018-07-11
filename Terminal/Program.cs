@@ -14,6 +14,7 @@
     using Matheparser.Util;
     using Matheparser.Io;
     using System.Runtime.Loader;
+    using Api;
 
     public static class Program
     {
@@ -21,18 +22,20 @@
         private static string workingDirectory;
         private static Dictionary<string, TerminalAction> actions;
         private static List<TerminalAction> uniqeActions;
+        private static List<IPlugin> activePlugins;
 
         [STAThread]
         public static void Main(string[] args)
         {
             context = new CalculationContext(new VariableManager(true), new FunctionManager(true), ConfigBase.DefaultConfig);
             workingDirectory = Directory.GetCurrentDirectory();
+            activePlugins = new List<IPlugin>();
             uniqeActions = new List<TerminalAction>()
             {
                 new TerminalAction {
                     Name = "tokenize",
-                    Alias = "",
-                    Description = "",
+                    Alias = "t",
+                    Description = "Prints the list of tokens of the expression.",
                     Action = (expression) => {
                         Tokenize(expression);
                         return false;
@@ -41,8 +44,8 @@
 
                 new TerminalAction {
                     Name = "parse",
-                    Alias = "",
-                    Description = "",
+                    Alias = "p",
+                    Description = "Parses the expression and prints the created postfix expression.",
                     Action = (expression) => {
                         Parse(expression);
                         return false;
@@ -51,8 +54,8 @@
 
                 new TerminalAction {
                     Name = "def",
-                    Alias = "",
-                    Description = "",
+                    Alias = "d",
+                    Description = "Evaluates the given expression and defines a variable, which value is the result of the evaluation.",
                     Action = (expression) => {
                         Define(expression, true);
                         return false;
@@ -61,8 +64,8 @@
 
                 new TerminalAction {
                     Name = "exp",
-                    Alias = "",
-                    Description = "",
+                    Alias = "e",
+                    Description = "Defines a variable that contains the given expression.",
                     Action = (expression) => {
                         Define(expression, false);
                         return false;
@@ -71,8 +74,8 @@
 
                 new TerminalAction {
                     Name = "undef",
-                    Alias = "",
-                    Description = "",
+                    Alias = "ud",
+                    Description = "Removes a variable.",
                     Action = (expression) => {
                         Undefine(expression);
                         return false;
@@ -81,8 +84,8 @@
 
                 new TerminalAction {
                     Name = "quit",
-                    Alias = "",
-                    Description = "",
+                    Alias = "q",
+                    Description = "Quit the application.",
                     Action = (expression) => {
                         return true;
                     },
@@ -90,8 +93,8 @@
 
                 new TerminalAction {
                     Name = "solve",
-                    Alias = "",
-                    Description = "",
+                    Alias = "s",
+                    Description = "Evaluates the expression and prints the result.",
                     Action = (expression) => {
                         Solve(expression);
                         return false;
@@ -100,18 +103,27 @@
 
                 new TerminalAction {
                     Name = "load",
-                    Alias = "",
-                    Description = "",
+                    Alias = "ld",
+                    Description = "load a file from the specified path and interpret each line as a command.",
                     Action = (expression) => {
                         return Load(expression);
+                    },
+                },
+
+                new TerminalAction {
+                    Name = "plugin",
+                    Alias = "pl",
+                    Description = "Loads a plugin from the specified path.",
+                    Action = (expression) => {
+                        return LoadPlugin(expression);
                     },
                 },
 
                 new TerminalAction
                 {
                     Name = "err",
-                    Alias = "",
-                    Description = "",
+                    Alias = "|",
+                    Description = "Changes the error stream to the specified file. Use :err <std> to print to console.",
                     Action = (expression) =>
                     {
                         context.Out = OpenOut(expression);
@@ -122,8 +134,8 @@
                 new TerminalAction
                 {
                     Name = "out",
-                    Alias = "",
-                    Description = "",
+                    Alias = ">",
+                    Description = "Changes the output stream to the specified file. Use :out <std> to print to console.",
                     Action = (expression) =>
                     {
                         context.Out = OpenOut(expression);
@@ -134,8 +146,8 @@
                 new TerminalAction
                 {
                     Name = "in",
-                    Alias = "",
-                    Description = "",
+                    Alias = "<",
+                    Description = "Changes the input stream. Use :in <std> to use the console.",
                     Action = (expression) =>
                     {
                         context.In = OpenIn(expression);
@@ -146,8 +158,8 @@
                 new TerminalAction
                 {
                     Name = "dir",
-                    Alias = "",
-                    Description = "",
+                    Alias = "cd",
+                    Description = "Changes the to specified directory and prints the current directory.",
                     Action = (expression) =>
                     {
                         ChangeDir(expression);
@@ -158,8 +170,8 @@
                 new TerminalAction
                 {
                     Name = "promt",
-                    Alias = "",
-                    Description = "",
+                    Alias = "#",
+                    Description = "Use the specified expression as prompt.",
                     Action = (expression) =>
                     {
                         SetPrompt(expression);
@@ -170,8 +182,8 @@
                 new TerminalAction
                 {
                     Name = "clear",
-                    Alias = "",
-                    Description = "",
+                    Alias = "cl",
+                    Description = "Clears the screen.",
                     Action = (expression) =>
                     {
                         context.Out.Clear();
@@ -182,8 +194,8 @@
                 new TerminalAction
                 {
                     Name = "files",
-                    Alias = "",
-                    Description = "",
+                    Alias = "ls",
+                    Description = "List all Files and directories in the current directory.",
                     Action = (expression) =>
                     {
                         ListFiles();
@@ -194,8 +206,8 @@
                 new TerminalAction
                 {
                     Name = "clearvars",
-                    Alias = "",
-                    Description = "",
+                    Alias = "clv",
+                    Description = "Delete all variables, except e and pi. Use :clearvars all to also delete e and pi.",
                     Action = (expression) =>
                     {
                         ClearVars(expression);
@@ -206,8 +218,8 @@
                 new TerminalAction
                 {
                     Name = "help",
-                    Alias = "",
-                    Description = "",
+                    Alias = "h",
+                    Description = "Prints the help.",
                     Action = (expression) =>
                     {
                         ShowHelp(expression);
@@ -261,7 +273,7 @@
                 {
                     if (action.HasAlias)
                     {
-                        context.Out.WriteLine(action.Name);
+                        context.Out.WriteLine(action.Alias);
                         context.Out.WriteLine("{0} - {1}", action.Name, action.Description);
                     }
                     else
@@ -461,9 +473,21 @@
 
         private static bool LoadPlugin(string path)
         {
-            var plugin = AssemblyLoadContext.Default.LoadFromAssemblyPath(path);
+            var dll = AssemblyLoadContext.Default.LoadFromAssemblyPath(path);
 
-            
+            foreach (var type in dll.GetTypes())
+            {
+                if (typeof(IPlugin).IsAssignableFrom(type))
+                {
+                    var plugin = (IPlugin)Activator.CreateInstance(type);
+                    plugin.Init(context);
+                }
+                
+                if(typeof(IFunction).IsAssignableFrom(type))
+                {
+                    context.FunctionManager.Define((IFunction)Activator.CreateInstance(type));
+                }
+            }
 
             return false;
         }
