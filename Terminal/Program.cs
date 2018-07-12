@@ -11,11 +11,14 @@ namespace Terminal
             var engine = new Engine();
             var quit = false;
 
-            engine.EnqueueAllCommands(args);
+            for (int i = 0; i < args.Length && !quit; i++)
+            {
+                quit = engine.Eval(args[i]);
+            }
 
             while (!quit)
             {
-                quit = engine.ExecuteNext();
+                quit = engine.EvalFromStdIn();
             }
         }
     }

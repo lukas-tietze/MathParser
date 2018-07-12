@@ -24,7 +24,6 @@ namespace Matheparser
         private Dictionary<string, TerminalAction> actions;
         private List<TerminalAction> uniqueActions;
         private List<IPlugin> activePlugins;
-        private Queue<string> commandQueue;
 
         public Engine()
         {
@@ -36,7 +35,6 @@ namespace Matheparser
                 new ConsoleWriter(),
                 new ConsoleReader());
             this.workingDirectory = Directory.GetCurrentDirectory();
-            this.commandQueue = new Queue<string>();
             this.activePlugins = new List<IPlugin>();
             this.uniqueActions = new List<TerminalAction>()
             {
@@ -249,41 +247,13 @@ namespace Matheparser
             }
         }
 
-        public int RemainingCommands
+        public bool EvalFromStdIn()
         {
-            get
-            {
-                return this.commandQueue.Count;
-            }
+            return this.Eval(this.context.In.ReadLine());
         }
 
-        public void EnqueueNextLine()
+        public bool Eval(string input)
         {
-            this.EnqueueCommand(this.context.In.ReadLine());
-        }
-
-        public void EnqueueAllCommands(IEnumerable<string> items)
-        {
-            foreach (var item in items)
-            {
-                this.commandQueue.Enqueue(item);
-            }
-        }
-
-        public void EnqueueCommand(string input)
-        {
-            this.commandQueue.Enqueue(input);
-        }
-
-        public bool ExecuteNext()
-        {
-            if (this.commandQueue.Count == 0)
-            {
-                return false;
-            }
-
-            var input = this.commandQueue.Dequeue();
-
             if (string.IsNullOrEmpty(input))
             {
                 return false;
@@ -535,7 +505,7 @@ namespace Matheparser
 
             for (var i = 0; i < allLines.Length && !quit; i++)
             {
-                commandQueue.Enqueue(allLines[i]);
+                quit = Eval(allLines[i]);
             }
 
             return quit;
