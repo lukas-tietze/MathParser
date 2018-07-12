@@ -3,6 +3,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Lib\Lib.csproj" />
     <ProjectReference Include="..\Api\Api.csproj" />
+    <ProjectReference Include="..\Plugin\Plugin.csproj" />
   </ItemGroup>
 
   <ItemGroup>

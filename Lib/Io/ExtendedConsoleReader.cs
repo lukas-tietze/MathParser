@@ -281,16 +281,31 @@ namespace Matheparser.Io
 
             this.AutoCompleteRequired?.Invoke(this, args);
 
+            if (args.Suggestions.Count == 0)
+            {
+                return;
+            }
+
+            var enumerator = args.Suggestions.GetEnumerator();
+            enumerator.MoveNext();
+
             if (args.Suggestions.Count == 1)
             {
-                var enumerator = args.Suggestions.GetEnumerator();
-                enumerator.MoveNext();
                 this.currentInput.Clear().Append(enumerator.Current);
-                // this.Refresh();
+                this.Refresh();
             }
             else
             {
+                Console.WriteLine();
 
+                Console.Write(enumerator.Current);
+
+                while (enumerator.MoveNext())
+                {
+                    Console.Write(", {0}", enumerator.Current);
+                }
+
+                this.Refresh();
             }
         }
 
@@ -306,10 +321,11 @@ namespace Matheparser.Io
         {
             if (Console.CursorLeft > 0)
             {
-                var pos = Console.CursorLeft;
-                this.HandleLeft();
-
+                var x = Console.CursorLeft;
+                var y = Console.CursorTop;
                 Console.Write("\r{0} ", this.currentInput);
+                Console.CursorLeft = (x-1+Console.BufferWidth) % Console.BufferWidth;
+                Console.CursorTop = (Math.Min(y, this.currentInput.Length / Console.BufferWidth));
             }
         }
 
@@ -329,6 +345,11 @@ namespace Matheparser.Io
             }
 
             return string.Empty;
+        }
+
+        private void Refresh()
+        {
+            Console.Write("\r{0}{1}", this.currentInput, new string(' ', Console.BufferWidth - (this.currentInput.Length % Console.BufferWidth) - 1));
         }
 
         public class AutoCompleteEventArgs : EventArgs
