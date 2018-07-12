@@ -10,6 +10,17 @@
         private IWriter errWriter;
         private IReader reader;
 
+        public CalculationContext(IConfig config)
+        {
+            this.VariableManager = new VariableManager(true);
+            this.FunctionManager = new FunctionManager(true);
+            this.Config = config;
+            this.Culture = config.Culture;
+            this.Out = new ConsoleWriter();
+            this.Err = new ConsoleWriter();
+            this.In = new ConsoleReader();
+        }
+
         public CalculationContext(VariableManager variableManager, FunctionManager functionManager, IConfig config, IWriter outWriter, IWriter errWriter, IReader reader)
         {
             this.VariableManager = variableManager;
@@ -29,7 +40,7 @@
 
         public CultureInfo Culture { get; set; }
 
-        public IWriter Out 
+        public IWriter Out
         {
             get
             {
@@ -38,16 +49,16 @@
 
             set
             {
-                if(this.outWriter != null)
+                if (this.outWriter != null)
                 {
                     this.outWriter.Dispose();
                 }
 
                 this.outWriter = value;
-            }    
+            }
         }
 
-        public IWriter Err 
+        public IWriter Err
         {
             get
             {
@@ -56,13 +67,13 @@
 
             set
             {
-                if(this.errWriter != null)
+                if (this.errWriter != null)
                 {
                     this.errWriter.Dispose();
                 }
 
                 this.errWriter = value;
-            }    
+            }
         }
 
         public IReader In
@@ -74,13 +85,13 @@
 
             set
             {
-                if(this.reader != null)
+                if (this.reader != null)
                 {
                     this.reader.Dispose();
                 }
 
                 this.reader = value;
-            }    
+            }
         }
     }
 }

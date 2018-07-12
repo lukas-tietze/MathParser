@@ -36,6 +36,7 @@ namespace Matheparser
                 new ConsoleWriter(),
                 new ConsoleReader());
             this.workingDirectory = Directory.GetCurrentDirectory();
+            this.commandQueue = new Queue<string>();
             this.activePlugins = new List<IPlugin>();
             this.uniqueActions = new List<TerminalAction>()
             {
@@ -245,6 +246,14 @@ namespace Matheparser
                 {
                     this.actions.Add(item.Alias, item);
                 }
+            }
+        }
+
+        public int RemainingCommands
+        {
+            get
+            {
+                return this.commandQueue.Count;
             }
         }
 

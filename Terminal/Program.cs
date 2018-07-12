@@ -9,7 +9,6 @@ namespace Terminal
         public static void Main(string[] args)
         {
             var engine = new Engine();
-
             var quit = false;
 
             engine.EnqueueAllCommands(args);
