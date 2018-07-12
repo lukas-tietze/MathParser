@@ -6,19 +6,19 @@
 
     public sealed class CalculationContext
     {
-        private IWriter out_writer;
-        private IWriter err_writer;
-        private IReader in_writer;
+        private IWriter outWriter;
+        private IWriter errWriter;
+        private IReader reader;
 
-        public CalculationContext(VariableManager variableManager, FunctionManager functionManager, IConfig config)
+        public CalculationContext(VariableManager variableManager, FunctionManager functionManager, IConfig config, IWriter outWriter, IWriter errWriter, IReader reader)
         {
             this.VariableManager = variableManager;
             this.FunctionManager = functionManager;
             this.Config = config;
             this.Culture = config.Culture;
-            this.Out = new ConsoleWriter();
-            this.Err = new ConsoleWriter();
-            this.In = new ConsoleReader();
+            this.Out = outWriter;
+            this.Err = errWriter;
+            this.In = reader;
         }
 
         public VariableManager VariableManager { get; set; }
@@ -33,17 +33,17 @@
         {
             get
             {
-                return this.out_writer;
+                return this.outWriter;
             }
 
             set
             {
-                if(this.out_writer != null)
+                if(this.outWriter != null)
                 {
-                    this.out_writer.Dispose();
+                    this.outWriter.Dispose();
                 }
 
-                this.out_writer = value;
+                this.outWriter = value;
             }    
         }
 
@@ -51,17 +51,17 @@
         {
             get
             {
-                return this.err_writer;
+                return this.errWriter;
             }
 
             set
             {
-                if(this.err_writer != null)
+                if(this.errWriter != null)
                 {
-                    this.err_writer.Dispose();
+                    this.errWriter.Dispose();
                 }
 
-                this.err_writer = value;
+                this.errWriter = value;
             }    
         }
 
@@ -69,17 +69,17 @@
         {
             get
             {
-                return this.in_writer;
+                return this.reader;
             }
 
             set
             {
-                if(this.in_writer != null)
+                if(this.reader != null)
                 {
-                    this.in_writer.Dispose();
+                    this.reader.Dispose();
                 }
 
-                this.in_writer = value;
+                this.reader = value;
             }    
         }
     }

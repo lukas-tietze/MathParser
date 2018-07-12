@@ -79,7 +79,7 @@
                         {
                             var argCount = argCountStack.Pop();
 
-                            if (this.tokens[i - 1].Type != TokenType.FunctionStart || this.tokens[i - 1].Type != TokenType.SetStart)
+                            if (this.tokens[i - 1].Type != TokenType.FunctionStart && this.tokens[i - 1].Type != TokenType.SetStart)
                             {
                                 argCount++;
                             }

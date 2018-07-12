@@ -8,7 +8,8 @@ run: build
 
 exe:
 	dotnet msbuild -r win10-x64
-	mv Terminal/
+	mv Terminal/bin/Debugnetcoreapp2.0/Terminal.exe bin/
 
 # unx:
 	# dotnet msbuild -r linuxmint.18.1-x64
+	# mv Terminal/bin/Debugnetcoreapp2.0/Terminal bin/

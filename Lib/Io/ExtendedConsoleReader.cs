@@ -39,6 +39,7 @@ namespace Matheparser.Io
             this.history.Clear();
             this.currentInput = null;
             this.currentInput.Clear();
+            this.AutoCompleteRequired = null;
         }
 
         public override string ReadLine()
@@ -128,6 +129,16 @@ namespace Matheparser.Io
                     case ConsoleKey.NumPad7:
                     case ConsoleKey.NumPad8:
                     case ConsoleKey.NumPad9:
+                    case ConsoleKey.D0:
+                    case ConsoleKey.D1:
+                    case ConsoleKey.D2:
+                    case ConsoleKey.D3:
+                    case ConsoleKey.D4:
+                    case ConsoleKey.D5:
+                    case ConsoleKey.D6:
+                    case ConsoleKey.D7:
+                    case ConsoleKey.D8:
+                    case ConsoleKey.D9:
                         this.HandleInputChar(input);
                         break;
                     case ConsoleKey.Applications:
@@ -141,16 +152,6 @@ namespace Matheparser.Io
                     case ConsoleKey.BrowserStop:
                     case ConsoleKey.Clear:
                     case ConsoleKey.CrSel:
-                    case ConsoleKey.D0:
-                    case ConsoleKey.D1:
-                    case ConsoleKey.D2:
-                    case ConsoleKey.D3:
-                    case ConsoleKey.D4:
-                    case ConsoleKey.D5:
-                    case ConsoleKey.D6:
-                    case ConsoleKey.D7:
-                    case ConsoleKey.D8:
-                    case ConsoleKey.D9:
                     case ConsoleKey.EraseEndOfFile:
                     case ConsoleKey.Execute:
                     case ConsoleKey.ExSel:
@@ -225,7 +226,6 @@ namespace Matheparser.Io
                     default:
                         throw new NotSupportedException();
                 }
-
             }
 
             return this.Commit();
@@ -273,6 +273,7 @@ namespace Matheparser.Io
 
         private void HandleEnd()
         {
+            Console.CursorLeft = this.currentInput.Length;
         }
 
         private void HandleTab()
