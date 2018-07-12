@@ -12,12 +12,9 @@ namespace Terminal
 
             var quit = false;
 
-            for(int i = 0; i < args.Length && !quit; i++)
-            {
-                quit = engine.Execute(args[i]);
-            }
+            engine.EnqueueAllCommands(args);
 
-            while(!quit)
+            while (!quit)
             {
                 quit = engine.ExecuteNext();
             }

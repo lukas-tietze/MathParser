@@ -18,18 +18,19 @@ namespace Matheparser
     using Api;
 
     public class Engine
-    {        
+    {
         private CalculationContext context;
         private string workingDirectory;
         private Dictionary<string, TerminalAction> actions;
         private List<TerminalAction> uniqueActions;
         private List<IPlugin> activePlugins;
+        private Queue<string> commandQueue;
 
         public Engine()
         {
             this.context = new CalculationContext(
-                new VariableManager(true), 
-                new FunctionManager(true), 
+                new VariableManager(true),
+                new FunctionManager(true),
                 ConfigBase.DefaultConfig,
                 new ConsoleWriter(),
                 new ConsoleWriter(),
@@ -247,13 +248,33 @@ namespace Matheparser
             }
         }
 
-        public bool ExecuteNext()
+        public void EnqueueNextLine()
         {
-            return this.Execute(this.context.In.ReadLine());
+            this.EnqueueCommand(this.context.In.ReadLine());
         }
 
-        public bool Execute(string input)
+        public void EnqueueAllCommands(IEnumerable<string> items)
         {
+            foreach (var item in items)
+            {
+                this.commandQueue.Enqueue(item);
+            }
+        }
+
+        public void EnqueueCommand(string input)
+        {
+            this.commandQueue.Enqueue(input);
+        }
+
+        public bool ExecuteNext()
+        {
+            if (this.commandQueue.Count == 0)
+            {
+                return false;
+            }
+
+            var input = this.commandQueue.Dequeue();
+
             if (string.IsNullOrEmpty(input))
             {
                 return false;
@@ -505,7 +526,7 @@ namespace Matheparser
 
             for (var i = 0; i < allLines.Length && !quit; i++)
             {
-                quit = Execute(allLines[i]);
+                commandQueue.Enqueue(allLines[i]);
             }
 
             return quit;
