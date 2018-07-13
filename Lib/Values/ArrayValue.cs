@@ -65,6 +65,14 @@
             }
         }
 
+        public string Description
+        {
+            get
+            {
+                return this.ToString();
+            }
+        }
+
         public override string ToString()
         {
             var sb = new StringBuilder();

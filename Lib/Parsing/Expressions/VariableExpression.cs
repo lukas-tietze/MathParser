@@ -14,11 +14,11 @@ namespace Matheparser.Parsing.Expressions
             this.name = name;
         }
 
-        public PostFixExpressionType Type
+        public ExpressionType Type
         {
             get
             {
-                return PostFixExpressionType.Value;
+                return ExpressionType.Value;
             }
         }
 

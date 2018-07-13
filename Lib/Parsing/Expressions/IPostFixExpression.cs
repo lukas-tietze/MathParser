@@ -10,7 +10,7 @@ namespace Matheparser.Parsing.Expressions
             get;
         }
 
-        PostFixExpressionType Type
+        ExpressionType Type
         {
             get;
         }

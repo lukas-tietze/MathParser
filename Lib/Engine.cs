@@ -24,6 +24,8 @@ namespace Matheparser
         private Dictionary<string, TerminalAction> actions;
         private List<TerminalAction> uniqueActions;
         private List<IPlugin> activePlugins;
+        private IWriter diagnosticWriter;
+        private IWriter debugWriter;
 
         public Engine()
         {
@@ -36,6 +38,8 @@ namespace Matheparser
                 new ConsoleReader());
             this.workingDirectory = Directory.GetCurrentDirectory();
             this.activePlugins = new List<IPlugin>();
+            this.diagnosticWriter = new EmptyWriter();
+            this.debugWriter = new EmptyWriter();
             this.uniqueActions = new List<TerminalAction>()
             {
                 new TerminalAction {
@@ -229,6 +233,42 @@ namespace Matheparser
                     Action = (expression) =>
                     {
                         ShowHelp(expression);
+                        return false;
+                    },
+                },
+
+                new TerminalAction
+                {
+                    Name = "debug",
+                    Alias = "db",
+                    Description = "Set debug-Output to the specified stream.",
+                    Action = (expression) =>
+                    {
+                        if(this.debugWriter != null)
+                        {
+                            this.debugWriter.Dispose();
+                        }
+
+                        this.debugWriter = this.OpenOut(expression);
+
+                        return false;
+                    },
+                },
+
+                new TerminalAction
+                {
+                    Name = "diagnostic",
+                    Alias = "dg",
+                    Description = "Set diagnostic-Output to the specified stream.",
+                    Action = (expression) =>
+                    {
+                        if(this.diagnosticWriter != null)
+                        {
+                            this.diagnosticWriter.Dispose();
+                        }
+
+                        this.diagnosticWriter = this.OpenOut(expression);
+
                         return false;
                     },
                 },
@@ -608,7 +648,7 @@ namespace Matheparser
 
             context.VariableManager.Define(newVar);
 
-            context.Out.WriteLine("Defined {0} as {1}.", newVar.Name, newVar.Value);
+            context.Out.WriteLine("Defined {0} as {1}.", newVar.Name, newVar.Value.Description);
         }
 
         private void Solve(string expression)

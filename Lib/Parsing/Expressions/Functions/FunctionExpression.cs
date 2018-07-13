@@ -14,11 +14,11 @@ namespace Matheparser.Parsing.Expressions.Functions
             this.argCount = argCount;
         }
 
-        public PostFixExpressionType Type
+        public ExpressionType Type
         {
             get
             {
-                return PostFixExpressionType.Function;
+                return ExpressionType.Function;
             }
         }
 

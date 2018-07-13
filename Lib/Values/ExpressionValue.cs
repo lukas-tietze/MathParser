@@ -11,29 +11,22 @@
     public sealed class ExpressionValue : IValue
     {
         private readonly string rawExpression;
-        private readonly CalculationContext context;
-        private readonly IReadOnlyList<IPostFixExpression> expressions;
-        private IValue lastResult;
+        private readonly PostFixEvaluator evaluator;
 
         public ExpressionValue(CalculationContext context, string expression)
         {
-            this.context = context;
             this.rawExpression = expression;
-            var tokenizer = new Tokenizing.Tokenizer(expression, this.context.Config);
-            var parser = new Parsing.Parser(tokenizer.Tokens, this.context.Config);
-            this.expressions = parser.CreatePostFixExpression();
+            var tokenizer = new Tokenizing.Tokenizer(expression, context.Config);
+            tokenizer.Run();
+            var parser = new Parsing.Parser(tokenizer.Tokens, context.Config);
+            this.evaluator = new PostFixEvaluator(parser.CreatePostFixExpression(), context);
         }
 
         public ValueType Type
         {
             get
             {
-                if (this.lastResult == null)
-                {
-                    this.Eval();
-                }
-
-                return this.lastResult.Type;
+                return this.evaluator.Run().Type;
             }
         }
 
@@ -41,12 +34,7 @@
         {
             get
             {
-                if (this.lastResult == null)
-                {
-                    this.Eval();
-                }
-
-                return this.lastResult.AsDouble;
+                return this.evaluator.Run().AsDouble;
             }
         }
 
@@ -54,12 +42,7 @@
         {
             get
             {
-                if (this.lastResult == null)
-                {
-                    this.Eval();
-                }
-
-                return this.lastResult.AsString;
+                return this.evaluator.Run().AsString;
             }
         }
 
@@ -67,23 +50,21 @@
         {
             get
             {
-                if (this.lastResult == null)
-                {
-                    this.Eval();
-                }
-
-                return this.lastResult.AsSet;
+                return this.evaluator.Run().AsSet;
             }
         }
 
-        private void Eval()
+        public string Description
         {
-            this.lastResult = new PostFixEvaluator(this.expressions, this.context).Run();
+            get
+            {
+                return this.rawExpression;
+            }
         }
 
         public override string ToString()
         {
-            return this.rawExpression;
+            return this.evaluator.Run().ToString();
         }
     }
 }

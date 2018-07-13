@@ -50,6 +50,14 @@ namespace Matheparser.Values
             }
         }
 
+        public string Description
+        {
+            get
+            {
+                return this.ToString();
+            }
+        }
+
         public override bool Equals(object obj)
         {
             return obj is DoubleValue value &&

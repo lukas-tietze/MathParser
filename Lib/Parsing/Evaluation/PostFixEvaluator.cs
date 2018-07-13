@@ -26,10 +26,10 @@ namespace Matheparser.Parsing.Evaluation
             {
                 switch (expression.Type)
                 {
-                    case PostFixExpressionType.Value:
+                    case ExpressionType.Value:
                         stack.Push(expression.Eval(this.context, null));
                         break;
-                    case PostFixExpressionType.Function:
+                    case ExpressionType.Function:
                         var args = new IValue[expression.ArgCount];
 
                         for(var i = 0; i < expression.ArgCount; i++)

@@ -23,5 +23,10 @@
         {
             get;
         }
+
+        string Description
+        {
+            get;
+        }
     }
 }

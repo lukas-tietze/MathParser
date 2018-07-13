@@ -9,11 +9,11 @@ namespace Matheparser.Parsing.Expressions.Unary
 {
     public abstract class UnaryOperatorExpressionBase : IPostFixExpression
     {
-        public PostFixExpressionType Type
+        public ExpressionType Type
         {
             get
             {
-                return PostFixExpressionType.Function;
+                return ExpressionType.Function;
             }
         }
 
