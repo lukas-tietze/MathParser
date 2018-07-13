@@ -26,6 +26,7 @@ namespace Matheparser
         private List<IPlugin> activePlugins;
         private IWriter diagnosticWriter;
         private IWriter debugWriter;
+        private bool echo;
 
         public Engine()
         {
@@ -40,6 +41,7 @@ namespace Matheparser
             this.activePlugins = new List<IPlugin>();
             this.diagnosticWriter = new EmptyWriter();
             this.debugWriter = new EmptyWriter();
+            this.echo = false;
             this.uniqueActions = new List<TerminalAction>()
             {
                 new TerminalAction {
@@ -180,13 +182,25 @@ namespace Matheparser
                 new TerminalAction
                 {
                     Name = "promt",
-                    Alias = "#",
+                    Alias = "$",
                     Description = "Use the specified expression as prompt.",
                     Action = (expression) =>
                     {
                         SetPrompt(expression);
                         return false;
                     },
+                },
+
+                new TerminalAction
+                {
+                    Name = "echo",
+                    Alias = "#",
+                    Description = "Use on, off to enable or disable echoing of commands",
+                    Action = (expression) =>
+                    {
+                        SetEcho(expression);
+                        return false;
+                    }
                 },
 
                 new TerminalAction
@@ -299,6 +313,11 @@ namespace Matheparser
                 return false;
             }
 
+            if(this.echo)
+            {
+                this.context.Out.WriteLine(input);
+            }
+
             var quit = false;
 
             try
@@ -327,6 +346,18 @@ namespace Matheparser
             }
 
             return quit;
+        }
+
+        private void SetEcho(string expression)
+        {
+            if ("on".Equals(expression.Trim()))
+            {
+                this.echo = true;
+            }
+            else if ("off".Equals(expression.Trim()))
+            {
+                this.echo = false;
+            }
         }
 
         private void ShowHelp(string expression)
