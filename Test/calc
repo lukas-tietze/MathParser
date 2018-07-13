@@ -1,6 +1,9 @@
-:out <std>|a.txt|b.txt|c.txt
+:out <std>|out.txt
+:echo on
 
-:exp a i*2
-:def set GENSET(0,1,10)
+:def n 100
+:def count CONCAT({2}, GENSET(3,2,n))
+:exp isPrime (#(SELECT(count, "j", "i%j==0")))==1
+:def res FOREACH(count, "i", "R(isPrime)")
 
-FOREACH(set, "i", "R(a)")
+res
