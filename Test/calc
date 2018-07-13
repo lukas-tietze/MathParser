@@ -1,3 +1,5 @@
+:out <std>|a.txt|b.txt|c.txt
+
 :exp a i*2
 :def set GENSET(0,1,10)
 

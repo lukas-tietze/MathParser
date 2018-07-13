@@ -526,6 +526,18 @@ namespace Matheparser
 
         private IWriter OpenOut(string expression)
         {
+            if(expression.Contains("|"))
+            {
+                var multiWriter = new MultiWriter();
+
+                foreach(var subExpression in expression.Split('|'))
+                {
+                    multiWriter.Add(this.OpenOut(subExpression.Trim()));
+                }
+
+                return multiWriter;
+            }
+
             if ("<std>".Equals(expression.ToLower()))
             {
                 return new ConsoleWriter();
