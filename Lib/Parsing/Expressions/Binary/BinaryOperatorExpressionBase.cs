@@ -4,7 +4,7 @@ using Matheparser.Functions;
 using Matheparser.Util;
 using Matheparser.Values;
 
-namespace Matheparser.Parsing.PostFixExpressions.Binary
+namespace Matheparser.Parsing.Expressions.Binary
 {
     public abstract class BinaryOperatorExpressionBase : IPostFixExpression
     {

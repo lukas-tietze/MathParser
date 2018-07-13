@@ -1,4 +1,4 @@
-﻿namespace Matheparser.Parsing.PostFixExpressions
+﻿namespace Matheparser.Parsing.Expressions
 {
     using System.Diagnostics;
     using Matheparser.Functions;

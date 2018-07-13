@@ -5,7 +5,7 @@ using Matheparser.Functions;
 using Matheparser.Util;
 using Matheparser.Values;
 
-namespace Matheparser.Parsing.PostFixExpressions.Unary
+namespace Matheparser.Parsing.Expressions.Unary
 {
     public abstract class UnaryOperatorExpressionBase : IPostFixExpression
     {

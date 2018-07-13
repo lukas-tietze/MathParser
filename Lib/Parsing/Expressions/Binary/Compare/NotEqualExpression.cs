@@ -1,4 +1,4 @@
-﻿namespace Matheparser.Parsing.PostFixExpressions.Binary.Compare
+﻿namespace Matheparser.Parsing.Expressions.Binary.Compare
 {
     using System.Diagnostics;
     using Matheparser.Util;

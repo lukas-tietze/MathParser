@@ -3,7 +3,7 @@ using Matheparser.Functions;
 using Matheparser.Values;
 using Matheparser.Variables;
 
-namespace Matheparser.Parsing.PostFixExpressions
+namespace Matheparser.Parsing.Expressions
 {
     public sealed class VariableExpression : IPostFixExpression
     {

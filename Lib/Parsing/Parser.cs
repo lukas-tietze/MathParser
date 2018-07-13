@@ -2,11 +2,11 @@
 {
     using System;
     using System.Collections.Generic;
-    using Matheparser.Parsing.PostFixExpressions;
-    using Matheparser.Parsing.PostFixExpressions.Binary.Arithmetic;
-    using Matheparser.Parsing.PostFixExpressions.Binary.Compare;
-    using Matheparser.Parsing.PostFixExpressions.Functions;
-    using Matheparser.Parsing.PostFixExpressions.Unary;
+    using Matheparser.Parsing.Expressions;
+    using Matheparser.Parsing.Expressions.Binary.Arithmetic;
+    using Matheparser.Parsing.Expressions.Binary.Compare;
+    using Matheparser.Parsing.Expressions.Functions;
+    using Matheparser.Parsing.Expressions.Unary;
     using Matheparser.Tokenizing;
 
     public class Parser
@@ -147,6 +147,11 @@
             return expressions.AsReadOnly();
         }
 
+        public IReadOnlyCollection<IPostFixExpression> CreateAbstractSyntxTree()
+        {
+            return null;
+        }
+
         private bool IsHigherPriority(TokenType opA, TokenType opB)
         {
             var mask = 0x0F00;
@@ -213,11 +218,6 @@
                 default:
                     throw new NotSupportedException();
             }
-        }
-
-        public void CreateAbstractSyntaxTree()
-        {
-            throw new NotImplementedException();
         }
     }
 }

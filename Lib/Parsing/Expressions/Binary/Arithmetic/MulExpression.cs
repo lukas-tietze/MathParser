@@ -1,4 +1,4 @@
-﻿namespace Matheparser.Parsing.PostFixExpressions.Binary.Arithmetic
+﻿namespace Matheparser.Parsing.Expressions.Binary.Arithmetic
 {
     using System;
     using System.Diagnostics;

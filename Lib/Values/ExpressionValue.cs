@@ -4,7 +4,7 @@
     using System.Diagnostics;
     using Matheparser.Functions;
     using Matheparser.Parsing.Evaluation;
-    using Matheparser.Parsing.PostFixExpressions;
+    using Matheparser.Parsing.Expressions;
     using Matheparser.Util;
 
     [DebuggerDisplay("Expression: {rawExpression}")]

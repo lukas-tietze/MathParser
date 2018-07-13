@@ -1,7 +1,9 @@
 :out <off>
 
-:def setA GENSET(1,1,10)
-:def setB SELECT(GENSET(0,1,9), "i", "AT(setA, i)%2==0")
+:def count INPUT("Enter target number")
 
+:def setA GENSET(2,1,count)
+:def enum CONCAT({2},GENSET(3,2,CEIL(count/2)))
 :out <std>
-setB
+
+SELECT(setA, "i", "#(SELECT(enum, \"j\", \"(i%j)==0\")) == 0")

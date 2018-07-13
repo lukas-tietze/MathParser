@@ -1,7 +1,7 @@
 ﻿using Matheparser.Functions;
 using Matheparser.Values;
 
-namespace Matheparser.Parsing.PostFixExpressions
+namespace Matheparser.Parsing.Expressions
 {
     public interface IPostFixExpression
     {
