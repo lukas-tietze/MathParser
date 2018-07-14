@@ -15,7 +15,7 @@
             this.values = new ListArray();
         }
 
-        public ArrayValue(IEnumerable<IValue> values):
+        public ArrayValue(IEnumerable<IValue> values) :
             this()
         {
             foreach (var item in values)
@@ -79,13 +79,18 @@
 
             sb.Append("{ ");
 
-            foreach (var value in this.values)
+            var enumerator = this.values.GetEnumerator();
+
+            if (enumerator.MoveNext())
             {
-                sb.Append(value);
-                sb.Append(", ");
+                sb.Append(enumerator.Current);
             }
 
-            sb.Remove(sb.Length - 2, 2);
+            while(enumerator.MoveNext())
+            {
+                sb.Append(", ").Append(enumerator.Current);
+            }
+
             sb.Append(" }");
 
             return sb.ToString();

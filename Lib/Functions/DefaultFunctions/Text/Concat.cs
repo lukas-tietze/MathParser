@@ -3,6 +3,7 @@
     using System.Text;
     using Matheparser.Values;
     using Matheparser.Exceptions;
+    using Matheparser.Util;
 
     public sealed class Concat : FunctionBase
     {
@@ -16,16 +17,31 @@
 
         public override IValue Eval(IValue[] parameters)
         {
-            this.Validate(parameters);
+            var mode = this.Validate(parameters);
 
-            var sb = new StringBuilder();
-
-            foreach (var parameter in parameters)
+            switch (mode)
             {
-                sb.Append(parameter.AsString);
-            }
+                case Mode.Set:
+                    var res = new ListArray() as IArray;
 
-            return new StringValue(sb.ToString());
+                    foreach (var parameter in parameters)
+                    {
+                        res = res.Combine(parameter.AsSet);
+                    }
+
+                    return new ArrayValue(res);
+                case Mode.String:
+                    var sb = new StringBuilder();
+
+                    foreach (var parameter in parameters)
+                    {
+                        sb.Append(parameter.AsString);
+                    }
+
+                    return new StringValue(sb.ToString());
+                default:
+                    throw new System.NotSupportedException();
+            }
         }
 
         private Mode Validate(IValue[] parameters)
@@ -51,12 +67,12 @@
                 setFound = setFound || parameter.Type == ValueType.Set;
             }
 
-            if(stringFound)
+            if (stringFound)
             {
                 return Mode.String;
             }
 
-            if(setFound)
+            if (setFound)
             {
                 return Mode.Set;
             }

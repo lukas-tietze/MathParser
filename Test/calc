@@ -1,9 +1,0 @@
-:def len 10
-:def prove CONCAT({2}, GENSET(3,2,len))
-:def count GENSET(1,1,100)
-:exp eval ((i%2)==0)
-
-FOREACH(count, "i", "eval")
-
-:clv
-//:q
