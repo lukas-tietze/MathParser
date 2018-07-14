@@ -549,18 +549,25 @@ namespace Matheparser
             {
                 var line = allLines[i].Trim();
 
-                if (string.IsNullOrEmpty(line) || line.StartsWith("//"))
+                if (string.IsNullOrEmpty(line))
+                {
+                    if (lineBuf.Length > 0)
+                    {
+                        quit = Eval(lineBuf.ToString());
+                        lineBuf.Clear();
+                    }
+                }
+                else if (line.StartsWith("//"))
                 {
                     continue;
                 }
-
-                if (line.EndsWith('\\'))
+                else if (line.EndsWith('\\'))
                 {
                     lineBuf.Append(line, 0, line.Length - 1);
-                    continue;
                 }
                 else
                 {
+                    lineBuf.Append(line);
                     quit = Eval(lineBuf.ToString());
                     lineBuf.Clear();
                 }

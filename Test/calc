@@ -1,12 +1,9 @@
-//Kommentar
-//:def a 3
+:def len 10
+:def prove CONCAT({2}, GENSET(3,2,len))
+:def count GENSET(1,1,100)
+:exp eval ((i%2)==0)
 
-1 \
-+ \
-2 
+FOREACH(count, "i", "eval")
 
-2 \
-// + \
--3
-
-:q
+:clv
+//:q

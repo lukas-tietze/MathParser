@@ -60,7 +60,12 @@ namespace Matheparser.Tokenizing
         {
             while (this.pos < this.data.Length)
             {
-                this.tokens.Add(this.ReadNext());
+                var next = this.ReadNext();
+                
+                if (next != null)
+                {
+                    this.tokens.Add(next);
+                }
             }
 
             if (this.bracketStack.Count != 0)
@@ -76,6 +81,11 @@ namespace Matheparser.Tokenizing
             if (char.IsWhiteSpace(this.data[this.pos]))
             {
                 this.SkipWhiteSpace();
+            }
+
+            if (this.pos >= this.data.Length)
+            {
+                return null;
             }
 
             var c = this.data[this.pos];
@@ -377,7 +387,7 @@ namespace Matheparser.Tokenizing
         {
             var readStart = this.pos;
 
-            while (char.IsWhiteSpace(this.data[this.pos]))
+            while (this.pos < this.data.Length && char.IsWhiteSpace(this.data[this.pos]))
             {
                 this.pos++;
             }
