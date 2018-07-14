@@ -16,6 +16,7 @@ namespace Matheparser
     using Matheparser.Util;
     using Matheparser.Io;
     using Api;
+    using System.Text;
 
     public class Engine
     {
@@ -542,10 +543,32 @@ namespace Matheparser
         {
             var allLines = File.ReadAllLines(Path.GetFullPath(Path.Combine(workingDirectory, path.Trim())));
             var quit = false;
+            var lineBuf = new StringBuilder();
 
             for (var i = 0; i < allLines.Length && !quit; i++)
             {
-                quit = Eval(allLines[i]);
+                var line = allLines[i].Trim();
+
+                if (string.IsNullOrEmpty(line) || line.StartsWith("//"))
+                {
+                    continue;
+                }
+
+                if (line.EndsWith('\\'))
+                {
+                    lineBuf.Append(line, 0, line.Length - 1);
+                    continue;
+                }
+                else
+                {
+                    quit = Eval(lineBuf.ToString());
+                    lineBuf.Clear();
+                }
+            }
+
+            if (lineBuf.Length != 0 && !quit)
+            {
+                quit = Eval(lineBuf.ToString());
             }
 
             return quit;
