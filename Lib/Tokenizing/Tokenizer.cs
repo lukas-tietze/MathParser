@@ -104,8 +104,7 @@ namespace Matheparser.Tokenizing
             }
             else if(c == '$')
             {
-                this.pos++;
-                return new Token(TokenType.LazyEvalSeperator);
+                return this.ReadLazyExpression();
             }
             ////TODO An Config binden
             else if (c == '(')
@@ -189,6 +188,20 @@ namespace Matheparser.Tokenizing
             {
                 throw new NotSupportedException();
             }
+        }
+
+        private Token ReadLazyExpression()
+        {
+            var start = ++this.pos;
+
+            while(this.pos < this.data.Length && this.data[this.pos] != '$')
+            {
+                pos++;
+            }
+
+            pos++;
+
+            return new Token(TokenType.LazyEvalSeperator, new string(this.data, start, pos - start - 1));
         }
 
         private bool TryReadOperator(out Token tokenOut)

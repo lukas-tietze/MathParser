@@ -26,7 +26,6 @@
             var functionStack = new Stack<string>();
             var argCountStack = new Stack<int>();
             var expressions = new List<IPostFixExpression>();
-            var lazyEvalCapture = new Capture { Active = false };
 
             for (var i = 0; i < this.tokens.Count; i++)
             {
@@ -44,32 +43,7 @@
                         expressions.Add(new VariableExpression(token.Value));
                         break;
                     case TokenType.LazyEvalSeperator:
-                        if (!lazyEvalCapture.Active)
-                        {
-                            lazyEvalCapture.Active = true;
-                            lazyEvalCapture.ExpressionCount = expressions.Count;
-                            lazyEvalCapture.OperatorCount = operatorStack.Count;
-                        }
-                        else
-                        {
-                            var res = new List<IPostFixExpression>();
-
-                            for (int j = lazyEvalCapture.ExpressionCount; j < expressions.Count; j++)
-                            {
-                                res.Add(expressions[j]);
-                            }
-
-                            expressions.RemoveRange(lazyEvalCapture.ExpressionCount, expressions.Count - lazyEvalCapture.ExpressionCount);
-
-                            while(operatorStack.Count > lazyEvalCapture.OperatorCount)
-                            {
-                                res.Add(this.CreateOperatorExpression(operatorStack.Pop()));
-                            }
-
-                            lazyEvalCapture.Active = false;
-                            expressions.Add(new LazyExpression(res.AsReadOnly()));
-                        }
-
+                        expressions.Add(new LazyExpression(token.Value));
                         break;
                     case TokenType.OpeningBracket:
                     case TokenType.ClosingBracket:
@@ -247,13 +221,6 @@
                 default:
                     throw new NotSupportedException();
             }
-        }
-
-        private struct Capture
-        {
-            public int ExpressionCount;
-            public int OperatorCount;
-            public bool Active;
         }
     }
 }

@@ -27,7 +27,7 @@ namespace Matheparser.Values
             this.rawExpression = sb.ToString();
         }
 
-        public LazyValue(CalculationContext context, string expression)
+        public LazyValue(string expression, CalculationContext context)
         {
             this.rawExpression = expression;
             var tokenizer = new Tokenizing.Tokenizer(expression, context.Config);

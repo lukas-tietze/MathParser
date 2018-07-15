@@ -9,11 +9,14 @@ namespace Matheparser.Parsing.Expressions
     [DebuggerDisplay("Lazy expression:")]
     public class LazyExpression : IPostFixExpression
     {
-        private IReadOnlyList<IPostFixExpression> expressions;
+        private string expression;
+        private LazyValue lastValue;
+        private CalculationContext lastContext;
 
-        public LazyExpression(IReadOnlyList<IPostFixExpression> expressions)
+        public LazyExpression(string expression)
         {
-            this.expressions = new List<IPostFixExpression>(expressions);
+            this.expression = expression;
+            this.lastValue = null;
         }
 
         public int ArgCount
@@ -34,7 +37,12 @@ namespace Matheparser.Parsing.Expressions
 
         public IValue Eval(CalculationContext context, IValue[] operands)
         {
-            return new LazyValue(this.expressions, context);
+            if (this.lastContext == null || !this.lastContext.Equals(context))
+            {
+                this.lastValue = new LazyValue(this.expression, context);
+            }
+            
+            return this.lastValue;
         }
     }
 }

@@ -709,12 +709,12 @@ namespace Matheparser
                 }
                 catch (CalculationException)
                 {
-                    res = new LazyValue(context, value);
+                    res = new LazyValue(value, context);
                 }
             }
             else
             {
-                res = new LazyValue(context, value);
+                res = new LazyValue(value, context);
             }
 
             var newVar = new Variable(key, res);
