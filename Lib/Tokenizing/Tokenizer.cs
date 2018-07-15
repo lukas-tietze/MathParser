@@ -61,7 +61,7 @@ namespace Matheparser.Tokenizing
             while (this.pos < this.data.Length)
             {
                 var next = this.ReadNext();
-                
+
                 if (next != null)
                 {
                     this.tokens.Add(next);
@@ -101,6 +101,11 @@ namespace Matheparser.Tokenizing
             else if (this.IsStartOfIdentifier(c))
             {
                 return this.ReadIdentifier();
+            }
+            else if(c == '$')
+            {
+                this.pos++;
+                return new Token(TokenType.LazyEvalSeperator);
             }
             ////TODO An Config binden
             else if (c == '(')

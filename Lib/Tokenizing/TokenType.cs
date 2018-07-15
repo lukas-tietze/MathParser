@@ -14,6 +14,7 @@
         AccessorEnd = 0x0009,
         FunctionStart = 0x000A,
         FunctionEnd = 0x000B,
+        LazyEvalSeperator = 0x000C,
 
         Operator = 0x1000,
         OperatorAdd = 0x1C01,
