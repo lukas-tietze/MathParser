@@ -2,6 +2,7 @@ namespace Matheparser.Values
 {
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Text;
     using Matheparser.Functions;
     using Matheparser.Parsing.Evaluation;
     using Matheparser.Parsing.Expressions;
@@ -16,7 +17,14 @@ namespace Matheparser.Values
         public LazyValue(IReadOnlyList<IPostFixExpression> expressions, CalculationContext context)
         {
             this.evaluator = new PostFixEvaluator(expressions, context);
-            this.rawExpression = string.Empty;
+            var sb = new StringBuilder();
+
+            foreach (var expression in expressions)
+            {
+                sb.Append(expression.ToString()).Append(' ');
+            }
+
+            this.rawExpression = sb.ToString();
         }
 
         public LazyValue(CalculationContext context, string expression)

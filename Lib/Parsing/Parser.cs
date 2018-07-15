@@ -63,7 +63,7 @@
 
                             while(operatorStack.Count > lazyEvalCapture.OperatorCount)
                             {
-                                operatorStack.Pop();
+                                res.Add(this.CreateOperatorExpression(operatorStack.Pop()));
                             }
 
                             lazyEvalCapture.Active = false;
