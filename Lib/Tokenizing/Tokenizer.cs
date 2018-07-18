@@ -60,7 +60,12 @@ namespace Matheparser.Tokenizing
         {
             while (this.pos < this.data.Length)
             {
-                this.tokens.Add(this.ReadNext());
+                var next = this.ReadNext();
+
+                if (next != null)
+                {
+                    this.tokens.Add(next);
+                }
             }
 
             if (this.bracketStack.Count != 0)
@@ -78,6 +83,11 @@ namespace Matheparser.Tokenizing
                 this.SkipWhiteSpace();
             }
 
+            if (this.pos >= this.data.Length)
+            {
+                return null;
+            }
+
             var c = this.data[this.pos];
 
             if (this.IsStartOfNumber(c))
@@ -91,6 +101,10 @@ namespace Matheparser.Tokenizing
             else if (this.IsStartOfIdentifier(c))
             {
                 return this.ReadIdentifier();
+            }
+            else if(c == '$')
+            {
+                return this.ReadLazyExpression();
             }
             ////TODO An Config binden
             else if (c == '(')
@@ -174,6 +188,20 @@ namespace Matheparser.Tokenizing
             {
                 throw new NotSupportedException();
             }
+        }
+
+        private Token ReadLazyExpression()
+        {
+            var start = ++this.pos;
+
+            while(this.pos < this.data.Length && this.data[this.pos] != '$')
+            {
+                pos++;
+            }
+
+            pos++;
+
+            return new Token(TokenType.LazyEvalSeperator, new string(this.data, start, pos - start - 1));
         }
 
         private bool TryReadOperator(out Token tokenOut)
@@ -375,7 +403,7 @@ namespace Matheparser.Tokenizing
         {
             var readStart = this.pos;
 
-            while (char.IsWhiteSpace(this.data[this.pos]))
+            while (this.pos < this.data.Length && char.IsWhiteSpace(this.data[this.pos]))
             {
                 this.pos++;
             }

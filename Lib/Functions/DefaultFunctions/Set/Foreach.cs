@@ -17,40 +17,55 @@ namespace Matheparser.Functions.DefaultFunctions.Set
                 return "FOREACH";
             }
         }
-        
+
         public override IValue Eval(IValue[] parameters)
         {
-            this.Validate(parameters);
+            var mode = this.Validate(parameters);
 
             var set = parameters[0].AsSet;
             var res = new ListArray();
             var i = new Variable(parameters[1].AsString, new DoubleValue(0));
-            var evaluator = default(PostFixEvaluator);
 
             this.Context.VariableManager.Define(i);
 
-            try
+            switch (mode)
             {
-                var tokenizer = new Tokenizer(parameters[2].AsString, this.Context.Config);
-                tokenizer.Run();
-                var parser = new Parser(tokenizer.Tokens, this.Context.Config);
-                evaluator = new PostFixEvaluator(parser.CreatePostFixExpression(), this.Context);
-            }
-            catch (System.Exception)
-            {
-                throw new OperandEvaluationException();
-            }
+                case Mode.Eval:
 
-            foreach (var item in set)
-            {
-                i.Value = item;
-                res.Add(evaluator.Run());
+                    var evaluator = default(PostFixEvaluator);
+                    try
+                    {
+                        var tokenizer = new Tokenizer(parameters[2].AsString, this.Context.Config);
+                        tokenizer.Run();
+                        var parser = new Parser(tokenizer.Tokens, this.Context.Config);
+                        evaluator = new PostFixEvaluator(parser.CreatePostFixExpression(), this.Context);
+                    }
+                    catch (System.Exception)
+                    {
+                        throw new OperandEvaluationException();
+                    }
+
+                    foreach (var item in set)
+                    {
+                        i.Value = item;
+                        res.Add(evaluator.Run());
+                    }
+                    break;
+                case Mode.Copy:
+                    foreach (var item in set)
+                    {
+                        i.Value = item;
+                        res.Add(ValueHelper.Copy(parameters[2]));
+                    }
+                    break;
+                default:
+                    throw new System.NotSupportedException();
             }
 
             return new ArrayValue(res);
         }
 
-        private void Validate(IValue[] parameters)
+        private Mode Validate(IValue[] parameters)
         {
             if (parameters.Length != 3)
             {
@@ -58,11 +73,23 @@ namespace Matheparser.Functions.DefaultFunctions.Set
             }
 
             if (parameters[0].Type != ValueType.Set ||
-                parameters[1].Type != ValueType.String ||
-                parameters[2].Type != ValueType.String)
+                parameters[1].Type != ValueType.String)
             {
                 throw new WrongOperandTypeException();
             }
+
+            if (parameters[2].Type == ValueType.String)
+            {
+                return Mode.Eval;
+            }
+
+            return Mode.Copy;
+        }
+
+        private enum Mode
+        {
+            Eval,
+            Copy,
         }
     }
 }

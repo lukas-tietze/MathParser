@@ -42,6 +42,9 @@
                     case TokenType.Identifier:
                         expressions.Add(new VariableExpression(token.Value));
                         break;
+                    case TokenType.LazyEvalSeperator:
+                        expressions.Add(new LazyExpression(token.Value));
+                        break;
                     case TokenType.OpeningBracket:
                     case TokenType.ClosingBracket:
                         operatorStack.Push(token.Type);
