@@ -357,15 +357,13 @@ namespace Matheparser.Tokenizing
                     {
                         decSeperatorRead = true;
                     }
-                    else if (c == '-' && !prefixRead)
-                    {
-                        prefixRead = true;
-                    }
-                    else
+                    else if (c != '-' || prefixRead)
                     {
                         break;
                     }
                 }
+
+                prefixRead = true;
 
                 this.pos++;
             }
