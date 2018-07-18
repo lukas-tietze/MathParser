@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Globalization;
     using System.Text;
     using Matheparser.Util;
 
@@ -24,12 +25,12 @@
             }
         }
 
-        public ArrayValue(IEnumerable<object> items) :
+        public ArrayValue(IEnumerable<object> items, CultureInfo cultureInfo) :
             this()
         {
             foreach (var item in items)
             {
-                this.values.Add(ValueCreator.Create(item));
+                this.values.Add(ValueHelper.Create(item, cultureInfo));
             }
         }
 

@@ -1,6 +1,7 @@
 ﻿namespace Matheparser.Parsing.Expressions
 {
     using System.Diagnostics;
+    using System.Globalization;
     using Matheparser.Functions;
     using Matheparser.Values;
 
@@ -9,13 +10,13 @@
     {
         private readonly IValue value;
 
-        public ValueExpression(string value) :
-            this(ValueCreator.Create(value))
+        public ValueExpression(string value, CultureInfo cultureInfo) :
+            this(ValueHelper.Create(value, cultureInfo))
         {
         }
 
-        public ValueExpression(double value) :
-            this(ValueCreator.Create(value))
+        public ValueExpression(double value, CultureInfo cultureInfo) :
+            this(ValueHelper.Create(value, cultureInfo))
         {
         }
 

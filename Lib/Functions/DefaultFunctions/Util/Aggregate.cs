@@ -25,7 +25,7 @@ namespace Matheparser.Functions.DefaultFunctions.Util
             var count = (int)parameters[1].AsDouble;
             var res = 0.0;
             var evaluator = default(PostFixEvaluator);
-            var counter = new Variable(parameters[2].AsString, 0);
+            var counter = new Variable(parameters[2].AsString, new DoubleValue(0));
 
             this.Context.VariableManager.Define(counter);
 
@@ -43,7 +43,7 @@ namespace Matheparser.Functions.DefaultFunctions.Util
 
             for (var i = 0; i < count; i++)
             {
-                counter.Value = ValueCreator.Create(i);
+                counter.Value = new DoubleValue(i);
                 var aggregate = evaluator.Run();
 
                 if (aggregate.Type != ValueType.Number)

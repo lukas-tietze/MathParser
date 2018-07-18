@@ -7,16 +7,6 @@ namespace Matheparser.Variables
         private string name;
         private IValue value;
 
-        public Variable(string name, double value) :
-            this(name, ValueCreator.Create(value))
-        {
-        }
-
-        public Variable(string name, string expression) :
-            this(name, ValueCreator.Create(expression))
-        {
-        }
-
         public Variable(string name, IValue value)
         {
             this.name = name;
