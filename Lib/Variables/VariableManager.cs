@@ -132,10 +132,38 @@ namespace Matheparser.Variables
             return args.Variable;
         }
 
+        private IVariable HandleMissingVariable(string name)
+        {
+            var res = default(IVariable);
+
+            switch (this.missingVariableMode)
+            {
+                case MissingVariableMode.Error:
+                    throw new UndefinedVariableException(name);
+                case MissingVariableMode.DefaultValue:
+                    res = new Variable(name, new EmptyValue());
+                    this.Define(res);
+                    return res;
+                case MissingVariableMode.Ask:
+                    res = this.OnVariableMissing(name);
+
+                    if (res != null)
+                    {
+                        this.Define(res);
+                        return res;
+                    }
+
+                    throw new UndefinedVariableException(name);
+                default:
+                    throw new System.NotSupportedException();
+            }
+        }
+
         public enum MissingVariableMode
         {
             Error,
-            ReturnDefaultValue,
+            DefaultValue,
+            Ask,
         }
     }
 }

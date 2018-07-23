@@ -37,7 +37,6 @@ namespace Matheparser.Functions.DefaultFunctions.Set
                 tokens.Add(new Token(TokenType.String, res.Name));
                 tokens.Add(new Token(TokenType.Seperator, ","));
                 tokens.Add(new Token(TokenType.Identifier, res.Name));
-                ////TODO TODO
                 tokens.Add(new Token(TokenType.Identifier, i.Name));
                 tokens.Add(new Token(TokenType.FunctionEnd));
 
