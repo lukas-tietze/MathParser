@@ -105,8 +105,8 @@ namespace Matheparser.Variables
 
         private void SetDefaultVariables()
         {
-            this.Define(new Variable("e", Math.E));
-            this.Define(new Variable("pi", Math.PI));
+            this.Define(new Variable("e", new DoubleValue(Math.E)));
+            this.Define(new Variable("pi", new DoubleValue(Math.PI)));
         }
 
         private void OnVariableDefined(IVariable variable)

@@ -23,7 +23,7 @@ namespace Matheparser.Functions.DefaultFunctions.Set
 
             var set = parameters[0].AsSet;
             var res = new ListArray();
-            var i = new Variable(parameters[1].AsString, 0);
+            var i = new Variable(parameters[1].AsString, new DoubleValue(0));
             var evaluator = default(PostFixEvaluator);
 
             this.Context.VariableManager.Define(i);
