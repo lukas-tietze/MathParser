@@ -19,5 +19,7 @@ namespace Matheparser.Variables
             get;
             set;
         }
+
+        event System.EventHandler<ValueChangedEventArgs> ValueChanged;
     }
 }

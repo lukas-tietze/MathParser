@@ -7,7 +7,7 @@ namespace Matheparser.Variables
     public class VariableManager
     {
         private Dictionary<string, IVariable> variables;
-        private MissingVariabeMode missingVariabeMode;
+        private MissingVariableMode missingVariableMode;
 
         public VariableManager() :
             this(false)
@@ -17,7 +17,7 @@ namespace Matheparser.Variables
         public VariableManager(bool setDefaultVariables)
         {
             this.variables = new Dictionary<string, IVariable>();
-            this.missingVariabeMode = MissingVariabeMode.Error;
+            this.missingVariableMode = MissingVariableMode.Error;
 
             if (setDefaultVariables)
             {
@@ -25,14 +25,27 @@ namespace Matheparser.Variables
             }
         }
 
+        public event EventHandler<VariableEventArgs> VariableDefined;
+
+        public event EventHandler<VariableEventArgs> VariableRemoved;
+
+        public event EventHandler<VariableEventArgs> VariableMissing;
+
         public void Remove(string key)
         {
-            this.variables.Remove(key);
+            if (this.variables.TryGetValue(key, out var variable))
+            {
+                this.variables.Remove(key);
+
+                this.OnVariableRemoved(variable);
+            }
         }
 
         public void Define(IVariable variable)
         {
             this.variables[variable.Name] = variable;
+
+            this.OnVariableDefined(variable);
         }
 
         public IVariable GetVariable(string name)
@@ -48,16 +61,17 @@ namespace Matheparser.Variables
         public IVariable CreateTempVariable()
         {
             var count = DateTime.UtcNow.Ticks;
-            var name = "__temp__" + count;
+            var nameBase = "__temp__";
+            var name = nameBase + count;
 
             while (this.variables.ContainsKey(name))
             {
-                name = "__temp__" + ++count;
+                name = nameBase + ++count;
             }
 
             var tmp = new Variable(name, new EmptyValue());
 
-            Define(tmp);
+            this.Define(tmp);
 
             return tmp;
         }
@@ -77,20 +91,15 @@ namespace Matheparser.Variables
             throw new UndefinedVariableException(name);
         }
 
-        public enum MissingVariabeMode
-        {
-            Error,
-            ReturnDefaultValue,
-        }
-
         public void ClearAll()
         {
+            ////TODO evtl. überarbeiten, sodass für jede Variable ein Remove-Event kommt?
             this.variables.Clear();
         }
 
         public void ClearUserVariables()
         {
-            this.variables.Clear();
+            this.ClearAll();
             this.SetDefaultVariables();
         }
 
@@ -98,6 +107,35 @@ namespace Matheparser.Variables
         {
             this.Define(new Variable("e", Math.E));
             this.Define(new Variable("pi", Math.PI));
+        }
+
+        private void OnVariableDefined(IVariable variable)
+        {
+            var args = new VariableEventArgs(variable);
+
+            this.VariableDefined?.Invoke(this, args);
+        }
+
+        private void OnVariableRemoved(IVariable variable)
+        {
+            var args = new VariableEventArgs(variable);
+
+            this.VariableRemoved?.Invoke(this, args);
+        }
+
+        private IVariable OnVariableMissing(string name)
+        {
+            var args = new VariableEventArgs(name);
+
+            this.VariableMissing?.Invoke(this, args);
+
+            return args.Variable;
+        }
+
+        public enum MissingVariableMode
+        {
+            Error,
+            ReturnDefaultValue,
         }
     }
 }

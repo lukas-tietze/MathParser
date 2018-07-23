@@ -18,6 +18,22 @@ namespace Matheparser.Parsing.Evaluation
             this.context = context;
         }
 
+        public IReadOnlyList<IPostFixExpression> Expressions
+        {
+            get
+            {
+                return this.expressions;
+            }
+        }
+
+        public CalculationContext Context
+        {
+            get
+            {
+                return this.context;
+            }
+        }
+
         public IValue Run()
         {
             var stack = new Stack<IValue>();
@@ -32,7 +48,7 @@ namespace Matheparser.Parsing.Evaluation
                     case ExpressionType.Function:
                         var args = new IValue[expression.ArgCount];
 
-                        for(var i = 0; i < expression.ArgCount; i++)
+                        for (var i = 0; i < expression.ArgCount; i++)
                         {
                             args[expression.ArgCount - i - 1] = stack.Pop();
                         }

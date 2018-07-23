@@ -1,4 +1,5 @@
-﻿using Matheparser.Values;
+﻿using System;
+using Matheparser.Values;
 
 namespace Matheparser.Variables
 {
@@ -48,9 +49,16 @@ namespace Matheparser.Variables
 
             set
             {
-                this.value = value;
+                if (this.value != value)
+                {
+                    var eventArgs = new ValueChangedEventArgs(this.value, value);
+                    this.value = value;
+                    this.ValueChanged?.Invoke(this, eventArgs);
+                }
             }
         }
+
+        public event EventHandler<ValueChangedEventArgs> ValueChanged;
 
         public override string ToString()
         {

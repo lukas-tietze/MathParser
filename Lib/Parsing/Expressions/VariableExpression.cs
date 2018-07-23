@@ -14,6 +14,14 @@ namespace Matheparser.Parsing.Expressions
             this.name = name;
         }
 
+        public string VariableName
+        {
+            get
+            {
+                return this.name;
+            }
+        }
+
         public ExpressionType Type
         {
             get
