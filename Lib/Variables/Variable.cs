@@ -1,5 +1,4 @@
-﻿using System;
-using Matheparser.Values;
+﻿using Matheparser.Values;
 
 namespace Matheparser.Variables
 {
@@ -48,7 +47,7 @@ namespace Matheparser.Variables
             }
         }
 
-        public event EventHandler<ValueChangedEventArgs> ValueChanged;
+        public event System.EventHandler<ValueChangedEventArgs> ValueChanged;
 
         public override string ToString()
         {
