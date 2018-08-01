@@ -26,8 +26,8 @@ namespace Matheparser
         private List<TerminalAction> uniqueActions;
         private List<IPlugin> activePlugins;
         private IWriter diagnosticWriter;
-        private IWriter debugWriter;
         private bool echo;
+        private bool useAns;
 
         public Engine()
         {
@@ -41,8 +41,8 @@ namespace Matheparser
             this.workingDirectory = Directory.GetCurrentDirectory();
             this.activePlugins = new List<IPlugin>();
             this.diagnosticWriter = new EmptyWriter();
-            this.debugWriter = new EmptyWriter();
             this.echo = false;
+            this.useAns = true;
             this.uniqueActions = new List<TerminalAction>()
             {
                 new TerminalAction {
@@ -206,6 +206,18 @@ namespace Matheparser
 
                 new TerminalAction
                 {
+                    Name = "useAns",
+                    Alias = "ans",
+                    Description =" use on, off to enable or disable the ANS-Variable. If enablad the result of the last calculation will be saved in a variable named ANS",
+                    Action = (expression) =>
+                    {
+                        SetAns(expression);
+                        return false;
+                    }
+                },
+
+                new TerminalAction
+                {
                     Name = "clear",
                     Alias = "cl",
                     Description = "Clears the screen.",
@@ -254,24 +266,6 @@ namespace Matheparser
 
                 new TerminalAction
                 {
-                    Name = "debug",
-                    Alias = "db",
-                    Description = "Set debug-Output to the specified stream.",
-                    Action = (expression) =>
-                    {
-                        if(this.debugWriter != null)
-                        {
-                            this.debugWriter.Dispose();
-                        }
-
-                        this.debugWriter = this.OpenOut(expression);
-
-                        return false;
-                    },
-                },
-
-                new TerminalAction
-                {
                     Name = "diagnostic",
                     Alias = "dg",
                     Description = "Set diagnostic-Output to the specified stream.",
@@ -311,14 +305,16 @@ namespace Matheparser
         {
             if (string.IsNullOrEmpty(input))
             {
+                this.diagnosticWriter.WriteLine("Empty Input.");
                 return false;
             }
 
-            if(this.echo)
+            if (this.echo)
             {
                 this.context.Out.WriteLine(input);
             }
 
+            var now = DateTime.Now.Ticks;
             var quit = false;
 
             try
@@ -346,6 +342,8 @@ namespace Matheparser
                 HandleException(e);
             }
 
+            this.diagnosticWriter.WriteLine("Evaluation of \"{0}\" took {1}ms.", input, new TimeSpan(DateTime.Now.Ticks - now).TotalMilliseconds);
+
             return quit;
         }
 
@@ -358,6 +356,18 @@ namespace Matheparser
             else if ("off".Equals(expression.Trim()))
             {
                 this.echo = false;
+            }
+        }
+
+        private void SetAns(string expression)
+        {
+            if ("on".Equals(expression.Trim()))
+            {
+                this.useAns = true;
+            }
+            else if ("off".Equals(expression.Trim()))
+            {
+                this.useAns = false;
             }
         }
 
@@ -527,11 +537,11 @@ namespace Matheparser
 
         private IWriter OpenOut(string expression)
         {
-            if(expression.Contains("|"))
+            if (expression.Contains("|"))
             {
                 var multiWriter = new MultiWriter();
 
-                foreach(var subExpression in expression.Split('|'))
+                foreach (var subExpression in expression.Split('|'))
                 {
                     multiWriter.Add(this.OpenOut(subExpression.Trim()));
                 }
@@ -733,6 +743,12 @@ namespace Matheparser
 
             var calculator = new Calculator(context);
             var res = calculator.Calculate(expression);
+
+            if (this.useAns)
+            {
+                this.context.VariableManager.Define(new Variable("ANS", res));
+            }
+
             context.Out.WriteLine("> {0}", res.ToString());
         }
 

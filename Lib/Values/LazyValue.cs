@@ -139,6 +139,8 @@ namespace Matheparser.Values
 
         private void BindEvents()
         {
+            this.alwaysDirty = true;
+
             foreach (var expression in this.evaluator.Expressions)
             {
                 if (expression is VariableExpression variableExpression)
